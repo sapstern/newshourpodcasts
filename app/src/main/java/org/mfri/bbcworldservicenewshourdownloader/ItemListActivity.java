@@ -54,7 +54,6 @@ public class ItemListActivity extends AppCompatActivity {
 
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
         setupRecyclerView((RecyclerView) recyclerView, new ItemList(listBundle));
-        utils.submitBackgroundRunnableForDownload(this);
         Log.d("CREATE", "onCreate end");
     }
 

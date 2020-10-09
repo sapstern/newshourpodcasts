@@ -6,9 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
 import android.util.Log;
 
 import androidx.core.net.ConnectivityManagerCompat;
@@ -212,21 +209,7 @@ public class Utils {
         return "Newshour_"+theContentDesc+"_"+theDate+".mp3";
     }
 
-    public void submitBackgroundRunnableForDownload(Context theContext) {
-        // Create a new background thread for processing messages or runnables sequentially
-        HandlerThread handlerThread = new HandlerThread("BackgroundDownloadThread");
-// Starts the background thread
-        handlerThread.start();
-// Create a handler attached to the HandlerThread's Looper
-        Handler mHandler = new Handler(handlerThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                // Process received messages here!
-            }
-        };
-        // Execute the specified code on the worker thread
-        mHandler.post(new BackgroundDowmloadRunnable(theContext));
-    }
+
 
     /**
      * Check for existance of given filename in podcasts directory

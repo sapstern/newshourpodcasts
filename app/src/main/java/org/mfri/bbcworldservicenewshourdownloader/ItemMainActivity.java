@@ -12,6 +12,10 @@ import android.os.Message;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import java.util.concurrent.TimeUnit;
 
 public class ItemMainActivity extends Activity {
 
@@ -35,6 +39,13 @@ public class ItemMainActivity extends Activity {
         }
 
         if (isPermissionGiven){
+            PeriodicWorkRequest downLoadRequest =
+                    new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
+                            // Constraints
+                            .build();
+            WorkManager
+                    .getInstance(this)
+                    .enqueue(downLoadRequest);
             Intent intent = new Intent(this, ListService.class);
             this.startService(intent);
         }
@@ -63,6 +74,13 @@ public class ItemMainActivity extends Activity {
                     //Log.e("value", "Permission Denied, You cannot use local drive .");
                 }
                 if (isPerpermissionForAllGranted) {
+                    PeriodicWorkRequest downLoadRequest =
+                            new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
+                                    // Constraints
+                                    .build();
+                    WorkManager
+                            .getInstance(this)
+                            .enqueue(downLoadRequest);
                     Intent intent = new Intent(this, ListService.class);
                     this.startService(intent);
 
