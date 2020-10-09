@@ -1,0 +1,2043 @@
+
+<!DOCTYPE html>
+<html class="b-reith-sans-font b-header--black--white b-footer--black--white " lang="en-GB">
+    <head>
+        <meta charset="UTF-8">
+        <title>BBC World Service - Newshour - Downloads</title>
+        <link rel="icon" href="https://www.bbc.co.uk/favicon.ico" type="image/x-icon"><link rel="shortcut icon" sizes="196x196" href="https://ichef.bbci.co.uk/images/ic/208x208/p085qrkx.jpg">
+        <link rel="shortcut icon" sizes="128x128" href="https://ichef.bbci.co.uk/images/ic/128x128/p085qrkx.jpg">
+        <link rel="apple-touch-icon" href="https://ichef.bbci.co.uk/images/ic/80x80/p085qrkx.jpg" >
+        <link rel="apple-touch-icon" sizes="120x120" href="https://ichef.bbci.co.uk/images/ic/128x128/p085qrkx.jpg">
+        <link rel="apple-touch-icon" sizes="152x152" href="https://ichef.bbci.co.uk/images/ic/160x160/p085qrkx.jpg">
+
+                        
+        <script>document.documentElement.className += ' has-js';</script>
+        <!-- iSite2 Project (Tenant space): progs-worldservice -->
+                        
+<!-- Environment: live -->
+<!-- Orbit: 3.0.0-1094.dfb9a23c -->
+<!-- istats Web Module: 0.0.2-477.3a39ca0 -->
+<!-- navid Web Module: 0.2.0-21.719d1f6 -->
+<!-- User Activity Helper Web Module: 1.0.0-86.88e40f8 -->
+<!-- cookiebanner Web Module: 0.0.2-477.3a39ca0 -->
+<!-- searchbox Web Module: 3.0.0-168.f9babde -->
+<!-- navpromo Web Module: 3.0.0-153.7cba724 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta property="fb:admins" content="100004154058350"><link rel="stylesheet" href="https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/css/orb-ltr.min.css"><!--[if (lt IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" href="https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/css/orb-ie-ltr.min.css">
+    <![endif]--><script type="text/javascript">/*<![CDATA[*/
+        window.orb = {
+            lang: 'en',
+            bbcBaseUrl: 'https://www.bbc.co.uk',
+            bbcUrlPrefix: 'https://www.',
+            staticHost: 'https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f',
+            figUrl: 'https://fig.bbc.co.uk/frameworks/fig/2/fig.js',
+            partialCookieOvenUrl: 'https://cookie-oven.api.bbc'
+        };
+
+        document.documentElement.className += (document.documentElement.className? ' ' : '') + 'orb-js';
+        window.orb.worldwideNavlinks = '';
+
+
+     /*]]>*/</script><script>// Promise polyfill from https://github.com/bramstein/promis
+        (function(){'use strict';var f,g=[];function l(a){g.push(a);1==g.length&&f()}function m(){for(;g.length;)g[0](),g.shift()}f=function(){setTimeout(m)};function n(a){this.a=p;this.b=void 0;this.f=[];var b=this;try{a(function(a){q(b,a)},function(a){r(b,a)})}catch(c){r(b,c)}}var p=2;function t(a){return new n(function(b,c){c(a)})}function u(a){return new n(function(b){b(a)})}function q(a,b){if(a.a==p){if(b==a)throw new TypeError;var c=!1;try{var d=b&&b.then;if(null!=b&&"object"==typeof b&&"function"==typeof d){d.call(b,function(b){c||q(a,b);c=!0},function(b){c||r(a,b);c=!0});return}}catch(e){c||r(a,e);return}a.a=0;a.b=b;v(a)}} function r(a,b){if(a.a==p){if(b==a)throw new TypeError;a.a=1;a.b=b;v(a)}}function v(a){l(function(){if(a.a!=p)for(;a.f.length;){var b=a.f.shift(),c=b[0],d=b[1],e=b[2],b=b[3];try{0==a.a?"function"==typeof c?e(c.call(void 0,a.b)):e(a.b):1==a.a&&("function"==typeof d?e(d.call(void 0,a.b)):b(a.b))}catch(h){b(h)}}})}n.prototype.g=function(a){return this.c(void 0,a)};n.prototype.c=function(a,b){var c=this;return new n(function(d,e){c.f.push([a,b,d,e]);v(c)})}; function w(a){return new n(function(b,c){function d(c){return function(d){h[c]=d;e+=1;e==a.length&&b(h)}}var e=0,h=[];0==a.length&&b(h);for(var k=0;k<a.length;k+=1)u(a[k]).c(d(k),c)})}function x(a){return new n(function(b,c){for(var d=0;d<a.length;d+=1)u(a[d]).c(b,c)})};window.Promise||(window.Promise=n,window.Promise.resolve=u,window.Promise.reject=t,window.Promise.race=x,window.Promise.all=w,window.Promise.prototype.then=n.prototype.c,window.Promise.prototype["catch"]=n.prototype.g);}());
+    
+    
+        // Polyfill Event constructor for IE ref: https://jira.dev.bbc.co.uk/browse/ORBITEN-919
+        // see: https://stackoverflow.com/questions/26596123
+        (function () {
+          if (typeof window.CustomEvent === "function") {
+            return false;
+          }
+          function CustomEvent(event, params) {
+            params = params || { bubbles: false, cancelable: false, detail: undefined };
+            var evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+            return evt;
+          }
+          CustomEvent.prototype = window.Event.prototype;
+          window.Event = CustomEvent;
+        })();
+    
+    
+        //Element.prototype.matches polyfill
+        //from https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+        if (!Element.prototype.matches) {
+          Element.prototype.matches = Element.prototype.msMatchesSelector ||
+                                      Element.prototype.webkitMatchesSelector;
+        }
+        //NodeList.forEach Polyfill
+        //from https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach#Polyfill
+        if (window.NodeList && !NodeList.prototype.forEach) {
+          NodeList.prototype.forEach = Array.prototype.forEach;
+        }
+    
+        // Object.assign polyfill from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
+        if (typeof Object.assign != 'function') {
+          // Must be writable: true, enumerable: false, configurable: true
+          Object.defineProperty(Object, "assign", {
+            value: function assign(target, varArgs) { // .length of function is 2
+              'use strict';
+              if (target == null) { // TypeError if undefined or null
+                throw new TypeError('Cannot convert undefined or null to object');
+              }
+    
+              var to = Object(target);
+    
+              for (var index = 1; index < arguments.length; index++) {
+                var nextSource = arguments[index];
+    
+                if (nextSource != null) { // Skip over if undefined or null
+                  for (var nextKey in nextSource) {
+                    // Avoid bugs when hasOwnProperty is shadowed
+                    if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                      to[nextKey] = nextSource[nextKey];
+                    }
+                  }
+                }
+              }
+              return to;
+            },
+            writable: true,
+            configurable: true
+          });
+        }
+    
+        // window.fetch polyfill https://github.com/github/fetch/blob/v0.11.0/fetch.js - chosen for IE9 compatibility
+        if(typeof window.fetch !== 'function') {
+          (function(self){"use strict";if(self.fetch){return}function normalizeName(name){if(typeof name!=="string"){name=String(name)}if(/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)){throw new TypeError("Invalid character in header field name")}return name.toLowerCase()}function normalizeValue(value){if(typeof value!=="string"){value=String(value)}return value}function Headers(headers){this.map={};if(headers instanceof Headers){headers.forEach(function(value,name){this.append(name,value)},this)}else if(headers){Object.getOwnPropertyNames(headers).forEach(function(name){this.append(name,headers[name])},this)}}Headers.prototype.append=function(name,value){name=normalizeName(name);value=normalizeValue(value);var list=this.map[name];if(!list){list=[];this.map[name]=list}list.push(value)};Headers.prototype["delete"]=function(name){delete this.map[normalizeName(name)]};Headers.prototype.get=function(name){var values=this.map[normalizeName(name)];return values?values[0]:null};Headers.prototype.getAll=function(name){return this.map[normalizeName(name)]||[]};Headers.prototype.has=function(name){return this.map.hasOwnProperty(normalizeName(name))};Headers.prototype.set=function(name,value){this.map[normalizeName(name)]=[normalizeValue(value)]};Headers.prototype.forEach=function(callback,thisArg){Object.getOwnPropertyNames(this.map).forEach(function(name){this.map[name].forEach(function(value){callback.call(thisArg,value,name,this)},this)},this)};function consumed(body){if(body.bodyUsed){return Promise.reject(new TypeError("Already read"))}body.bodyUsed=true}function fileReaderReady(reader){return new Promise(function(resolve,reject){reader.onload=function(){resolve(reader.result)};reader.onerror=function(){reject(reader.error)}})}function readBlobAsArrayBuffer(blob){var reader=new FileReader;reader.readAsArrayBuffer(blob);return fileReaderReady(reader)}function readBlobAsText(blob){var reader=new FileReader;reader.readAsText(blob);return fileReaderReady(reader)}var support={blob:"FileReader"in self&&"Blob"in self&&function(){try{new Blob;return true}catch(e){return false}}(),formData:"FormData"in self,arrayBuffer:"ArrayBuffer"in self};function Body(){this.bodyUsed=false;this._initBody=function(body){this._bodyInit=body;if(typeof body==="string"){this._bodyText=body}else if(support.blob&&Blob.prototype.isPrototypeOf(body)){this._bodyBlob=body}else if(support.formData&&FormData.prototype.isPrototypeOf(body)){this._bodyFormData=body}else if(!body){this._bodyText=""}else if(support.arrayBuffer&&ArrayBuffer.prototype.isPrototypeOf(body)){}else{throw new Error("unsupported BodyInit type")}if(!this.headers.get("content-type")){if(typeof body==="string"){this.headers.set("content-type","text/plain;charset=UTF-8")}else if(this._bodyBlob&&this._bodyBlob.type){this.headers.set("content-type",this._bodyBlob.type)}}};if(support.blob){this.blob=function(){var rejected=consumed(this);if(rejected){return rejected}if(this._bodyBlob){return Promise.resolve(this._bodyBlob)}else if(this._bodyFormData){throw new Error("could not read FormData body as blob")}else{return Promise.resolve(new Blob([this._bodyText]))}};this.arrayBuffer=function(){return this.blob().then(readBlobAsArrayBuffer)};this.text=function(){var rejected=consumed(this);if(rejected){return rejected}if(this._bodyBlob){return readBlobAsText(this._bodyBlob)}else if(this._bodyFormData){throw new Error("could not read FormData body as text")}else{return Promise.resolve(this._bodyText)}}}else{this.text=function(){var rejected=consumed(this);return rejected?rejected:Promise.resolve(this._bodyText)}}if(support.formData){this.formData=function(){return this.text().then(decode)}}this.json=function(){return this.text().then(JSON.parse)};return this}var methods=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];function normalizeMethod(method){var upcased=method.toUpperCase();return methods.indexOf(upcased)>-1?upcased:method}function Request(input,options){options=options||{};var body=options.body;if(Request.prototype.isPrototypeOf(input)){if(input.bodyUsed){throw new TypeError("Already read")}this.url=input.url;this.credentials=input.credentials;if(!options.headers){this.headers=new Headers(input.headers)}this.method=input.method;this.mode=input.mode;if(!body){body=input._bodyInit;input.bodyUsed=true}}else{this.url=input}this.credentials=options.credentials||this.credentials||"omit";if(options.headers||!this.headers){this.headers=new Headers(options.headers)}this.method=normalizeMethod(options.method||this.method||"GET");this.mode=options.mode||this.mode||null;this.referrer=null;if((this.method==="GET"||this.method==="HEAD")&&body){throw new TypeError("Body not allowed for GET or HEAD requests")}this._initBody(body)}Request.prototype.clone=function(){return new Request(this)};function decode(body){var form=new FormData;body.trim().split("&").forEach(function(bytes){if(bytes){var split=bytes.split("=");var name=split.shift().replace(/\+/g," ");var value=split.join("=").replace(/\+/g," ");form.append(decodeURIComponent(name),decodeURIComponent(value))}});return form}function headers(xhr){var head=new Headers;var pairs=xhr.getAllResponseHeaders().trim().split("\n");pairs.forEach(function(header){var split=header.trim().split(":");var key=split.shift().trim();var value=split.join(":").trim();head.append(key,value)});return head}Body.call(Request.prototype);function Response(bodyInit,options){if(!options){options={}}this.type="default";this.status=options.status;this.ok=this.status>=200&&this.status<300;this.statusText=options.statusText;this.headers=options.headers instanceof Headers?options.headers:new Headers(options.headers);this.url=options.url||"";this._initBody(bodyInit)}Body.call(Response.prototype);Response.prototype.clone=function(){return new Response(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new Headers(this.headers),url:this.url})};Response.error=function(){var response=new Response(null,{status:0,statusText:""});response.type="error";return response};var redirectStatuses=[301,302,303,307,308];Response.redirect=function(url,status){if(redirectStatuses.indexOf(status)===-1){throw new RangeError("Invalid status code")}return new Response(null,{status:status,headers:{location:url}})};self.Headers=Headers;self.Request=Request;self.Response=Response;self.fetch=function(input,init){return new Promise(function(resolve,reject){var request;if(Request.prototype.isPrototypeOf(input)&&!init){request=input}else{request=new Request(input,init)}var xhr=new XMLHttpRequest;function responseURL(){if("responseURL"in xhr){return xhr.responseURL}if(/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())){return xhr.getResponseHeader("X-Request-URL")}return}xhr.onload=function(){var status=xhr.status===1223?204:xhr.status;if(status<100||status>599){reject(new TypeError("Network request failed"));return}var options={status:status,statusText:xhr.statusText,headers:headers(xhr),url:responseURL()};var body="response"in xhr?xhr.response:xhr.responseText;resolve(new Response(body,options))};xhr.onerror=function(){reject(new TypeError("Network request failed"))};xhr.open(request.method,request.url,true);if(request.credentials==="include"){xhr.withCredentials=true}if("responseType"in xhr&&support.blob){xhr.responseType="blob"}request.headers.forEach(function(value,name){xhr.setRequestHeader(name,value)});xhr.send(typeof request._bodyInit==="undefined"?null:request._bodyInit)})};self.fetch.polyfill=true})(typeof self!=="undefined"?self:this);
+        }
+    
+        if (typeof window.CustomEvent !== 'function') {
+    
+          function CustomEvent(event, params) {
+            params = params || { bubbles: false, cancelable: false, detail: null };
+            var evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+            return evt;
+          }
+    
+          CustomEvent.prototype = window.Event.prototype;
+    
+          window.CustomEvent = CustomEvent;
+    
+        }
+    
+        (function() {
+    
+            var language = 'en';
+                language = 'en';
+    
+            var modal = false;
+    
+    
+            var istatsLabels = {name: '' || undefined};
+    
+            function getMetaValue(propertyName) {
+              var metaTag = document.querySelector(
+                "meta[property='" + propertyName + "'], " +
+                "meta[name='" + propertyName + "']");
+              if (metaTag) {
+                return metaTag.getAttribute("content");
+              } else {
+                throw new Error('No meta tag called: ' + propertyName)
+              }
+            }
+    
+            function generateCountername() {
+                if (window.location.protocol === 'file:') {
+                  return 'local.file';
+                }
+    
+                var pathName = window.location.pathname
+                    .replace(/\/$/, "")
+                    .replace(/^\//, "")
+                    .replace(/\//g, '.');
+                return pathName + '.page';
+            }
+    
+            var additionalPageProperties = {};
+                additionalPageProperties['app_name'] = 'programmes';
+                additionalPageProperties['custom_var_1'] = 'Newshour';
+                additionalPageProperties['custom_var_2'] = 'Newshour';
+                additionalPageProperties['custom_var_4'] = 'bbc_world_service';
+                additionalPageProperties['custom_var_6'] = 'true';
+    
+            var page = {
+                name: '' || istatsLabels.name || generateCountername(),
+                destination: 'ws_programmes' || null,
+                producer: 'WORLD_SERVICE_ENGLISH' || null,
+                section: 'guide-podcasts' || null,
+                site: '' || istatsLabels.bbc_site || istatsLabels.app_name || istatsLabels.prod_name || null,
+                contentId: 'urn:bbc:pips:p002vsnk' || null,
+                contentType: 'downloads' || null,
+                edition: '' || null,
+                additionalProperties: additionalPageProperties
+            };
+    
+            function updatePageData(newData) {
+                page = Object.assign(page, newData);
+            }
+    
+            document.addEventListener('bbc-page-reset', function(event) {
+                if (event.detail && event.detail.page) {
+                    updatePageData(event.detail.page);
+                }
+                document.dispatchEvent(new Event('bbc-page-updated'));
+            });
+    
+            window.bbcpage = {
+                loadModule: function(deps) {
+                    return new Promise(function (resolve, reject) {
+                        window.require(deps, function () {
+                            resolve.apply(this, arguments);
+                        },
+                        function (error) {
+                            reject(error);
+                        });
+                    })
+                },
+                loadCSS: function (url, timeout) {
+                    return window.bbcpage.loadModule(['orb/lib/_$'])
+                        .then(function($) {
+                            return new Promise(function(resolve, reject) {
+                                var stylesheet = loadCSS(url);
+                                $.onloadCSS(stylesheet, function() {
+                                    resolve();
+                                });
+                                if (timeout) {
+                                    setTimeout(function () { reject(); }, timeout);
+                                }
+                            });
+                    });
+                },
+                isModal: function () {
+                    return Promise.resolve(modal);
+                },
+                getLanguage: function () {
+                    return new Promise(function(resolve, reject) {
+                        resolve(language);
+                    });
+                },
+                trackRegion: function (region, labels) {
+                    return window.bbcpage.loadModule(['istats-1'])
+                        .then(function(istats) {
+    
+                            var trackLabels = {
+                                region: region
+                            };
+    
+                            for (var label in labels) {
+                                trackLabels[label] = labels[label];
+                            }
+    
+                            var linkType = labels.linkType || 'internal';
+    
+                            istats.track(linkType, trackLabels);
+                        });
+                },
+                getName: function() {
+                    return Promise.resolve(page.name);
+                },
+                getDestination: function() {
+                    return Promise.resolve(page.destination);
+                },
+                getProducer: function() {
+                    return Promise.resolve(page.producer);
+                },
+                getSite: function() {
+                    return Promise.resolve(page.site);
+                },
+                getSection: function() {
+                    return Promise.resolve(page.section);
+                },
+                getContentType: function() {
+                    return Promise.resolve(page.contentType);
+                },
+                getContentId: function() {
+                    return Promise.resolve(page.contentId);
+                },
+                getEdition: function() {
+                  return new Promise(function (resolve, reject) {
+                    if (page.edition) {
+                      resolve(page.edition);
+                      return;
+                    }
+                    try {
+                      resolve(getMetaValue('x-audience').toLowerCase());
+                    } catch (err){
+                      // This property is related to Chartbeat; see http://support.chartbeat.com/docs/
+                      if (window._sf_async_config) {
+                        resolve(window._sf_async_config.region || null);
+                      }
+                    }
+                    resolve(null);
+                  });
+                },
+                getReferrer: function() {
+                  return Promise.resolve(window.orb && window.orb.referrer !== null && window.orb.referrer !== undefined ? window.orb.referrer : document.referrer);
+                },
+                getAdditionalProperties: function() {
+                  return Promise.resolve(page.additionalProperties);
+                }
+            };
+    
+            var USERINFO_PREFIX = "www." || "www.";
+    
+            function initUserCache(orbitUser) {
+              var availableAttr = [
+                'X-Country',
+                'X-Ip_is_advertise_combined',
+                'X-Ip_is_uk_combined'
+              ];
+              var userCache = availableAttr.reduce(function(user, curr, i) {
+                if (!orbitUser[curr]) {
+                  return user;
+                }
+                var res = Object.assign({}, user);
+                res[curr] = orbitUser[curr];
+                return res;
+              }, {});
+              if (Object.keys(userCache).length !== availableAttr.length) {
+                userCache._partial = true;
+              }
+              return userCache;
+            }
+    
+            var user = initUserCache({
+            });
+    
+            function checkStatus(response) {
+              if (response.status >= 200 && response.status < 300) {
+                return response;
+              } else {
+                var error = new Error(response.statusText);
+                error.response = response;
+                throw error;
+              }
+            }
+    
+            function parseJSON(response) {
+              return response.json();
+            }
+    
+            var supportsCors = function() {
+              return typeof XMLHttpRequest !== 'undefined' &&
+                'withCredentials' in new XMLHttpRequest();
+            };
+    
+            var getUserInfoFallback = function() {
+              return window.bbcpage.loadModule(['orb/fig'])
+                .then(function(orbFig) {
+                  return new Promise(function(resolve, reject) {
+                    orbFig.load(function(fig) {
+                      var getCountryFallback = function() {
+                        if (fig.geo.isUK()) {
+                          return 'GB';
+                        } else if (fig.geo.isEU()) {
+                          return 'EU';
+                        }
+                      };
+                      resolve({
+                        'X-Country': user.country || getCountryFallback(),
+                        'X-Ip_is_uk_combined': fig().uk ? 'yes' : 'no',
+                        'X-Ip_is_advertise_combined': fig().ad ? 'yes' : 'no'
+                      });
+                    }, function () {
+                      reject('Error determining country. Timeout?');
+                    });
+                  });
+                });
+            };
+    
+            var _userInfoRequest;
+            var getUserInfo = function() {
+    
+              var host = window.location.host.toString().match(/bbc\.com$/) ? 'bbc.com' : 'bbc.co.uk';
+              var userInfoUrl = "https://" + USERINFO_PREFIX + host + '/userinfo';
+    
+              if (!user._partial) {
+                return Promise.resolve(user);
+              }
+    
+              if (!_userInfoRequest) {
+                if (typeof window.fetch === 'undefined' || !supportsCors()) {
+                  _userInfoRequest = getUserInfoFallback();
+                } else {
+                  _userInfoRequest = window.fetch(userInfoUrl, { credentials: 'same-origin' })
+                    .then(checkStatus)
+                    .then(parseJSON)
+                    .then(function(userInfo) {
+                      user = userInfo;
+                      return user;
+                    });
+                }
+              }
+    
+              return _userInfoRequest;
+            };
+    
+            var USER_PROFILE_URL = "https://www.bbc.co.uk/userprofile";;
+            var _helloRequest;
+            var getSegmentations = function() {
+    
+              if (user.ageBand) {
+                return Promise.resolve(user);
+              }
+    
+              if (!_helloRequest) {
+                if (typeof window.fetch === 'undefined' || !supportsCors()) {
+                  return Promise.resolve(user);
+                } else {
+    
+                  _helloRequest = window.bbcpage.loadModule(['idcta-v2/idcta-1']).then(function(idcta) {
+                    return idcta.initiateTokenRefresh().then(function() {
+                      return window.fetch(USER_PROFILE_URL, { credentials: 'include' })
+                        .then(checkStatus)
+                        .then(parseJSON)
+                        .then(function(profileInfo) {
+                          Object.assign(user, profileInfo);
+                          return user;
+                        });
+                      });
+                  });
+    
+                }
+              }
+    
+              return _helloRequest;
+            };
+    
+            window.bbcuser = {
+                getHashedId: function() {
+                    return window.bbcpage.loadModule(['idcta-v2/idcta-1'])
+                        .then(function(idcta) {
+                            return idcta.getCookieInstance().getHidFromCookie();
+                    });
+                },
+    
+                getAgeBand: function() {
+                    if (user['X-Age-Band']) {
+                        return Promise.resolve(user['X-Age-Band']);
+                    }
+    
+                    return bbcuser.isSignedIn().then(function(isSignedIn) {
+                        if (isSignedIn) {
+                            return window.bbcpage.loadModule(['idcta-v2/idcta-1'])
+                                .then(function(idcta) {
+                                    user['X-Age-Band'] = idcta.getUserDetailsFromCookie().ab;
+                                    if (user['X-Age-Band'] === 'u13') {
+                                        user['X-Age-Band'] = '0-12';
+                                        return user['X-Age-Band'];
+                                    } else if (user['X-Age-Band'] === 'u16') {
+                                        user['X-Age-Band'] = '13-15';
+                                        return user['X-Age-Band'];
+                                    } else if (user['X-Age-Band'] === 'u18') {
+                                        user['X-Age-Band'] = '16-17';
+                                        return user['X-Age-Band'];
+                                    } else {
+                                        user['X-Age-Band'] = undefined;
+                                        return getSegmentations().then(function(userInfo) {
+                                            user['X-Age-Band'] = userInfo['X-Age-Band'];
+                                            return user['X-Age-Band'] || undefined;
+                                        }).catch(function(error) {
+                                            return user['X-Age-Band'] || undefined;
+                                        });
+                                    }
+                                });
+    
+                        } else {
+                            return undefined;
+                        }
+                    });
+                },
+    
+                getCountry: function() {
+                    if (user['X-Country']) {
+                        return Promise.resolve(user['X-Country']);
+                    }
+                    return getUserInfo().then(function(userInfo) {
+                        return userInfo['X-Country'] || 'GB';
+                    });
+                },
+    
+                isUKCombined: function() {
+                    return getUserInfo().then(function(userInfo) {
+                        if (!userInfo['X-Ip_is_uk_combined']) {
+                            throw new Error('missing isUKCombined from userinfo response');
+                        }
+                        return userInfo['X-Ip_is_uk_combined'].toLowerCase() === 'yes';
+                    })
+                },
+    
+                canSeeAdverts: function() {
+                    return getUserInfo().then(function(userInfo) {
+                        if (!userInfo['X-Ip_is_advertise_combined']) {
+                            throw new Error('missing canSeeAdverts from userinfo response');
+                        }
+                        return userInfo['X-Ip_is_advertise_combined'].toLowerCase() === "yes";
+                    });
+                },
+    
+                isSignedIn: function() {
+                    return window.bbcpage.loadModule(['idcta-v2/idcta-1'])
+                        .then(function(idcta) {
+                            return (idcta && idcta.getCookieInstance().hasCookie());
+                        });
+                },
+                allowsPerformanceCookies: function() {
+                    return window.bbcpage.loadModule(['orb/cookies'])
+                            .then(function(bbccookies) {
+                                return !!bbccookies.cookiesEnabled() && !!bbccookies.readPolicy('performance');
+                            });
+                },
+                allowsFunctionalCookies: function() {
+                    return window.bbcpage.loadModule(['orb/cookies'])
+                            .then(function(bbccookies) {
+                                return !!bbccookies.cookiesEnabled() && !!bbccookies.readPolicy('personalisation');
+                            });
+                },
+                getCookieValue: function(cookieName) {
+                    return window.bbcpage.loadModule(['orb/cookies'])
+                            .then(function(bbccookies) {
+                                return bbccookies.get(cookieName);
+                            });
+                },
+                resetCookiesPreferences: function() {
+                    return window.bbcpage.loadModule(['orb/cookies'])
+                            .then(function(bbccookies) {
+                                bbccookies.setDefaultCookiesSingleDomain();
+                            });
+                },
+                hasCookiesEnabled: function() {
+                    return window.bbcpage.loadModule(['orb/cookies'])
+                            .then(function(bbccookies) {
+                                return !!bbccookies.cookiesEnabled();
+                            });
+                },
+                hasSeenCookieBanner: function() {
+                    return window.bbcpage.loadModule(['orb/cookies'])
+                            .then(function (bbccookies) {
+                                return !!bbccookies.isCookiePolicySet();
+                            });
+                },
+                logEvent: function (verb, noun, extraLabels) {
+                    return window.bbcuser.hasCookiesEnabled()
+                        .then(function(allowsCookies) {
+                            if (allowsCookies) {
+                                return window.bbcpage.loadModule(['istats-1'])
+                                    .then(function(istats) {
+                                        istats.log(verb, noun, extraLabels);
+                                    });
+                            } else {
+                                throw new Error('User cannot be tracked due to cookies preferences.');
+                            }
+                        });
+                },
+            };
+    
+        }());</script><script src="https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/js/require.min.js"></script>   <script src="https://nav.files.bbci.co.uk/orbit-webmodules/0.0.2-477.3a39ca0/cookie-banner/cookie-library.min.js"></script><script type="text/javascript">if (window.define !==  undefined) {
+        define('orb/cookies', function() {
+          return window.bbccookies;
+        });
+      }</script>     <script src="https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/js/api.min.js"></script> <script type="text/javascript">window.bbcFlagpoles_istats="ON",require.config({paths:{"istats-1":"https://nav.files.bbci.co.uk/orbit-webmodules/0.0.2-477.3a39ca0/istats/istats-1"}}),require(["istats-1","orb/cookies"],function(a,t){if(t.isAllowed("s1")){var e=(o=document.location.href.match(/^(?:https|http):\/\/\w*\.(?:(int|test|stage|live|)\.)?bbc\.(?:co\.uk|com)/))?void 0===o[1]||""===o[1]||"live"===o[1]?"//sa.bbc.co.uk/bbc/bbc/s":"//sa.bbc.co.uk/bbc/"+o[1]+"/s":"//sa.bbc.co.uk/bbc/test/s";a.addCollector({name:"default",url:e,separator:"&"});var s="unknown";a.setCountername(s),window.istats_countername&&a.setCountername(window.istats_countername),a.addLabels("ml_name=webmodule&ml_version=0.0.2-477.3a39ca0&blq_e=orbit&blq_r=orbit&blq_s=orbit&blq_v=worldservice&language=en")}var o});</script><link rel="stylesheet" href="https://static.files.bbci.co.uk/account/id-cta/1.49.0/style/id-cta.css"><!--[if IE 8]><link href="https://static.files.bbci.co.uk/account/id-cta/1.49.0/style/ie8.css" rel="stylesheet"/> <![endif]--><script type="text/javascript">(function() {if (!window.require) {throw new Error('idcta: could not find require module');}if (typeof(map) == 'undefined') {var map = {};}if (!!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {document.documentElement.className += ' id-svg';}var ptrt = new RegExp("[\\?&]ptrt=([^&]*)").exec(document.location.href);var ENDPOINT_URL = 'https://idcta.api.bbc.co.uk';var ENDPOINT_CONFIG = ('/idcta/config?callback=&ptrt=' + encodeURIComponent((ptrt ? ptrt[1] : document.location.href))).replace(/\&amp;/g, '&');var ENDPOINT_TRANSLATIONS = '/idcta/translations?callback=';function hasPromise() {var P = window.Promise;var promiseToString = null;if (P) {try {promiseToString = Object.prototype.toString.call(P.resolve());} catch(e) {/*silently ignored*/}}return (promiseToString === '[object Promise]' && !P.cast);}if (hasPromise()) {define('idcta/es6-promise', function() {return window.Promise;});define('idcta-v2/es6-promise', function() {return window.Promise;});}map['idcta-v2'] = 'https://static.files.bbci.co.uk/account/id-cta/1.49.0/modules/idcta-v2';map['idcta-v2/config'] = ENDPOINT_URL + ENDPOINT_CONFIG;map['idcta-v2/translations'] = ENDPOINT_URL + ENDPOINT_TRANSLATIONS;map['idcta'] = 'https://static.files.bbci.co.uk/account/id-cta/1.8.2/modules/idcta';map['idcta-v2/idcta-1'] = 'https://static.files.bbci.co.uk/account/id-cta/1.49.0/modules/idcta-v2/dist/idcta-1.min';map['idcta-v2/experiment-snippet'] = 'https://cdn.optimizely.com/public/4621041136/s/idcta_live';const idctaShim = {deps: ['idcta-v2/idcta-1'],};require({shim: {'idcta-v2/statusbar': idctaShim,'idcta-v2/id-config': idctaShim},map: {'*': {'idcta/idcta-1': 'idcta-v2/idcta-1','idcta': 'idcta-v2',}},paths: map});window.idctaBaseUrl = ENDPOINT_URL;define('idcta/config', ['idcta-v2/config'], function(data) {return data;});define('idcta/translations', ['idcta-v2/translations'], function(data) {return data;});})();</script>   <!-- BBCDOTCOM head --><style type="text/css">.bbccom_display_none{display:none;}</style><script type="text/javascript">/*<![CDATA[*/ var bbcdotcomConfig, googletag = googletag || {}; googletag.cmd = googletag.cmd || [], bbcdotcomScripts = [], tp = window.tp || []; var bbcdotcom = false; (function(){ if(typeof require !== 'undefined') { require({ paths:{ "bbcdotcom":"https://static.bbc.co.uk/bbcdotcom/4.6.0/script" } }); } })(); /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ var bbcdotcom = { adverts: { keyValues: { set: function() {} } }, advert: { write: function () {}, show: function () {}, isActive: function () { return false; }, layout: function() { return { reset: function() {} } } }, config: { init: function() {}, isActive: function() {}, setSections: function() {}, isAdsEnabled: function() {}, setAdsEnabled: function() {}, isAnalyticsEnabled: function() {}, setAnalyticsEnabled: function() {}, setAssetPrefix: function() {}, setFlagpoles: function() {}, setVersion: function () {}, setJsPrefix: function() {}, setSwfPrefix: function() {}, setCssPrefix: function() {}, setConfig: function() {}, getAssetPrefix: function() {}, getJsPrefix: function () {}, getSwfPrefix: function () {}, getCssPrefix: function () {}, isOptimizelyEnabled: function() {}, isThirdPartyDisabled: function() {}, isThirdPartyDisabledEU: function() {}, setEU: function() {} }, survey: { init: function(){ return false; } }, data: {}, init: function() {}, objects: function(str) { return false; }, locale: { set: function() {}, get: function() {} }, setAdKeyValue: function() {}, utils: { addEvent: function() {}, addHtmlTagClass: function() {}, log: function () {} }, addLoadEvent: function() {} }; /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ (function(){ if (typeof orb !== 'undefined' && typeof orb.fig === 'function') { if (orb.fig('ad') && orb.fig('uk') == 0) { bbcdotcom.data = { ads: (orb.fig('ad') ? 1 : 0), stats: (orb.fig('uk') == 0 ? 1 : 0), statsProvider: orb.fig('ap') }; } } else { document.write('<script type="text/javascript" src="https://www.bbc.com/wwscripts/data">\x3C/script>'); } })(); /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ (function(){ if (typeof orb === 'undefined' || typeof orb.fig !== 'function') { bbcdotcom.data = { ads: bbcdotcom.data.a, stats: bbcdotcom.data.b, statsProvider: bbcdotcom.data.c }; } if (bbcdotcom.data.ads == 1) { document.write('<script type="text/javascript" src="https://www.bbc.com/wwscripts/flag">\x3C/script>'); } })(); /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ (function(){ if (window.bbcdotcom && (typeof bbcdotcom.flag == 'undefined' || (typeof bbcdotcom.data.ads !== 'undefined' && bbcdotcom.flag.a != 1))) { bbcdotcom.data.ads = 0; } if (/[?|&]ads/.test(window.location.href) || /(^|; )ads=on; /.test(document.cookie) || /; ads=on(; |$)/.test(document.cookie)) { bbcdotcom.data.ads = 1; bbcdotcom.data.stats = 1; } if (window.bbcdotcom && (bbcdotcom.data.ads == 1 || bbcdotcom.data.stats == 1)) { bbcdotcom.assetPrefix = "https://static.bbc.co.uk/bbcdotcom/4.6.0/"; if (/(sandbox|int)(.dev)*.bbc.co*/.test(window.location.href) || /[?|&]ads-debug/.test(window.location.href) || document.cookie.indexOf('ads-debug=') !== -1) { document.write('<script type="text/javascript" src="https://static.bbc.co.uk/bbcdotcom/4.6.0/script/dist/bbcdotcom.dev.js">\x3C/script>'); } else { document.write('<script type="text/javascript" src="https://static.bbc.co.uk/bbcdotcom/4.6.0/script/dist/bbcdotcom.js">\x3C/script>'); } } })(); /*]]>*/</script><script type="text/javascript">if (window.bbcdotcom && bbcdotcom.data.stats == 1) { document.write('<link rel="dns-prefetch" href="//secure-us.imrworldwide.com/">'); document.write('<link rel="dns-prefetch" href="//me-cdn.effectivemeasure.net/">'); document.write('<link rel="dns-prefetch" href="//ssc.api.bbc.com/">'); } if (window.bbcdotcom && bbcdotcom.data.ads == 1) { document.write('<link rel="dns-prefetch" href="//www.googletagservices.com/">'); document.write('<link rel="dns-prefetch" href="//bbc.gscontxt.net/">'); document.write('<link rel="dns-prefetch" href="//tags.crwdcntrl.net/">'); document.write('<link rel="dns-prefetch" href="//ad.crwdcntrl.net/">'); }</script><script type="text/javascript">if (window.bbcdotcom && bbcdotcom.data.ads == 1) { document.write('<meta name="google-site-verification" content="auTeTTwSt_KBY_4iDoR00Lwb7-qzx1IgzJy6ztaWgEI" />'); }</script><script type="text/javascript">/*<![CDATA[*/ (function(){ var GDPR_COUNTRIES = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'CH']; if (window.bbcdotcom && (bbcdotcom.data.ads == 1 || bbcdotcom.data.stats == 1)) { bbcdotcomConfig = {"adFormat":"standard","adKeyword":"","adMode":"smart","adsEnabled":true,"appAnalyticsSections":"","asyncEnabled":true,"disableInitialLoad":false,"advertInfoPageUrl":"https:\/\/www.bbc.com\/privacy\/cookies\/international\/","advertisementText":"Advertisement","analyticsEnabled":true,"thirdPartyDisabled":false,"sherlockEnabled":false,"permutiveEnabled":false,"appName":"","assetPrefix":"https:\/\/static.bbc.co.uk\/bbcdotcom\/4.6.0\/","customAdParams":[],"customStatsParams":[],"headline":"","id":"","inAssociationWithText":"in association with","keywords":"","language":"","orbTransitional":false,"optimizelyEnabled":true,"palEnv":"live","productName":"","sections":[],"comScoreEnabled":true,"comscoreSite":"bbc","comscoreID":"19293874","comscorePageName":"","slots":"","sponsoredByText":"is sponsored by","adsByGoogleText":"Ads by Google","summary":"","type":"","features":{"testfeature":{"name":"testfeature","envs":["sandbox","int","test"],"on":true,"options":{},"override":null},"lxadverts":{"name":"lxadverts","envs":[],"on":true,"options":{},"override":null}},"staticBase":"\/bbcdotcom","staticHost":"https:\/\/static.bbc.co.uk","staticVersion":"4.6.0","staticPrefix":"https:\/\/static.bbc.co.uk\/bbcdotcom\/4.6.0","dataHttp":"tps.bbc.com","dataHttps":"www.bbc.com","flagHttp":"www.bbc.co.uk","flagHttps":"www.bbc.co.uk","analyticsHttp":"sa.bbc.com","analyticsHttps":"ssa.bbc.com"}; bbcdotcom.config.init(bbcdotcomConfig, bbcdotcom.data, window.location, window.document); bbcdotcom.config.setFlagpoles(bbcdotcom.flag || {}); bbcdotcom.config.setAssetPrefix("https://static.bbc.co.uk/bbcdotcom/4.6.0/"); bbcdotcom.config.setVersion("4.6.0"); if (window.bbcuser && window.bbcuser.getCountry && typeof(window.bbcuser.getCountry) === 'function') { window.bbcuser.getCountry().then(function(countryCode) { var isEU = countryCode ? GDPR_COUNTRIES.indexOf(countryCode.toUpperCase()) !== -1 : false; bbcdotcom.config.setEU(isEU); }); } else if (window.orb && window.orb.fig && typeof(window.orb.fig) === 'function') { bbcdotcom.config.setEU(window.orb.fig('eu')); } document.write('<!--[if IE 7]><script type="text/javascript">bbcdotcom.config.setIE7(true);\x3C/script><![endif]-->'); document.write('<!--[if IE 8]><script type="text/javascript">bbcdotcom.config.setIE8(true);\x3C/script><![endif]-->'); document.write('<!--[if IE 9]><script type="text/javascript">bbcdotcom.config.setIE9(true);\x3C/script><![endif]-->'); if (/[?|&]ex-dp/.test(window.location.href) || document.cookie.indexOf('ex-dp=') !== -1) { bbcdotcom.utils.addHtmlTagClass('bbcdotcom-ex-dp'); } } })(); /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ if ( window.bbcdotcom && bbcdotcom.data && bbcdotcom.data.ads && bbcdotcom.data.ads == 1 && bbcdotcom.config && bbcdotcom.config.isGrapeshotEnabled && bbcdotcom.config.isGrapeshotEnabled() && bbcdotcom.config.isWorldService && !bbcdotcom.config.isWorldService() ) { var gs_channels="DEFAULT"; (function () { var gsurl = window.location.href.split("?")[0]; bbcdotcomScripts.push({src:'https://bbc.gscontxt.net/?url='+encodeURIComponent(gsurl)}); })(); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ if (window.bbcdotcom && bbcdotcom.config && bbcdotcom.config.isLotameActive && bbcdotcom.config.isLotameActive()&& bbcdotcom.config.isLotameEnabled && bbcdotcom.config.isLotameEnabled()){ (function () { var clientId, lotameUrl, lotameAudienceUrl; clientId = (bbcdotcom.config.isWorldService && bbcdotcom.config.isWorldService()) ? '10826' : '10816'; lotameUrl = 'https://tags.crwdcntrl.net/c/'+clientId+'/cc.js?ns='+clientId; lotameAudienceUrl = 'https://ad.crwdcntrl.net/5/c=10815/pe=y/var=ccauds'; bbcdotcomScripts.push({src:lotameUrl,id:"LOTCC"+clientId}); bbcdotcomScripts.push({src:lotameAudienceUrl}); })(); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ if (window.bbcdotcom && bbcdotcom.config && bbcdotcom.config.isPermutiveEnabled && bbcdotcom.config.isPermutiveEnabled() && bbcdotcom.config.isWorldService && !bbcdotcom.config.isWorldService()){ (function () { !function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"e488cdb0-e7cb-4d91-9648-60d437d8e491","1bb84885-9325-4fef-adda-a208032b2715",{"consentRequired":true}); bbcdotcomScripts.push({src:'https://cdn.permutive.com/e488cdb0-e7cb-4d91-9648-60d437d8e491-web.js'}); })(); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ /** * ASYNC waits to make any gpt requests until the bottom of the page */ if ( window.bbcdotcom && bbcdotcom.data && bbcdotcom.data.ads && bbcdotcom.data.ads == 1 && bbcdotcom.config && bbcdotcom.config.isAsync && bbcdotcom.config.isAsync() && bbcdotcom.config.isAdsEnabled && bbcdotcom.config.isAdsEnabled() ) { (function () { bbcdotcomScripts.push({src:'https://securepubads.g.doubleclick.net/tag/js/gpt.js'}); })(); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ /* Load Lotame, Grapeshot and GPT without blocking rendering but executing in order */ if ( window.bbcdotcom && bbcdotcom.config && bbcdotcomScripts.length > 0 ) { (function () { bbcdotcom.checkThirdPartyFirst(function(){ if (!bbcdotcom.config.isThirdPartyDisabledEU()){ bbcdotcomScripts.forEach(function(item) { var script = document.createElement('script'); script.async = false; if(item.id) script.id = item.id; script.src = item.src; document.head.appendChild(script); }); } }); })(); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ (function() { window.bbcdotcom.head = true; }()); /*]]>*/</script>     <script type="text/javascript">// Globally available search context
+  window.SEARCHBOX={"variant":"worldservice","locale":"en","feature":"","navSearchboxStaticPrefix":"https://nav.files.bbci.co.uk/searchbox/129e5428f8f9cbfd37adc735c0e02870/","searchboxAppStaticPrefix":"https://nav.files.bbci.co.uk/searchbox/129e5428f8f9cbfd37adc735c0e02870/drawer","searchFormHtml":"<div tabindex=\"-1\"><div><section class=\"se-searchbox-panel\"><div class=\"se-g-wrap\"><div class=\"se-g-layout\"><div class=\"se-g-layout__item se-searchbox-title\" aria-hidden=\"true\">search</div><div class=\"se-g-layout__item se-searchbox\"><form accept-charset=\"utf-8\" id=\"searchboxDrawerForm\" method=\"get\" action=\"https://search.bbc.co.uk/search\"><label class=\"se-searchbox__input\" for=\"se-searchbox-input-field\"><span class=\"se-sr-only\">Search Term</span><input type=\"text\" name=\"q\" value=\"\" id=\"se-searchbox-input-field\" class=\"se-searchbox__input__field\" maxLength=\"100\" autoComplete=\"off\" autoCorrect=\"off\" autoCapitalize=\"off\" spellcheck=\"false\" tabindex=\"0\"/></label><input type=\"hidden\" name=\"scope\" value=\"\"/><button type=\"submit\" class=\"se-searchbox__submit\" tabindex=\"0\" data-bbc-container=\"se-searchbox-panel\" data-bbc-title=\"search-icon\" data-bbc-metadata=\"{&quot;PAR&quot;:&quot;form::1&quot;,&quot;CHD&quot;:&quot;button::1&quot;}\" data-bbc-personalisation=\"{&quot;QRY&quot;:&quot;&quot;}\">Search</button><button type=\"button\" class=\"se-searchbox__clear se-searchbox__clear--visible\" tabindex=\"0\" data-bbc-container=\"se-searchbox-panel\" data-bbc-title=\"clear-icon\" data-bbc-metadata=\"{&quot;PAR&quot;:&quot;form::1&quot;,&quot;CHD&quot;:&quot;button::2&quot;}\" data-bbc-personalisation=\"{&quot;QRY&quot;:&quot;&quot;}\">Close</button></form></div></div></div></section><div aria-live=\"polite\" aria-atomic=\"true\" class=\"se-suggestions-container\"><section class=\"se-g-wrap\"></section></div></div></div>","searchScopePlaceholder":"<input type=\"hidden\" name=\"scope\" id=\"orb-search-scope\" value=\"sounds\">","searchScopeParam":"?scope=sounds","searchScopeTemplate":"sounds","searchPlaceholderWrapperStart":"","searchPlaceholderWrapperEnd":""};
+  window.SEARCHBOX.suppress = false;
+  window.SEARCHBOX.searchScope = SEARCHBOX.searchScopeTemplate.split('-')[0];</script><link rel="stylesheet" href="https://nav.files.bbci.co.uk/searchbox/129e5428f8f9cbfd37adc735c0e02870/css/main.css"><!--[if IE 8]>
+  <script type="text/javascript" src="https://nav.files.bbci.co.uk/searchbox/129e5428f8f9cbfd37adc735c0e02870/script/html5shiv.min.js"></script>
+  <script type="text/javascript">window['searchboxIEVersion'] = 8;</script>
+  <link rel="stylesheet" href="https://nav.files.bbci.co.uk/searchbox/129e5428f8f9cbfd37adc735c0e02870/css/ie8.css">
+<![endif]--><!--[if IE 9]>
+  <script type="text/javascript">window['searchboxIEVersion'] = 9;</script>
+<![endif]-->   <script type="text/javascript">"use strict";!function(){window.__reverbStaticLocation="https://mybbc-analytics.files.bbci.co.uk/reverb-client-js/",window.__smarttagVersion="5.22.0",window.__reverb={},window.__reverb.__reverbLoadedPromise=new Promise(function(e,n){window.__reverb.__resolveReverbLoaded=e,window.__reverb.__rejectReverbLoaded=n}),window.__reverb.__reverbTimeout=setTimeout(function(){window.__reverb.__rejectReverbLoaded()},5e3);var n=function(r,d){window.__reverb.__reverbLoadedPromise.then(function(e){if(r&&r.detail){var n=r.detail.label,t=r.detail.type,i=r.detail.elem,o=r.detail.originalEvent;r.detail.isClick&&(d=r.detail.isClick),e.userActionEvent(t,n,r.detail,i,o,d)}},function(){console.log("Reverb failed to load. Event not sent")})};document.addEventListener("bbc-user-event",function(e){n(e,!1)}),document.addEventListener("bbc-user-click",function(e){n(e,!0)}),document.addEventListener("bbc-page-updated",function(){window.__reverb.__reverbLoadedPromise.then(function(e){e.initialise().then(function(){return e.viewEvent()})},function(){console.log("Reverb failed to load. Event not sent")})})}();</script><script type="text/javascript" src="https://mybbc-analytics.files.bbci.co.uk/reverb-client-js/reverb-1.5.1.js" async=""></script><script type="text/javascript">window.__detectview={clickManagementEnabled:false};</script>
+                <!-- BRANDINGID: br-00262 -->
+        <!--[if (gt IE 8)|!(IE)]><!-->
+        <link rel="stylesheet" href="//branding.files.bbci.co.uk/branding/live/css/3d8daddba34f4d7a17ce83d5c9588379.css" />
+        <!--<![endif]-->
+
+        <!--[if (lt IE 9)&(!IEMobile)]>
+        <link rel="stylesheet" href="//branding.files.bbci.co.uk/branding/live/css/a0a222d96b3aac7c1319ad861c95d433.css" />
+        <![endif]-->
+
+        <script>require({paths: {'msi/content-loader': "//rmp.files.bbci.co.uk/radio-msi/latest"}});</script>
+    <link rel="stylesheet" type="text/css" href="https://rmp.files.bbci.co.uk/on-air-panel/css/on-air-panel.3c24f40ff87b2a79312f.css">
+<script src="https://rmp.files.bbci.co.uk/on-air-panel/js/polyfill.509c38f10c6f76de527a.js" defer></script>
+<script src="https://rmp.files.bbci.co.uk/on-air-panel/js/vendors.233ea8ecbbbbe9c2c518.js" defer></script>
+<script src="https://rmp.files.bbci.co.uk/on-air-panel/js/on-air-panel.3c24f40ff87b2a79312f.js" defer></script>
+    <style>
+                                .service-brand-logo-master {
+                display: block;
+                background-color: #BB1919;
+                background-image: url('data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFMAAAAkCAIAAAB695EuAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wQSDQMEdwz+0QAACMRJREFUaN7VWVtsVNUaXmvtta8z03aYdtpOO71RC61tpaGAhFQkYGMEqUhAE+JpSYx9qNCAPvBg1DSSoNFEG0lE8fZiQoIiEkpiKQIqhTaYSKkttReY1l6nnZnOzJ59W2udh13w5JzHwz45XQ87K/thZ337v3z/9y3YmZsLHFtE0wBjEEIAAGMMMIYEgVHKCPnXlxBjyHHUMAAAEEIAIaMUQMiJIoDQobNhh77LKOVkufzddwW/31pcRKLIyTKA8O7x40pJSfb27WYsxgjhvV4AQPjixfitW8WHD0OEjHCYWZaQlWWEw3feeMOKxyHHOXFC5FS4GYMc53/mGSkQmO3oiFy7JubmZm7bJuXlpVVX+7Zsmfvxx8j161Yslrl1a1p1tRgIZG7daoTDC7/8Eu3tNaNR/44diOcBY8ss5kuL47SpKezxIEWZv3LFU1m5VAWqas7Pr9i0aeaHH3Kefx5AyElS9MaN2Y6OqhMnIABGNMoMgzl5NOQscsaQKKpjY1RVrXh8qYwBgBhb8XhyeJiTZUYIRAhinBwa8lRUIEGAgiD6/Yw5Ctxp5BBSTeO93owNG2I9PfYbAACzLIDQirq6VCikTUxAjImm+bdvj/b2Tn7zzfT330+eOuVQef+PkFNdz1i/3vfkk2Y0+mh7u935GKWcyxVsalKHh8va2uTCQqrrzDT5FSsqPvzQUlV9cjKtqgpCx9q6HRSnWI0xyHEZ69ZhjwfJMmOM6Tq1rHh/P/Z4lKIiJEkAQmZZzDC0iQljYSGtqgpyHJQkOynMaDTW28ssyyFicwo5I4Tq+oPOTA0D8TwlBPE8AICZJsSYGgYSBJvVIYSAMYAQNQyIMdM0JMtQECBCDqW9I72dpFI5DQ1pNTVDb76JZBkwVtbWFvrkE29dXbCx0Uomk4ODM+fOZdbXjxw7xiwrb9++tDVrBo8cAZTm7dsHADAjkaKWFnNx8c+339YmJiDPLw/kjBCcnl7c2mqEw6MffIDdbk9FBRQEV2lp5MaNe8ePQ56npvnIxo1KSUnyzp2cnTs9lZWhEyfU0dGcXbtCJ04UHTw49NZbSJIgxzmU7U51OE6S7h4/7tu8OdjUZMZi9zselXJzPZWVSmGhMT29cPVqVn19em2tMT8fOnkyZ9cuT1UVM835S5eMubmiAwcSg4PJ4WEnAu4gcoixGQ73NTcXtrT4n37aSiQAhIwQV1lZZn29Z80aKAjTZ854N24seOWVcFfX1OnT6WvXFrz88uz584zS/oMHtb/+qj17VikpYYaxzFgNKYo6Otrf2rrq6FF3eTkzDCSKk6dO3Xr11bvt7ZwsJ+/cIalUxrp14a4udWzMjER8Tzwxe+EC7/OJgUDfoUPR7u7sHTuIpi0rxUIIM03O7Y5evz589Oij7e2MECuRyHvppbTHHjMjkdH33ycATJ85kxgcNCMRJAiz589rExNmJMJ7vStffx3yvJiVNfXdd3b/XyasRilOTwccZy4sQISorkv5+ebCAqcoUiAAeJ7qujoyAggBCEGElkgbQnvPGMNud1p1tTo6mhofR5LkhG5xkM8BAA+omJomwthW5vYMaxM7YMym8X/bM0qpYSCMIXYqK536LuS4JSR2zWMMAIAIQYQeDHkPZvv/3EPblnByOYj8obARM82lNFkWyKmup9fW5u7eTf87QkKiOHP2bKS7GzkQf8cUC3xIWosxh4S6Y54MY4zSh/IHl5k+Z6a55ExYlr2xqYsRQlIpapo2JKrr1DD+tisgBAgxQqimUcNw1JZBDgVcLiqCGDNKleJiiBBgTC4upoYhFxZmNzS4y8tJKgUxznj88bSaGmZZEGO5oMDGL+Xl+bZu9W7axEnS0h90Qln8w+N5+CpVVYP790OMzfn52jNnFn79FfF8YO9eQEjxgQNmNJqzcyfE2IpEig8dkoNBwedTx8ZKDh8Od3URVS1pbXWVlXFud+7u3bGbN4mq/s2F/+d1Dnk+3NmZWV/Pe72zHR2+ujpLVaM9PdkNDSPvvRf77Tc5GCx7553U6CjVdUDpUjHffzLGpr79NtzVVdTSkrtnz9hHH2G3e3lkOxKE+O3bgs+X09AwcuyYUlrq27Jl4eefOUkCCNmDGoSQUYoEQczJMebm7LGPxOP0vj5hADjqtzuS7XbrwunpzDBmzp0TMzONcHj+p5+YYRQ2NyslJYG9e2c7OvSpKSk//8+2tsKWlnh/v//ZZ12lpVhRpLw874YN3vXr5eLi8U8/tW3pZeZAAo6juo4wtrs6TaXkoiJ3RYU6MpIYHOQzMnivNxUKyQUFRNNEv1/w+/XJSWtxUSktZYax+PvvVNcdciacQQ4hM03bV4QcR03TvjNklsUsi6gqpyj27QLVNCiKVNeRIBBVBZRyLpc9+TFKscu1zG4UmWnK+fl5jY1WLDb+1VcrjxyBPD9/+TJJJgMvvJAYHIz29LhXrx7/4osVdXW81ytmZc11diorV+Y3NUEA4n/8Ee7sLDl82EokZjs6YjdvOiHRnZrb02prEc+HTp5EoihmZd39+ONUKJT93HPxvj4pGBS83rTqatHvz96xY+r06RWbNi329RU2N4c+/1wdGeG9XiEri5rm+MmTRFXRMvLhOEWZOXvWCIdLXnuNWRbv8+U1Nnqqq0kyGXjxRVdp6dzFi5Fr14oPHSKaFrt5E3KcnJ9vhMMLV69a8XhiYIBqmnv16vz9+6VgkDozzDiCnBGiFBXNnDuH3W73qlX69PTE11/H+/ux2x367LP5y5eDTU2zFy5kbdsW6e5mhECMk6OjnMeTu2ePXFDg27yZU5TEwMD4l19qk5PIGXPCGVYjhPd6A3v3JoeGFq5ckYLBjNpahHHq3j0zGp2/dMldXh6/fTsxMBDv6wMAcC5XYmAg2tOT+dRTGWvXMtOM9/W5y8vTa2qsWCw1MeHENYuDvZ1aFgQAiaJtnkKMl66QEaKGgWSZahoSBICQvWGEUMOACDEAkCBQTQMIIYyhM/PMPwEmhnKh8+C2ggAAAABJRU5ErkJggg==');
+
+                            }
+
+            .br-service-brand-box {
+                background-color: #BB1919;
+                        }
+
+            
+            .br-service-brand-box--alt {
+                background: #700F0F;
+            }
+            </style>
+        <!--[if (gt IE 8)|!(IE)]><!-->
+    <style>
+        @media (min-width: 37.5em) {         .service-brand-logo-master {
+        background-image: url('data: image/png;base64,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');
+
+            }
+     }
+    </style>
+    <!--<![endif]-->
+    <!--[if (lt IE 9)&(!IEMobile)]>
+        <style>
+                    .service-brand-logo-master {
+        background-image: url('data: image/png;base64,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');
+
+            }
+    
+        </style>
+    <![endif]-->
+
+        <script>
+            requirejs.config({
+                "paths": {
+                    'jquery-1.9': "https://static.bbci.co.uk/frameworks/jquery/0.4.1/sharedmodules/jquery-1.9.1",
+                    'rv-bootstrap': "https://programmes.files.bbci.co.uk/programmes-frontend/js/rv-bootstrap-5faf60a64a",
+                    'timezone-notification': "https://programmes.files.bbci.co.uk/programmes-frontend/js/timezone-notification-9476b56a8c",
+                    'episode-guide': "https://programmes.files.bbci.co.uk/programmes-frontend/js/episode-guide-4b10409449",
+                    'gallery': "https://programmes.files.bbci.co.uk/programmes-frontend/js/gallery-ad3f898914",
+                    'picturefill': "https://programmes.files.bbci.co.uk/programmes-frontend/js/picturefill-29a13ac5b6",
+                    'popup': "https://programmes.files.bbci.co.uk/programmes-frontend/js/popup-e49f2a49fe",
+                    'snippets': "https://programmes.files.bbci.co.uk/programmes-frontend/js/snippets-c639b05eea",
+                    'bump-3': "//emp.bbci.co.uk/emp/bump-3/bump-3",
+                    'smp/smpFactory': "https://programmes.files.bbci.co.uk/programmes-frontend/js/smp/smpFactory-f57a2ab390",
+                    'stream': "https://programmes.files.bbci.co.uk/programmes-frontend/js/stream-39232e1207",
+                    'smp/smp': "https://programmes.files.bbci.co.uk/programmes-frontend/js/smp/smp-b7f0d4bec6",
+                    'smp/recommendationsBump': "https://programmes.files.bbci.co.uk/programmes-frontend/js/smp/recommendationsBump-0c44d8e33c",
+                    'smp/uasService': "https://programmes.files.bbci.co.uk/programmes-frontend/js/smp/uasService-8116e5dab1",
+                    'cookieStore': "https://programmes.files.bbci.co.uk/programmes-frontend/js/cookieStore",
+                    'uasclient': "https://static.bbc.co.uk/uasclient/0.1.42/modules/uasclient",
+                    'relay-1': "https://static.bbc.co.uk/frameworks/relay/0.2.6/sharedmodules/relay-1",
+                    'policy-service': "https://programmes.files.bbci.co.uk/programmes-frontend/js/policy-service-c495418b29",
+                    'third-party': "https://programmes.files.bbci.co.uk/programmes-frontend/js/third-party-4cc5ca32e8",
+                    'kite': 'https://downloads.bbc.co.uk/interactive/embed/',
+                },
+                "priority": ['jquery-1.9', 'rv-bootstrap', 'timezone-notification'],
+                "map": {
+                    "*": {
+                        "jquery": "jquery-1.9"
+                    }
+                }
+            });
+        </script>
+
+        <!--[if (gt IE 8)|!(IE)]><!-->
+            <link rel="stylesheet" href="https://programmes.files.bbci.co.uk/programmes-frontend/css/ds2013-132de06cf4.css" />
+        <!--<![endif]-->
+        <!--[if (lt IE 9)&(!IEMobile)]>
+            <link rel="stylesheet" href="https://programmes.files.bbci.co.uk/programmes-frontend/css/ds2013-ie-636cb2225a.css" />
+        <![endif]-->
+        
+        
+                <link rel="canonical" href="https://www.bbc.co.uk/programmes/p002vsnk/episodes/downloads">        <meta name="theme-color" content="#BB1919">
+                    <meta name="description" content="Podcast downloads for Newshour">
+            <meta property="og:description" content="Podcast downloads for Newshour">
+        <meta property="fb:pages" content="6025943146,7397061762,7519460786,7833211321,8244244903,8251776107,8585725981,21750735380,80758950658,125309456546,130593816777,154344434967,228735667216,260212261199,260967092113,294662213128,295830058648,304314573046,401538510458,107909022566650,118883634811868,129044383774217,156060587793370,156400551056385,163571453661989,168895963122035,185246968166196,193022337414607,193435954068976,194575130577797,215504865453262,239931389545417,273726292719943,283348121682053,286567251709437,292291897588734,310719525611571,317278538359186,413132078795966,470911516262605,512423982152360,647687225371774,658551547588605,742734325867560,944295152308991,958681370814419,1143803202301544,1159932557403143,1392506827668140,1411916919051820,1477945425811579,1659215157653827,1731770190373618"><meta property="og:site_name" content="BBC">
+        <meta property="og:title" content="BBC World Service - Newshour - Downloads">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.bbc.co.uk/programmes/p002vsnk/episodes/downloads">        <meta property="og:image" content="https://ichef.bbci.co.uk/images/ic/1200x675/p085qrkx.jpg">            <meta name="twitter:card" content="summary_large_image">
+        <meta name="msapplication-square150x150logo" content="https://ichef.bbci.co.uk/images/ic/272x272/p085qrkx.jpg">
+    </head>
+    <body id="top">
+        <noscript><p style="position: absolute; top: -999em"><img src="https://a1.api.bbc.co.uk/hit.xiti?&col=1&from=p&ptag=js&s=598253&p=guide-podcasts::unknown&x1=[urn:bbc:pips:p002vsnk]&x2=[responsive]&x3=[bbc_website]&x4=[en]&x7=[downloads]&x8=[reverb-1.5.1-nojs]&x11=[ws_programmes]&x12=[WORLD_SERVICE_ENGLISH]" height="1" width="1" alt=""></p></noscript>   <!-- BBCDOTCOM bodyFirst --><div id="bbccom_interstitial_ad" class="bbccom_display_none"></div><div id="bbccom_interstitial" class="bbccom_display_none"><script type="text/javascript">/*<![CDATA[*/ (function() { if (window.bbcdotcom && bbcdotcom.config.isAdsEnabled()) { googletag.cmd.push(function() { googletag.display('bbccom_interstitial'); }); } }()); /*]]>*/</script></div><div id="bbccom_wallpaper_ad" class="bbccom_display_none"></div><div id="bbccom_wallpaper" class="bbccom_display_none"><script type="text/javascript">/*<![CDATA[*/ (function() { var wallpaper; if (window.bbcdotcom && bbcdotcom.config.isAdsEnabled()) { if (bbcdotcom.config.isAsync()) { googletag.cmd.push(function() { googletag.display('bbccom_wallpaper'); }); } else if (typeof googletag !== "undefined" && typeof googletag.display === "function") { googletag.display("wallpaper"); } wallpaper = bbcdotcom.adverts.adRegister.getAd('wallpaper'); } }()); /*]]>*/</script></div><script type="text/javascript">/*<![CDATA[*/ (function() { if (window.bbcdotcom && bbcdotcom.config.isAdsEnabled()) { document.write(unescape('%3Cscript id="gnlAdsEnabled" class="bbccom_display_none"%3E%3C/script%3E')); } if (window.bbcdotcom && bbcdotcom.config.isAnalyticsEnabled()) { document.write(unescape('%3Cscript id="gnlAnalyticsEnabled" class="bbccom_display_none"%3E%3C/script%3E')); } }()); /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ (function() { window.bbcdotcom.bodyFirst = true; }()); /*]]>*/</script>   <div id="cookiePrompt"></div>   <!--[if (gt IE 8) | (IEMobile)]><!--><header id="orb-banner" role="banner" aria-label="BBC"><!--<![endif]--><!--[if (lt IE 9) & (!IEMobile)]>
+            <![if (IE 8)]>
+                <header id="orb-banner" role="banner" class="orb-old-ie orb-ie8" aria-label="BBC">
+            <![endif]>
+
+            <![if (IE 7)]>
+                <header id="orb-banner" role="banner" class="orb-old-ie orb-ie7" aria-label="BBC">
+            <![endif]>
+
+            <![if (IE 6)]>
+                <header id="orb-banner" role="banner" class="orb-old-ie orb-ie6" aria-label="BBC">
+            <![endif]>
+        <![endif]--><div id="orb-header" class="orb-nav-pri orb-nav-pri-white orb-nav-empty" data-max-d="0" data-max-w="0" dir="ltr"><div class="orb-nav-pri-container b-r b-g-p"><div class="orb-nav-section orb-nav-blocks"><a href="https://www.bbc.co.uk">Homepage</a></div><section><div class="orb-skip-links"><h2>Accessibility links</h2><ul><li><a href="#programmes-content">Skip to content</a></li><li><a id="orb-accessibility-help" href="https://www.bbc.co.uk/accessibility/">Accessibility Help</a></li></ul></div></section><div id="mybbc-wrapper" class="orb-nav-section orb-nav-id orb-nav-focus orb-nav-id-default"></div><nav role="navigation" aria-label="BBC" class="orb-nav"><div class="orb-nav-section orb-nav-links orb-nav-focus" id="orb-nav-links"><ul><li class="orb-nav-news"><a href="https://www.bbc.com/news">News</a></li><li class="orb-nav-sport"><a href="https://www.bbc.com/sport">Sport</a></li><li class="orb-nav-weather"><a href="https://www.bbc.com/weather">Weather</a></li><li class="orb-nav-radio"><a href="https://www.bbc.co.uk/worldserviceradio">Radio</a></li><li class="orb-nav-arts"><a href="https://www.bbc.co.uk/arts">Arts</a></li><li id="orb-nav-more" style="width: 88px" aria-controls="orb-panel-more"><a href="#orb-footer" data-alt="More" class="istats-notrack">Menu<span class="orb-icon orb-icon-arrow"></span></a></li></ul></div></nav><div class="orb-nav-section orb-nav-search">  <a class="orb-search__button" href="https://search.bbc.co.uk/search?scope&#x3D;sounds" title="Search the BBC">Search</a><form class="b-f" id="orb-search-form" role="search" method="get" action="https://search.bbc.co.uk/search" accept-charset="utf-8"><div><input type="hidden" name="scope" id="orb-search-scope" value="sounds"><label for="orb-search-q">Search the BBC</label><input id="orb-search-q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="100" name="q" placeholder="Search"><button id="orb-search-button" class="orb-search__button">Search the BBC</button><input type="hidden" name="suggid" id="orb-search-suggid"></div></form> </div></div><div id="orb-panels" class="orb-ws-panels"></div></div></header>  <!-- Styling hook for shared modules only -->
+<div id="orb-modules">
+    
+
+                <div class="br-container">
+                        <div class="br-container__inner">
+                                    <div class="br-masthead" id="br-masthead"><div class="br-masthead__inner">
+                        <div class="b-g-p br-masthead__main br-masthead__main--small">
+            <div class="br-masthead__onairpanel" id="onairpanel-container">
+            <div class="on-air-panel on-air-panel--bbc_world_service" data-sid="bbc_world_service" data-polling-dial="on" data-settings="{&quot;url&quot;:&quot;https://rms.api.bbc.co.uk&quot;,&quot;broadcastPollingFeed&quot;:&quot;/v2/broadcasts/poll/&quot;}">
+  <a class="on-air-panel__station-link">
+    <div class="on-air-panel__main  on-air-panel__main--short  on-air-panel__item">
+      <svg aria-hidden="true" class="on-air-panel__speaker on-air-panel__link" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.099 4.383L19.678 5.85a14.635 14.635 0 0 1 4.017 10.113c0 3.935-1.537 7.505-4.017 10.112l1.42 1.467c2.84-2.981 4.597-7.066 4.597-11.579 0-4.513-1.756-8.6-4.596-11.579"
+        />
+        <path d="M25.344 0l-1.425 1.472c3.567 3.73 5.776 8.847 5.776 14.49 0 5.643-2.21 10.76-5.777 14.49l1.425 1.472c3.926-4.102 6.352-9.737 6.352-15.962 0-6.226-2.425-11.86-6.351-15.962M16 3.575l-6.306 5.92H0v12.387h9.694L16 28.35z"
+        />
+      </svg>
+      <div class="on-air-panel__on-now">
+        <svg aria-hidden="true" class="on-air-panel__pulse" width="42" height="12" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2h1.832v7.313h4.032V11H16V2zm7.156 0h1.832v9h-1.832V2zM34.69 2a290.712 290.712 0 0 1-1.588 4.506c-.543 1.502-1.096 3-1.659 4.494h-1.974a355.714 355.714 0 0 1-1.66-4.494A290.712 290.712 0 0 1 26.222 2h2.01c.365 1.175.733 2.345 1.106 3.512.373 1.166.753 2.333 1.142 3.5.388-1.167.769-2.334 1.142-3.5.372-1.167.741-2.337 1.106-3.512h1.962zm1.233 0h5.852v1.611h-4.02v1.951h3.568v1.611h-3.568V9.39H42V11h-6.078V2zM6 0a6 6 0 1 0 0 12A6 6 0 0 0 6 0m0 1.5c2.481 0 4.5 2.019 4.5 4.5 0 2.482-2.019 4.5-4.5 4.5A4.505 4.505 0 0 1 1.5 6C1.5 3.52 3.52 1.5 6 1.5"
+          />
+          <path class="live-svg-center" d="M9 6c0 1.654-1.346 3-3 3S3 7.654 3 6s1.346-3 3-3 3 1.346 3 3z" />
+        </svg>
+        <span class="on-air-panel__on-now-text"></span>
+      </div>
+    </div>
+  </a>
+  <a href=/schedules/p00fzl9p class="on-air-panel__schedule-link">
+    <div class="on-air-panel__schedule on-air-panel__item">
+      <svg aria-hidden="true" class="on-air-panel__link schedule-svg" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.886 15.41c3.584 0 6.5 2.916 6.5 6.5 0 3.586-2.916 6.5-6.5 6.5a6.507 6.507 0 0 1-6.5-6.5c0-3.584 2.916-6.5 6.5-6.5zm-13.458.447h8.21c-1.189.929-2.102 1.857-2.623 3.714H8.428v5.572h5.587c1.148 2.786 4.234 5.348 7.871 5.348 4.616 0 8.357-3.63 8.357-8.245 0-2.627-1.214-5.46-3.11-6.389h3.581v-5.571H8.428v5.571zM1 6.571h5.571v-5.57H1zM1 15.857h5.571v-5.57H1zM1 25.142h5.571v-5.57H1zM8.429 6.571h22.285v-5.57H8.43z"
+        />
+        <path d="M26.393 23.954l-3.107-2.508v-3.731H21.43v4.66l3.967 3.064z" />
+      </svg>
+      <span class="on-air-panel__schedule-link-text on-air-panel__link">
+        Schedule
+      </span>
+    </div>
+  </a>
+</div>
+        </div>
+    
+                                <span class="br-masthead__masterbrand service-brand-logo-master service-brand-logo-master--bbc_world_service">BBC World Service</span>
+    
+    
+                <div class="br-masthead__title">
+            <a href="/programmes/p002vsnk">Newshour</a>
+        </div>
+    </div>                            <div class="b-g-p"><div id="br-nav-programme" class="br-nav br-box-highlight br-highlight-bg-onbg080"><ul class="br-nav__list"><li class="br-nav__item"><a class="br-nav__link" href="/programmes/p002vsnk">Newshour Home</a></li><li class="br-nav__item"><a class="br-nav__link" href="/programmes/p002vsnk/episodes/player">Episodes</a></li><li class="br-nav__item"><a class="br-nav__link" href="/programmes/p002vsnk/clips">Highlights</a></li><li class="br-nav__item"><a class="br-nav__link" href="/programmes/p002vsnk/episodes/downloads">Podcast</a></li><li class="br-nav__item"><a class="br-nav__link" href="/programmes/p02dbd4m">The Real Story</a></li><li class="br-nav__item"><a class="br-nav__link" href="/programmes/articles/3hhkSnsr6MT7FkndRPLbQNs/sign-up-for-the-bbc-world-service-newsletter">Subscribe to our Newsletter</a></li><li class="br-nav__item"><a class="br-nav__link" href="http://www.facebook.com/bbcworldservice">Join us on Facebook</a></li><li class="br-nav__item"><a class="br-nav__link" href="https://twitter.com/bbcworldservice">Follow us on Twitter</a></li><!--BRANDING_PLACEHOLDER_NAV_END--></ul></div></div><script type="text/javascript">
+        define("branding-responsive-nav",[],function(){var e=function(e){this.setOptions(e)};return e.prototype={options:{},setOptions:function(e){var t={more_link_text:e&&e.more_link_text?e.more_link_text:"More"};this.options=t},getOptions:function(){return this.options},init:function(){function e(){var e=t.getWindowWidth(),n=t.getWindowHeight();(e!=i||n!=o)&&null!==t.local_nav_bar&&(t.processingNavigation=!1,t.processNavigation()),i=e,o=n}var t=this,n=null,i=this.getWindowWidth(),o=this.getWindowHeight();t.setupNavigation(),this.addListener(window,"resize",function(){clearTimeout(n),n=setTimeout(e,300)})},getWindowWidth:function(){var e=0;return"number"==typeof window.innerWidth?e=window.innerWidth:document.documentElement&&document.documentElement.clientWidth?e=document.documentElement.clientWidth:document.body&&document.body.clientWidth&&(e=document.body.clientWidth),e},getWindowHeight:function(){var e=0;return"number"==typeof window.innerHeight?e=window.innerHeight:document.documentElement&&document.documentElement.clientHeight?e=document.documentElement.clientHeight:document.body&&document.body.clientHeight&&(e=document.body.clientHeight),e},addListener:function(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n},setupNavigation:function(){if(this.local_nav_bar=document.getElementById("br-nav-programme"),null!==this.local_nav_bar){var e=document.createElement("button");e.className="br-nav__morelink br-box-highlight";var t=document.createTextNode(this.getOptions().more_link_text);e.appendChild(t),e.id="more-link",this.local_nav_bar.insertBefore(e,this.local_nav_bar.firstChild);var n=document.createElement("ul");n.id="more-list",n.className="br-nav__more br-nav__list",this.local_nav_bar.appendChild(n),this.addListener(e,"click",function(){-1!==e.className.indexOf("open")?(e.className=e.className.replace("open",""),n.className=n.className.replace("open","")):(e.className+=" open",n.className+=" open")}),t=null,this.processNavigation()}},processingNavigation:!1,processNavigation:function(){if(null!==this.local_nav_bar){var e=document.getElementById("more-link"),t=this.local_nav_bar.getElementsByTagName("ul");t=t[0];var n=t.getElementsByTagName("li"),i=n[0];this.processingNavigation=!0;var o=document.getElementById("more-list");if(null!==o)for(;o.hasChildNodes();)t.appendChild(o.firstChild);if(!this._navIsTooLong(t,i))return e.className=e.className.replace("visible",""),void(e=t=n=i=o=null);for(e.className=e.className.replace("visible",""),e.className+=" visible";this._navIsTooLong(t,i)&&this.processingNavigation;)this._moveLastNavItem();e=t=n=i=o=null}},_moveLastNavItem:function(){var e=this.local_nav_bar.getElementsByTagName("ul")[0],t=document.getElementById("more-list");t.insertBefore(e.lastChild,t.firstChild),e=nav_items=last_item=t=null},_navIsTooLong:function(e,t){var n=e.getElementsByTagName("li"),i=n.length>1&&e.offsetHeight>t.scrollHeight;return n=null,i}},e});
+        /*<![CDATA[*/
+        require(['branding-responsive-nav'],function(responsiveNav){
+            var nav = new responsiveNav({
+                'more_link_text' : 'More'
+            });
+            nav.init();
+        });
+        /*]]>*/
+    </script>                    </div></div>
+                
+
+        <div class="text-base programmes-page programmes-page--flush" role="main">
+            <div id="programmes-content" class="skip-to-content-destination" tabindex="-1">Main content</div>
+                    <div class="b-g-p no-margin-vertical">
+            <div class="grid-wrapper grid-wrapper--flush map map--episode map--count-2">
+                <div class="grid 2/3@bpw2 3/4@bpe map__column map__column--first">
+                    <div class="map__inner  br-box-secondary">
+                        <div class="island"><h1><span class="visually-hidden">Newshour </span><span class="cf deemphasize block-link">Podcast</span></h1>
+                            <div class="map__intro__synopsis centi">
+                                    <div class="text--prose longest-synopsis">
+                    <p>Interviews, news and analysis of the day’s global events.</p>
+            </div>
+
+                            </div><div class="grid-wrapper micro"><div class="grid 1/2">
+                                        <div class=""> <strong>Updated: </strong> <span class="nowrap">
+                                                daily</span>
+                                        </div>
+                                    </div><div class="grid 1/2">
+                                    <div>
+                                        <strong>Episodes available:</strong>
+                                        <span class="nowrap">7 days</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid 1/3@bpw2 1/4@bpe map__column map__column--2 map__column--last">
+                    <div class="map__inner br-box-secondary">
+                        <nav class="island">
+                            <a
+                                data-bbc-container="podcasts" data-bbc-title="subscribe_in_sounds"
+                                href="https://www.bbc.co.uk/sounds/play/brand:p002vsnk" class="popup__button popup__button--subscribe br-linkinvert podcast--subscribe-link">
+                                <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon podcast--subscribe-icon"><use xlink:href="#gelicon--basics--external-link" /></svg>
+                                Subscribe in Sounds
+                            </a>
+                            <br />
+                            <a
+                                data-bbc-container="podcasts" data-bbc-title="subscribe_rss"
+                                href="https://podcasts.files.bbci.co.uk/p002vsnk.rss" class="podcast--rss-link">RSS</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div><div class="prog-layout programmes-page">
+        <div>
+            <div class="grid-wrapper grid-wrapper--center">
+                <div class="grid 2/3@bpw2 2/3@bpe"><div class="br-box-page prog-box">
+                        <div class="component component--box component--box-flushbody component--box--primary">
+                            <div class="component__header br-box-page"><h2>Episodes to download</h2></div>
+                            <ul class="list-unstyled"><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yvh2sxd13">
+        
+    
+    <div class="programme__img programme__img--nomax 1/4@bpb1 1/4@bpb2 1/2@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p085qrkx.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p085qrkx.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p085qrkx.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p085qrkx.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p085qrkx.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p085qrkx.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p085qrkx.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p085qrkx.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p085qrkx.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yvh2sxd13"
+           title="29 days left to listen (Thu 24 September 2020, 15:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yvh2sxd13"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Africa to be declared free of wild polio</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Today
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>A major milestone is reached in the battle against polio in Africa after decades of work</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08plm0v.mp3"
+                                   download="Newshour, Africa to be declared free of wild polio - w172x2yvh2sxd13.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08plm0v.mp3"
+                                   download="Newshour, Africa to be declared free of wild polio - w172x2yvh2sxd13.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yvh2svbbx">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08pjk72.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08pjk72.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08pjk72.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08pjk72.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08pjk72.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08pjk72.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08pjk72.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08pjk72.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08pjk72.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yvh2svbbx"
+           title="29 days left to listen (Wed 23 September 2020, 22:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yvh2svbbx"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Belarusian opposition members rounded up</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Yesterday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Security forces in Belarus have rounded up more prominent members of the opposition</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08pjq3d.mp3"
+                                   download="Newshour, Belarusian opposition members rounded up - w172x2yvh2svbbx.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08pjq3d.mp3"
+                                   download="Newshour, Belarusian opposition members rounded up - w172x2yvh2svbbx.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yvh2sth40">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08phkkn.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08phkkn.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08phkkn.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08phkkn.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08phkkn.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08phkkn.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08phkkn.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08phkkn.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08phkkn.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yvh2sth40"
+           title="28 days left to listen (Wed 23 September 2020, 15:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yvh2sth40"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>US allows emergency Covid-19 plasma treatment</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Yesterday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>FDA gives emergency authorisation to use blood plasma to treat Covid patients</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08phqtx.mp3"
+                                   download="Newshour, US allows emergency Covid-19 plasma treatment - w172x2yvh2sth40.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08phqtx.mp3"
+                                   download="Newshour, US allows emergency Covid-19 plasma treatment - w172x2yvh2sth40.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thml5n">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08pfrsl.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08pfrsl.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08pfrsl.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08pfrsl.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08pfrsl.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08pfrsl.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08pfrsl.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08pfrsl.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08pfrsl.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thml5n"
+           title="28 days left to listen (Tue 22 September 2020, 22:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thml5n"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Belarus opposition holds mass rally in Minsk despite ban</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Sunday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Tens of thousands filled the central square in Minsk despite heavy police presence</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08pfx82.mp3"
+                                   download="Newshour, Belarus opposition holds mass rally in Minsk despite ban - w172x2yv3thml5n.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08pfx82.mp3"
+                                   download="Newshour, Belarus opposition holds mass rally in Minsk despite ban - w172x2yv3thml5n.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thlm6m">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08pf4rf.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08pf4rf.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08pf4rf.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08pf4rf.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08pf4rf.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08pf4rf.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08pf4rf.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08pf4rf.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08pf4rf.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thlm6m"
+           title="27 days left to listen (Tue 22 September 2020, 14:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thlm6m"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Belarus: fresh anti-government protests in Minsk</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Sunday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Thousands of protesters demand the country&#039;s President steps down</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08pf6h9.mp3"
+                                   download="Newshour, Belarus: fresh anti-government protests in Minsk - w172x2yv3thlm6m.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08pf6h9.mp3"
+                                   download="Newshour, Belarus: fresh anti-government protests in Minsk - w172x2yv3thlm6m.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thjp8k">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08pd5s1.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08pd5s1.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08pd5s1.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08pd5s1.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08pd5s1.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08pd5s1.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08pd5s1.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08pd5s1.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08pd5s1.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thjp8k"
+           title="27 days left to listen (Mon 21 September 2020, 22:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thjp8k"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>California struggles to contain huge wildfires</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Saturday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>California governor says fires sweeping the state are unlike anything seen in many years</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08pdbh4.mp3"
+                                   download="Newshour, California struggles to contain huge wildfires - w172x2yv3thjp8k.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08pdbh4.mp3"
+                                   download="Newshour, California struggles to contain huge wildfires - w172x2yv3thjp8k.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thhq9j">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08pcgdd.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08pcgdd.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08pcgdd.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08pcgdd.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08pcgdd.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08pcgdd.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08pcgdd.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08pcgdd.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08pcgdd.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thhq9j"
+           title="26 days left to listen (Mon 21 September 2020, 14:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thhq9j"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Alexei Navalny arrives in Berlin for treatment</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Saturday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Alexei Navalny: Putin critic arrives in Germany for medical treatment</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08pchtw.mp3"
+                                   download="Newshour, Alexei Navalny arrives in Berlin for treatment - w172x2yv3thhq9j.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08pchtw.mp3"
+                                   download="Newshour, Alexei Navalny arrives in Berlin for treatment - w172x2yv3thhq9j.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thfscg">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08p9wqk.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08p9wqk.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08p9wqk.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08p9wqk.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08p9wqk.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08p9wqk.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08p9wqk.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08p9wqk.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08p9wqk.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thfscg"
+           title="26 days left to listen (Sun 20 September 2020, 22:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thfscg"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Alexei Navalny allowed to fly to Germany</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Friday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Alexei Navalny is granted permission to fly to Germany for suspected poisoning treatment</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08pb2c3.mp3"
+                                   download="Newshour, Alexei Navalny allowed to fly to Germany - w172x2yv3thfscg.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08pb2c3.mp3"
+                                   download="Newshour, Alexei Navalny allowed to fly to Germany - w172x2yv3thfscg.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thdy4k">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08p89c6.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08p89c6.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08p89c6.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08p89c6.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08p89c6.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08p89c6.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08p89c6.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08p89c6.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08p89c6.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thdy4k"
+           title="25 days left to listen (Sun 20 September 2020, 15:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thdy4k"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Joe Biden formally accepts Democratic nomination</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Friday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>On the final night of the Democratic National Convention he said he&#039;d ‘overcome darkness’</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08p8w6w.mp3"
+                                   download="Newshour, Joe Biden formally accepts Democratic nomination - w172x2yv3thdy4k.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08p8w6w.mp3"
+                                   download="Newshour, Joe Biden formally accepts Democratic nomination - w172x2yv3thdy4k.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thbwgc">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08p6blb.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08p6blb.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08p6blb.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08p6blb.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08p6blb.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08p6blb.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08p6blb.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08p6blb.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08p6blb.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thbwgc"
+           title="25 days left to listen (Sat 19 September 2020, 22:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thbwgc"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>US set to reimpose sanctions on Iran</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Thursday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Iran nuclear deal: US to demand ‘snapback’ of UN sanctions</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08p6jtk.mp3"
+                                   download="Newshour, US set to reimpose sanctions on Iran - w172x2yv3thbwgc.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08p6jtk.mp3"
+                                   download="Newshour, US set to reimpose sanctions on Iran - w172x2yv3thbwgc.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3thb17g">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08p57bf.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08p57bf.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08p57bf.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08p57bf.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08p57bf.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08p57bf.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08p57bf.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08p57bf.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08p57bf.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3thb17g"
+           title="24 days left to listen (Sat 19 September 2020, 15:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3thb17g"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Alexei Navalny: Russian opposition leader &#039;poisoned&#039;</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Thursday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>Doctors in Russia say they&#039;re fighting to save a prominent opponent of President Putin</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08p5ff9.mp3"
+                                   download="Newshour, Alexei Navalny: Russian opposition leader &#039;poisoned&#039; - w172x2yv3thb17g.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08p5ff9.mp3"
+                                   download="Newshour, Alexei Navalny: Russian opposition leader &#039;poisoned&#039; - w172x2yv3thb17g.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3th7zk8">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08p2zwd.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08p2zwd.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08p2zwd.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08p2zwd.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08p2zwd.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08p2zwd.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08p2zwd.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08p2zwd.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08p2zwd.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3th7zk8"
+           title="24 days left to listen (Fri 18 September 2020, 22:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3th7zk8"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Belarus unrest: Lukashenko tries to reassert control</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Last Wednesday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>EU leaders agree to impose sanctions on Belarus at a virtual summit.</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08p39pf.mp3"
+                                   download="Newshour, Belarus unrest: Lukashenko tries to reassert control - w172x2yv3th7zk8.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08p39pf.mp3"
+                                   download="Newshour, Belarus unrest: Lukashenko tries to reassert control - w172x2yv3th7zk8.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li><li>
+                                        <div class="programme programme--radio programme--episode block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="w172x2yv3th74bc">
+        
+    
+    <div class="programme__img 1/4@bpb1 1/4@bpb2-one-quarter 1/3@bpw programme__img--available programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p08p1grl.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p08p1grl.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p08p1grl.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p08p1grl.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p08p1grl.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p08p1grl.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p08p1grl.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p08p1grl.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p08p1grl.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                                                    
+<div class="cta cta__overlay">
+            <a href="https://www.bbc.co.uk/sounds/play/w172x2yv3th74bc"
+           title="23 days left to listen (Fri 18 September 2020, 15:00)"
+           data-bbc-container="podcasts" data-bbc-title="episode:cta"
+           tabindex="-1"
+        >
+                            <div class="cta__icon  cta__with-link">
+        <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--half-container"><use xlink:href="#gelicon--audio-visual--listen" /></svg>
+    </div>
+                    </a>
+    </div>
+                                        </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/w172x2yv3th74bc"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="episode:title"
+        ><span class="programme__title "><span>Soldiers who ousted Mali&#039;s president promise elections</span></span></a></h4>
+
+                    <p class="programme__service micro ">
+        Last Wednesday
+    </p>
+
+    <p class="programme__synopsis text--subtle centi">
+                <span>The soldiers who removed the government in a coup say they want stability, not power</span>
+            </p>
+
+
+                <div class="popup buttons__download">
+            <input class="popup__status" type="checkbox" id="download-popup" checked>
+
+            <div class="buttons__download">
+                <h2 class="popup__button text-base br-linkinvert buttons__download__link">
+                    <label for="download-popup">
+                        <span class="buttons__icon"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi gelicon--leading"><use xlink:href="#gelicon--basics--download" /></svg></span>
+                        Download                    </label>
+                </h2>
+            </div>
+
+            <div class="popup__holder" id="download-popup-holder">
+                <div class="popup__content popup__content--download br-box-subtle br-subtle-link-onbg br-subtle-link-onborder popup__content--js">
+                    <h3 class="popup__header br-subtle-link-onborder--beforeafter br-subtle-linkhover-onborder--hover-beforeafter gamma no-margin deemphasize">
+                        <label class="popup__close island--squashed br-subtle-bg-onborder br-linkinvert" for="download-popup-holder">
+                            <span class="pull--right-spaced"><svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon gelicon--centi popup__close--button"><use xlink:href="#gelicon--basics--no" /></svg> </span>Choose your file
+                        </label>
+                    </h3>
+                    <ul class="list-unstyled popup__list">
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p08p1tjn.mp3"
+                                   download="Newshour, Soldiers who ousted Mali&#039;s president promise elections - w172x2yv3th74bc.mp3" aria-label="Download Higher quality (128kbps) ">
+                                    Higher quality (128kbps)
+                                </a>
+                            </li>
+                                                    <li>
+                                <a
+                                    class="link-complex popup__list__item island--squashed br-subtle-bg-ontext br-subtle-bg-onbg--hover br-subtle-link-ontext--hover" href="//open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/https/vpid/p08p1tjn.mp3"
+                                   download="Newshour, Soldiers who ousted Mali&#039;s president promise elections - w172x2yv3th74bc.mp3" aria-label="Download Lower quality (64kbps) ">
+                                    Lower quality (64kbps)
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+    </div>
+</div>
+
+                                    </li></ul>
+                        </div></div>
+                </div><div class="grid 1/3@bpw2 1/3@bpe"><div class="superpromo component component--box component--box--striped component--box-flushbody component--box--secondary">
+    <div class="component__header br-box-highlight">
+        <h2>The New Silk Road</h2>
+    </div>
+    <div class="component__body br-box-subtle">
+        <a class="superpromo__img" href="http://www.bbc.co.uk/programmes/p058dpxt"><img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320xn/p058dnzb.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80xn/p058dnzb.jpg 80w, https://ichef.bbci.co.uk/images/ic/160xn/p058dnzb.jpg 160w, https://ichef.bbci.co.uk/images/ic/320xn/p058dnzb.jpg 320w, https://ichef.bbci.co.uk/images/ic/480xn/p058dnzb.jpg 480w, https://ichef.bbci.co.uk/images/ic/640xn/p058dnzb.jpg 640w, https://ichef.bbci.co.uk/images/ic/768xn/p058dnzb.jpg 768w, https://ichef.bbci.co.uk/images/ic/896xn/p058dnzb.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008xn/p058dnzb.jpg 1008w" data-sizes="auto" alt="The New Silk Road"></a>
+        <div class="superpromo__content">
+                            <p class="superpromo__synopsis centi text--subtle">How China is launching a major new trade route via the ancient Silk Road</p>
+            
+                            <div class="superpromo__related-links centi">
+                    <ul class="no-margin-vertical list-spaced"><li>
+                            <a href="http://www.bbc.co.uk/programmes/p058dpxt">China&#039;s ambitious new trading project</a></li></ul>
+                </div>
+                    </div>
+    </div>
+</div>
+<div class="superpromo component component--box component--box--striped component--box-flushbody component--box--secondary">
+    <div class="component__header br-box-highlight">
+        <h2>70 Years On: Partition Stories</h2>
+    </div>
+    <div class="component__body br-box-subtle">
+        <a class="superpromo__img" href="http://www.bbc.co.uk/programmes/p05b5fdg"><img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320xn/p05cg1d5.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80xn/p05cg1d5.jpg 80w, https://ichef.bbci.co.uk/images/ic/160xn/p05cg1d5.jpg 160w, https://ichef.bbci.co.uk/images/ic/320xn/p05cg1d5.jpg 320w, https://ichef.bbci.co.uk/images/ic/480xn/p05cg1d5.jpg 480w, https://ichef.bbci.co.uk/images/ic/640xn/p05cg1d5.jpg 640w, https://ichef.bbci.co.uk/images/ic/768xn/p05cg1d5.jpg 768w, https://ichef.bbci.co.uk/images/ic/896xn/p05cg1d5.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008xn/p05cg1d5.jpg 1008w" data-sizes="auto" alt="70 Years On: Partition Stories"></a>
+        <div class="superpromo__content">
+                            <p class="superpromo__synopsis centi text--subtle">Memories and stories of Partition in 1947 and the legacy Partition leaves with us today</p>
+            
+                            <div class="superpromo__related-links centi">
+                    <ul class="no-margin-vertical list-spaced"><li>
+                            <a href="http://www.bbc.co.uk/programmes/p05b5fdg">Programmes, video and clips from across the BBC</a></li></ul>
+                </div>
+                    </div>
+    </div>
+</div>
+<div class="superpromo component component--box component--box--striped component--box-flushbody component--box--secondary">
+    <div class="component__header br-box-highlight">
+        <h2>China, the Party and the People</h2>
+    </div>
+    <div class="component__body br-box-subtle">
+        <a class="superpromo__img" href="http://www.bbc.co.uk/programmes/p05mb6tj"><img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320xn/p05mb6gl.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80xn/p05mb6gl.jpg 80w, https://ichef.bbci.co.uk/images/ic/160xn/p05mb6gl.jpg 160w, https://ichef.bbci.co.uk/images/ic/320xn/p05mb6gl.jpg 320w, https://ichef.bbci.co.uk/images/ic/480xn/p05mb6gl.jpg 480w, https://ichef.bbci.co.uk/images/ic/640xn/p05mb6gl.jpg 640w, https://ichef.bbci.co.uk/images/ic/768xn/p05mb6gl.jpg 768w, https://ichef.bbci.co.uk/images/ic/896xn/p05mb6gl.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008xn/p05mb6gl.jpg 1008w" data-sizes="auto" alt="China, the Party and the People"></a>
+        <div class="superpromo__content">
+                            <p class="superpromo__synopsis centi text--subtle">Clips, reports and highlights on a society in flux</p>
+            
+                            <div class="superpromo__related-links centi">
+                    <ul class="no-margin-vertical list-spaced"><li>
+                            <a href="http://www.bbc.co.uk/programmes/p05mb6tj">Clips, highlights and reports: China, the Party and the People</a></li></ul>
+                </div>
+                    </div>
+    </div>
+</div>
+<div class="superpromo component component--box component--box--striped component--box-flushbody component--box--secondary">
+    <div class="component__header br-box-highlight">
+        <h2>Inside The Philippines’ Deadly War On Drugs</h2>
+    </div>
+    <div class="component__body br-box-subtle">
+        <a class="superpromo__img" href="http://www.bbc.co.uk/programmes/p04sjkxw"><img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320xn/p04sx3pl.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80xn/p04sx3pl.jpg 80w, https://ichef.bbci.co.uk/images/ic/160xn/p04sx3pl.jpg 160w, https://ichef.bbci.co.uk/images/ic/320xn/p04sx3pl.jpg 320w, https://ichef.bbci.co.uk/images/ic/480xn/p04sx3pl.jpg 480w, https://ichef.bbci.co.uk/images/ic/640xn/p04sx3pl.jpg 640w, https://ichef.bbci.co.uk/images/ic/768xn/p04sx3pl.jpg 768w, https://ichef.bbci.co.uk/images/ic/896xn/p04sx3pl.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008xn/p04sx3pl.jpg 1008w" data-sizes="auto" alt="Inside The Philippines’ Deadly War On Drugs"></a>
+        <div class="superpromo__content">
+                            <p class="superpromo__synopsis centi text--subtle">A brutal crack-down on drugs that has claimed more than 7000 lives</p>
+            
+                            <div class="superpromo__related-links centi">
+                    <ul class="no-margin-vertical list-spaced"><li>
+                            <a href="http://www.bbc.co.uk/programmes/p04sjkxw">Former addicts, police officers and bereaved families share their stories</a></li></ul>
+                </div>
+                    </div>
+    </div>
+</div>
+<div class="component component--box component--box--striped component--box-flushbody component--box--secondary">
+                            <div class="component__header br-box-highlight">
+                                <h2>This podcast belongs to</h2>
+                            </div>
+                            <div class="component__body br-box-subtle">
+                                <ul class="list-unstyled">
+                                    <li class="">
+                                        <div class="programme programme--radio programme--brand block-link highlight-box--list br-keyline br-blocklink-page br-page-linkhover-onbg015--hover" data-pid="p002vsnk">
+        
+    
+    <div class="programme__img 1/3@bpb1 1/4@bpb2 1/3@bpw hidden@bpw2 programme__img--hasimage">
+                    <div class="programme__img-box">
+                <img class="image lazyload " data-src="https://ichef.bbci.co.uk/images/ic/320x180/p085qrkx.jpg" data-srcset="https://ichef.bbci.co.uk/images/ic/80x45/p085qrkx.jpg 80w, https://ichef.bbci.co.uk/images/ic/160x90/p085qrkx.jpg 160w, https://ichef.bbci.co.uk/images/ic/320x180/p085qrkx.jpg 320w, https://ichef.bbci.co.uk/images/ic/480x270/p085qrkx.jpg 480w, https://ichef.bbci.co.uk/images/ic/640x360/p085qrkx.jpg 640w, https://ichef.bbci.co.uk/images/ic/768x432/p085qrkx.jpg 768w, https://ichef.bbci.co.uk/images/ic/896x504/p085qrkx.jpg 896w, https://ichef.bbci.co.uk/images/ic/1008x567/p085qrkx.jpg 1008w" data-sizes="auto" alt="">
+            </div>
+        
+                                            </div>
+
+
+    <div class="programme__body">
+                <h4 class="programme__titles"><a href="https://www.bbc.co.uk/programmes/p002vsnk"
+           class="br-blocklink__link block-link__target"
+                      data-bbc-container="podcasts" data-bbc-title="brand:title"
+        ><span class="programme__title "><span>Newshour</span></span></a></h4>
+
+                
+
+
+
+    </div>
+</div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                                                <div>
+                            <div class="icon-box br-box-page">
+                                <a class="icon-box__link br-box-page__link br-page-link-onbg015 br-page-linkhover-onbg015--hover" href="/radio/categories/redirect?keys=news&amp;intent=podcast">
+                                    <i class="icon-box__icon gelicon gelicon--podcast"></i>
+                                    <div class="icon-box__hgroup">
+                                        <h3 class="icon-box__title gamma">Other podcasts you may like</h3>
+                                    </div>
+                                    <p class="icon-box__note micro"> See all podcasts</p>
+                                    <svg tabindex="-1" aria-hidden="true" focusable="false" class="gelicon  icon-box__icon gelicon gelicon--podcast"><use xlink:href="#gelicon--basics--podcast" /></svg>
+                                </a>
+                            </div>
+                        </div>
+                                            </div></div>
+            </div>
+        </div>
+    </div>        </div>
+        <div class="br-box-subtle text-base programmes-page programmes-page--flush" id="programmes-footer"><div class="footer-wrapper br-keyline">
+    <div class="footer g-f-l">
+        <h2 class="visually-hidden">Related Content</h2>
+        <div class="grid-wrapper grid-wrapper--flush">
+            <div class="grid grid--flush 1/2@bpw 5/12@bpw2 5/12@bpe"><div class="b-g-p"><div class="footer__similar b-g-p component">
+                    <h3 class="beta">Similar programmes</h3><div>
+                        <h4 class="inline micro">By genre:</h4>
+                        <ul class="list-unstyled micro"><li><a href="/programmes/genres/news">News</a></li></ul>
+                    </div></div></div></div>
+            <div class="grid grid--flush 1/2@bpw 1/4@bpw2 1/4@bpe">
+                            </div><div class="grid grid--flush 1/2 1/6@bpw2 1/6@bpe footer__service centi">
+                    <div class="footer__service-island br-service-brand-box fauxcolumn"><img alt="BBC World Service homepage" src="https://programmes.files.bbci.co.uk/programmes-frontend/images/logos/112x63/bbc_world_service-131e0fef59.png">                        <div class="footer__watch-live">
+                            <div class="lazy-module" data-lazyload-inc="/schedules/network/worldserviceradio/on-now?partial=2013" data-lazyload-threshold="768" data-lazyload-delay="true">
+                            </div>
+                        </div></div></div><div class="grid grid--flush 1/2 1/6@bpw2 1/6@bpe footer__service-nav centi"><div class="footer__service__nav"><div class="br-service-brand-box--alt fauxcolumn">
+                            <ul class="footer__service__nav__list list-unstyled footer__service-island"><li class="footer__service__navitem">
+                                        <a class="br-text" href="https://www.bbc.co.uk/schedules/p00fzl9p">Online schedule</a>
+                                    </li><li class="footer__service__navitem">
+                                        <a class="br-text" href="http://www.bbc.co.uk/podcasts/worldserviceradio">Downloads</a>
+                                    </li><li class="footer__service__navitem">
+                                        <a class="br-text" href="http://www.bbc.co.uk/programmes/articles/5nCxH0NlsPtyW8WvJ0rwDJP/about-world-service-radio">Help &amp; FAQs</a>
+                                    </li><li class="footer__service__navitem">
+                                        <a class="br-text" href="http://www.bbc.co.uk/programmes/articles/5nCxH0NlsPtyW8WvJ0rwDJP/about-world-service-radio">Contact us</a>
+                                    </li><li class="footer__service__navitem">
+                                        <a class="br-text" href="http://www.bbc.co.uk/worldservice/languages/index.shtml">News in 39 languages</a>
+                                    </li></ul>
+                        </div></div></div></div>
+    </div>
+</div></div>
+        <script>
+            require(['rv-bootstrap']);
+        </script>
+                    <script type="application/ld+json">
+                {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Programmes","item":"https:\/\/www.bbc.co.uk\/programmes"},{"@type":"ListItem","position":2,"name":"Newshour","item":"https:\/\/www.bbc.co.uk\/programmes\/p002vsnk"},{"@type":"ListItem","position":3,"name":"Downloads","item":"https:\/\/www.bbc.co.uk\/programmes\/p002vsnk\/episodes\/downloads"}],"@context":"https:\/\/schema.org"}
+            </script>
+                            <script type="application/ld+json">
+                {"@type":"RadioSeries","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p085qrkx.jpg","description":"Interviews, news and analysis of the day\u2019s global events.","identifier":"p002vsnk","name":"Newshour","url":"https:\/\/www.bbc.co.uk\/programmes\/p002vsnk","hasPart":[{"@type":"RadioEpisode","identifier":"w172x2yvh2sxd13","episodeNumber":null,"description":"A major milestone is reached in the battle against polio in Africa after decades of work","datePublished":"2020-08-25","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p085qrkx.jpg","name":"Africa to be declared free of wild polio","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yvh2sxd13","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yvh2sxd13","startDate":"2020-08-25T14:00:00+00:00","endDate":"2020-09-24T14:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yvh2svbbx","episodeNumber":null,"description":"Security forces in Belarus have rounded up more prominent members of the opposition","datePublished":"2020-08-24","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08pjk72.jpg","name":"Belarusian opposition members rounded up","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yvh2svbbx","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yvh2svbbx","startDate":"2020-08-24T21:00:00+00:00","endDate":"2020-09-23T21:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yvh2sth40","episodeNumber":null,"description":"FDA gives emergency authorisation to use blood plasma to treat Covid patients","datePublished":"2020-08-24","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08phkkn.jpg","name":"US allows emergency Covid-19 plasma treatment","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yvh2sth40","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yvh2sth40","startDate":"2020-08-24T14:00:00+00:00","endDate":"2020-09-23T14:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thml5n","episodeNumber":null,"description":"Tens of thousands filled the central square in Minsk despite heavy police presence","datePublished":"2020-08-23","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08pfrsl.jpg","name":"Belarus opposition holds mass rally in Minsk despite ban","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thml5n","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thml5n","startDate":"2020-08-23T21:00:00+00:00","endDate":"2020-09-22T21:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thlm6m","episodeNumber":null,"description":"Thousands of protesters demand the country's President steps down","datePublished":"2020-08-23","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08pf4rf.jpg","name":"Belarus: fresh anti-government protests in Minsk","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thlm6m","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thlm6m","startDate":"2020-08-23T13:00:00+00:00","endDate":"2020-09-22T13:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thjp8k","episodeNumber":null,"description":"California governor says fires sweeping the state are unlike anything seen in many years","datePublished":"2020-08-22","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08pd5s1.jpg","name":"California struggles to contain huge wildfires","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thjp8k","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thjp8k","startDate":"2020-08-22T21:00:00+00:00","endDate":"2020-09-21T21:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thhq9j","episodeNumber":null,"description":"Alexei Navalny: Putin critic arrives in Germany for medical treatment","datePublished":"2020-08-22","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08pcgdd.jpg","name":"Alexei Navalny arrives in Berlin for treatment","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thhq9j","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thhq9j","startDate":"2020-08-22T13:00:00+00:00","endDate":"2020-09-21T13:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thfscg","episodeNumber":null,"description":"Alexei Navalny is granted permission to fly to Germany for suspected poisoning treatment","datePublished":"2020-08-21","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08p9wqk.jpg","name":"Alexei Navalny allowed to fly to Germany","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thfscg","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thfscg","startDate":"2020-08-21T21:00:00+00:00","endDate":"2020-09-20T21:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thdy4k","episodeNumber":null,"description":"On the final night of the Democratic National Convention he said he'd \u2018overcome darkness\u2019","datePublished":"2020-08-21","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08p89c6.jpg","name":"Joe Biden formally accepts Democratic nomination","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thdy4k","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thdy4k","startDate":"2020-08-21T14:00:00+00:00","endDate":"2020-09-20T14:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thbwgc","episodeNumber":null,"description":"Iran nuclear deal: US to demand \u2018snapback\u2019 of UN sanctions","datePublished":"2020-08-20","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08p6blb.jpg","name":"US set to reimpose sanctions on Iran","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thbwgc","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thbwgc","startDate":"2020-08-20T21:00:00+00:00","endDate":"2020-09-19T21:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3thb17g","episodeNumber":null,"description":"Doctors in Russia say they're fighting to save a prominent opponent of President Putin","datePublished":"2020-08-20","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08p57bf.jpg","name":"Alexei Navalny: Russian opposition leader 'poisoned'","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3thb17g","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3thb17g","startDate":"2020-08-20T14:00:00+00:00","endDate":"2020-09-19T14:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3th7zk8","episodeNumber":null,"description":"EU leaders agree to impose sanctions on Belarus at a virtual summit.","datePublished":"2020-08-19","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08p2zwd.jpg","name":"Belarus unrest: Lukashenko tries to reassert control","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3th7zk8","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3th7zk8","startDate":"2020-08-19T21:00:00+00:00","endDate":"2020-09-18T21:00:00+00:00"}},{"@type":"RadioEpisode","identifier":"w172x2yv3th74bc","episodeNumber":null,"description":"The soldiers who removed the government in a coup say they want stability, not power","datePublished":"2020-08-19","image":"https:\/\/ichef.bbci.co.uk\/images\/ic\/480xn\/p08p1grl.jpg","name":"Soldiers who ousted Mali's president promise elections","url":"https:\/\/www.bbc.co.uk\/programmes\/w172x2yv3th74bc","publication":{"@type":"OnDemandEvent","publishedOn":{"@type":"BroadcastService","broadcaster":{"@type":"Organization","legalName":"British Broadcasting Corporation","logo":{"@type":"ImageObject","url":"https:\/\/ichef.bbci.co.uk\/images\/ic\/1200x675\/p01tqv8z.png"},"name":"BBC","url":"https:\/\/www.bbc.co.uk\/"},"name":"BBC Sounds","url":"https:\/\/www.bbc.co.uk\/sounds"},"duration":"PT3180S","url":"https:\/\/www.bbc.co.uk\/sounds\/play\/w172x2yv3th74bc","startDate":"2020-08-19T14:00:00+00:00","endDate":"2020-09-18T14:00:00+00:00"}}],"@context":"https:\/\/schema.org"}
+            </script>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="gelicons-source"><defs><symbol id="gelicon--basics--external-link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M12 0v5h11.5l-5 5H0v22h22V17.5l-2 2V30H2V12h14.5l-7.8 7.7 3.6 3.6L27 8.5V20h5V0H12z"/></symbol><symbol id="gelicon--basics--download" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M28.2 12.2L19 21.4V0h-6v21.4l-9.2-9.2L0 16l14 14H2v-6H0v8h16l16-16-3.8-3.8zM30 30h-8l-2 2h12v-8h-2v6z"/></symbol><symbol id="gelicon--basics--no" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M32 3.5L28.5 0 16 12.5 3.5 0 0 3.5 12.5 16 0 28.5 3.5 32 16 19.5 28.5 32l3.5-3.5L19.5 16 32 3.5z"/></symbol><symbol id="gelicon--audio-visual--listen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M21.4 4.8L20 6.2a14 14 0 0 1 0 19.6l1.4 1.4a16 16 0 0 0 0-22.4z"/><path d="M25.6.5L24.2 2a19.9 19.9 0 0 1 0 28.1l1.4 1.4a22 22 0 0 0 0-31zM16 4l-6 6H0v12h10l6 6V4z"/></symbol><symbol id="gelicon--basics--podcast" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="14" r="4"/><path d="M16 6a8 8 0 0 1 5.7 2.3l1.4-1.4A10 10 0 0 0 9 6.9l1.4 1.4A8 8 0 0 1 16 6z"/><path d="M16 2a12 12 0 0 1 8.5 3.5l1.4-1.4a14 14 0 0 0-19.8 0l1.4 1.4A12 12 0 0 1 16 2zM19 32h-6l-3-13h12l-3 13z"/></symbol></defs></svg>
+                </div>                     </div> 
+<!-- BrandingProjectId: "262", ThemeVersionId: "13625", NavigationVersionId: "13257". Published on 2020-08-25T01:35:32+00:00 -->
+                </div>
+<div id="orb-footer" class="orb-footer" dir="ltr">  <aside role="complementary"><div id="orb-aside" class="orb-nav-sec b-r b-g-p"><div class="orb-footer-inner" role="navigation" aria-label="BBC"><h2 class="orb-footer-lead">Explore the BBC</h2><div class="orb-footer-primary-links"><ul><li class="orb-nav-news"><a href="https://www.bbc.com/news">News</a></li><li class="orb-nav-sport"><a href="https://www.bbc.com/sport">Sport</a></li><li class="orb-nav-weather"><a href="https://www.bbc.com/weather">Weather</a></li><li class="orb-nav-radio"><a href="https://www.bbc.co.uk/worldserviceradio">Radio</a></li><li class="orb-nav-arts"><a href="https://www.bbc.co.uk/arts">Arts</a></li></ul></div></div></div></aside><footer role="contentinfo"><div id="orb-contentinfo" class="orb-nav-sec b-r b-g-p"><script>window.orb.worldwideFooterlinks = '<li class="orb-footer-ads"><a href="https://advertising.bbcworldwide.com/">Advertise with us<'+'/a><'+'/li><li class="orb-footer-adchoices"><a href="https://www.bbc.com/usingthebbc/cookies/how-can-i-change-my-bbc-cookie-settings/">AdChoices / Do Not Sell My Info<'+'/a><'+'/li>';</script><div class="orb-footer-inner"> <ul><li class="orb-footer-terms"><a href="https://www.bbc.co.uk/usingthebbc/terms/">Terms of Use</a></li><li class="orb-footer-about"><a href="https://www.bbc.co.uk/aboutthebbc">About the BBC</a></li><li class="orb-footer-privacy"><a href="https://www.bbc.co.uk/usingthebbc/privacy/">Privacy Policy</a></li><li class="orb-footer-cookies"><a href="https://www.bbc.co.uk/usingthebbc/cookies/">Cookies</a></li><li class="orb-footer-accessibility"><a href="https://www.bbc.co.uk/accessibility/">Accessibility Help</a></li><li class="orb-footer-parental"><a href="https://www.bbc.co.uk/guidance">Parental Guidance</a></li><li class="orb-footer-contact"><a href="https://www.bbc.co.uk/contact">Contact the BBC</a></li><li class="orb-footer-newsletter"><a href="https://www.bbc.co.uk/bbcnewsletter">Get Personalised Newsletters</a></li></ul><small><em class="orb-hilight">Copyright &copy; 2020 BBC.</em> The BBC is not responsible for the content of external sites. <span class="orb-footer-links"><a href="https://www.bbc.co.uk/help/web/links/" class="orb-hilight">Read about our approach to external linking.</a></span></small></div></div></div></footer></div><script id="orb-js-script" data-assetpath="https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/" src="https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/js/orb.min.js"></script>   <script type="text/javascript">/*<![CDATA[*/
+                    require(['orb/nav'], function(nav) {
+                        window.bbcuser.isUKCombined().then(function(isUK) {
+                            if (isUK) {
+                                nav.loadJs('https://nav.files.bbci.co.uk/orbit/b3428ed36e7e195dbf298117ef155a8f/js/edr.min.js');
+                            }
+                        });
+                    });
+                /*]]>*/</script> <!-- BBCDOTCOM bodyLast --><div class="bbccom_display_none"><script type="text/javascript">/*<![CDATA[*/ if (window.bbcdotcom && window.bbcdotcom.analytics && bbcdotcom.config && !bbcdotcom.config.isSportApp() && !bbcdotcom.config.isReel()) { bbcdotcom.checkThirdPartyFirst(bbcdotcom.analytics.page, bbcdotcom.analytics); } /*]]>*/</script><noscript><img src="//ssc.api.bbc.com/?c1=2&c2=19293874&ns_site=bbc&name=" height="1" width="1" alt=""></noscript><script type="text/javascript">/*<![CDATA[*/ if (window.bbcdotcom && bbcdotcom.currencyProviders) { bbcdotcom.checkThirdPartyFirst(bbcdotcom.currencyProviders.write, bbcdotcom.currencyProviders); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ if (window.bbcdotcom && bbcdotcom.currencyProviders) { bbcdotcom.checkThirdPartyFirst(bbcdotcom.currencyProviders.postWrite, bbcdotcom.currencyProviders); } /*]]>*/</script><script type="text/javascript">/*<![CDATA[*/ (function() { window.bbcdotcom.bodyLast = true; }()); /*]]>*/</script></div><!-- BBCDOTCOM all code in page -->         <script type="text/javascript">window.COOKIES_STATIC_HOST = 'https://nav.files.bbci.co.uk/orbit-webmodules/0.0.2-477.3a39ca0/cookie-banner/cookie-prompt/';</script><script src="https://nav.files.bbci.co.uk/orbit-webmodules/0.0.2-477.3a39ca0/cookie-banner/cookie-banners.bundle.js" async=""></script><script type="text/javascript">require(["istats-1","orb/cookies"],function(o,t){if(t.isAllowed("s1"))try{if(!require.s.contexts._.config.paths.idcta)return void i();require(["idcta/idcta-1"],function(t){t&&"function"==typeof t.getIStatsLabels&&o.addLabels(t.getIStatsLabels()),i()},function(t){throw t})}catch(t){console&&"function"==typeof console.log&&console.log("an exception occurred while adding idcta labels to istats, invoking istats without them",t),i()}function i(){o.invoke()}});</script><script type="text/javascript">"use strict";window.__reverb.__reverbLoadedPromise.then(function(e){return e.initialise().then(function(){return e.viewEvent()})},function(){console.log("Failed to load reverb. No event sent")});</script><script src="https://nav.files.bbci.co.uk//user-activity-helper/1d5fa47d9ba60d5c52b377ec3208b7be/js/detectview.bundle.js" async=""></script>
+                    <!-- Programmes Version: 1485 -->
+            </body>
+            <script type="text/javascript">
+            require(['popup'], function(popup) {
+                new popup({containerSelector: '.popup', useParentContainerWidth: true});
+            });
+        </script>
+    </html>

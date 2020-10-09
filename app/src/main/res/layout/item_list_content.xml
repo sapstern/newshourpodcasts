@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/GridLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:alignmentMode="alignBounds"
+    android:columnCount="2"
+    android:padding="5dp"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|fill"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1">
+        <Button
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|fill"
+            android:alignmentMode="alignBounds"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|fill"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1">
+        <Button
+            android:id="@+id/dateOfPublication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|fill"
+            android:alignmentMode="alignBounds"
+            android:clickable="false"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
+</GridLayout>
+
