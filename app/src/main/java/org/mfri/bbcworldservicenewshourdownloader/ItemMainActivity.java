@@ -26,6 +26,12 @@ public class ItemMainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_main);
 
+        try {
+            Class.forName("android.os.AsyncTask");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         boolean isPermissionGiven = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)

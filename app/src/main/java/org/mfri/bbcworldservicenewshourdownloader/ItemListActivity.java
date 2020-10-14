@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,13 +107,19 @@ public class ItemListActivity extends AppCompatActivity {
 
             ViewHolder(View view) {
                 super(view);
-                //mIdView = (TextView) view.findViewById(R.id.id_text);
                 mContentView = (Button) view.findViewById(R.id.content);
                 mDateOfPublicationView = (TextView) view.findViewById(R.id.dateOfPublication);
             }
 
             public void setSubmitButtonOnClickListener(final int position) {
 
+                Log.d("ItemListActivity", "setSubmitButtonOnClickListener("+position+")start => URL: "+mValues.get(position).url);
+                if(mValues.get(position).url!=null&&mValues.get(position).url.equals("none"))
+                     mContentView.setBackgroundColor(Color.BLUE);
+                else {
+                    if(position!=0)
+                        mContentView.setBackgroundColor(Color.RED);
+                }
                 mContentView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

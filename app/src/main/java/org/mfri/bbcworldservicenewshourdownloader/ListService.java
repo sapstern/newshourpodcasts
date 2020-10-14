@@ -54,7 +54,7 @@ public class ListService extends IntentService {
 
         if(theDownloadedPodcastBundle!=null && downloadOptionsBundle!=null){
             int theSizeOfDownloadOptions = downloadOptionsBundle.getInt("LIST_SIZE");
-            int theSizeOfDownloadedPodcasts = theDownloadedPodcastBundle.getInt("SIZE");
+            int theSizeOfDownloadedPodcasts = theDownloadedPodcastBundle.getInt("LIST_SIZE");
             int sizeAll = theSizeOfDownloadOptions;
 
             for (int i=0;i<theSizeOfDownloadedPodcasts;i++){
@@ -63,6 +63,12 @@ public class ListService extends IntentService {
                 for (int j=0;j<theSizeOfDownloadOptions;j++){
                     DownloadListItem itemOptions = downloadOptionsBundle.getParcelable("ITEM_"+j);
                     if(item.fileName.equals(itemOptions.fileName)){
+
+                            downloadOptionsBundle.remove("ITEM_" + j);
+                            //Neuer ITEM, weil url final ist, somit nicht auf "none" gesetzt werden kann, also ersetzen
+                            DownloadListItem itemTemp = new DownloadListItem(String.valueOf(j), itemOptions.content, "none", itemOptions.dateOfPublication, itemOptions.fileName);
+                            downloadOptionsBundle.putParcelable("ITEM_" + j, itemTemp);
+
                         isFound = true;
                         break;
                     }

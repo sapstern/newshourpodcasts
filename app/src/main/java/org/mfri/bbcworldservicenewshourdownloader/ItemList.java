@@ -21,26 +21,29 @@ public class ItemList {
      */
     public  final List<DownloadListItem> ITEMS = new ArrayList<DownloadListItem>();
 
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public  final Map<String, DownloadListItem> ITEM_MAP = new HashMap<String, DownloadListItem>();
+
 
 
 
 
 
     public ItemList(Bundle bundle) {
-        //Define table header
-        addItem(new DownloadListItem("none","Content","none", "Publication Date", "defaultFileame"));
+        //Define table header => Empty ListItem
+        ITEMS.add(new DownloadListItem("","Content","", "Published", ""));
         if (bundle!=null) {
-            int itemListSize = bundle.getInt("LIST_SIZE");
+            int itemListSize = -1;
+           try {
+                itemListSize = bundle.getInt("LIST_SIZE");
+           }
+           catch (Exception e){
+               e.printStackTrace();
+           }
             Log.d("ItemList size: ", String.valueOf(itemListSize));
             for (int i = 0; i < itemListSize; i++) {
                 DownloadListItem currentItem =  (DownloadListItem)bundle.get("ITEM_"+i);
                 if(currentItem!=null) {
                     Log.d("ItemList CONSTRUCTOR", currentItem.toString());
-                    addItem(currentItem);
+                    ITEMS.add(currentItem);
                 }
                 else
                     Log.d("ItemList CONSTRUCTOR", "ITEM_"+i+" is null");
@@ -49,10 +52,6 @@ public class ItemList {
 
     }
 
-    private  void addItem(DownloadListItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
-    }
 
 
 

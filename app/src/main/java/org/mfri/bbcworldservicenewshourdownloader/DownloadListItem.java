@@ -11,12 +11,14 @@ public class DownloadListItem implements Parcelable {
         public final String fileName;
 
 
+
         public DownloadListItem(String id, String content, String url, String dateOfPublication, String fileName) {
             this.id = id;
             this.content = content;
             this.url = url;
             this.dateOfPublication = dateOfPublication;
             this.fileName = fileName;
+
         }
 
         protected DownloadListItem(Parcel in) {
@@ -25,6 +27,7 @@ public class DownloadListItem implements Parcelable {
             url = in.readString();
             dateOfPublication = in.readString();
             fileName = in.readString();
+
         }
 
         public static final Creator<DownloadListItem> CREATOR = new Creator<DownloadListItem>() {
@@ -56,6 +59,7 @@ public class DownloadListItem implements Parcelable {
             parcel.writeString(url);
             parcel.writeString(dateOfPublication);
             parcel.writeString(fileName);
+
         }
 }
 

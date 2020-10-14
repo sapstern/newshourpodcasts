@@ -37,6 +37,11 @@ public class DownloadService extends IntentService {
      */
     public DownloadService() {
         super("DownloadService");
+        try {
+            Class.forName("android.os.AsyncTask");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

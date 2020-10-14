@@ -26,6 +26,7 @@ import java.util.StringTokenizer;
 
 public class Utils {
 
+
     /*
      * Checks the network state for connection
      *
@@ -48,7 +49,7 @@ public class Utils {
 
 
     public synchronized Bundle getDownloadedPodcasts() throws IOException{
-
+        Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/Podcasts");
@@ -84,16 +85,19 @@ public class Utils {
                         if(toki.hasMoreElements())
                              theDateBuilder.append("_");
                     }else {
-                        theDescriptionBuilder.append(currentToken);
+                        if(!currentToken.startsWith("Newshour"))
+                            theDescriptionBuilder.append(currentToken);
                         if(toki.hasMoreElements())
                             theDescriptionBuilder.append(" ");
                     }
                 }
-                DownloadListItem item = new DownloadListItem(String.valueOf(i), theDescriptionBuilder.toString(), "none", theDateBuilder.toString(), theFileName);
+
+                DownloadListItem item = new DownloadListItem(String.valueOf(i), theDescriptionBuilder.toString() , "none", theDateBuilder.toString(), theFileName);
                 bundle.putParcelable("ITEM_" + i, item);
             }
         }
-        bundle.putInt("SIZE", i);
+        Log.d("Utils", "getDownloadedPodcasts() end size of list: "+i );
+        bundle.putInt("LIST_SIZE", i);
         return bundle;
     }
     /*
@@ -102,6 +106,8 @@ public class Utils {
      * @return
      * */
     public synchronized Bundle getCurrentDownloadOptions() throws IOException {
+
+
         Bundle bundle = new Bundle();
         //MFRI jsoup rein
         String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
