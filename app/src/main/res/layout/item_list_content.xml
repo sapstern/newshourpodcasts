@@ -14,13 +14,15 @@
         android:layout_gravity="bottom|fill"
         android:layout_rowWeight="1"
         android:layout_columnWeight="1">
+
         <Button
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|fill"
             android:alignmentMode="alignBounds"
-            android:textAppearance="?attr/textAppearanceListItem" />
+
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
@@ -28,14 +30,14 @@
         android:layout_gravity="bottom|fill"
         android:layout_rowWeight="1"
         android:layout_columnWeight="1">
-        <Button
+        <TextView
             android:id="@+id/dateOfPublication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|fill"
             android:alignmentMode="alignBounds"
-            android:clickable="false"
-            android:textAppearance="?attr/textAppearanceListItem" />
+
+             />
     </LinearLayout>
 </GridLayout>
 

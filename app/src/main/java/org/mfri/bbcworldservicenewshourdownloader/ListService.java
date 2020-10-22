@@ -66,8 +66,8 @@ public class ListService extends IntentService {
 
                             downloadOptionsBundle.remove("ITEM_" + j);
                             //Neuer ITEM, weil url final ist, somit nicht auf "none" gesetzt werden kann, also ersetzen
-                            DownloadListItem itemTemp = new DownloadListItem(String.valueOf(j), itemOptions.content, "none", itemOptions.dateOfPublication, itemOptions.fileName);
-                            downloadOptionsBundle.putParcelable("ITEM_" + j, itemTemp);
+                            //DownloadListItem itemTemp = new DownloadListItem(String.valueOf(j), itemOptions.content, "none", itemOptions.dateOfPublication, itemOptions.fileName);
+                            downloadOptionsBundle.putParcelable("ITEM_" + j, item);
 
                         isFound = true;
                         break;

@@ -1,5 +1,6 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,12 +9,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,108 +42,125 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemListActivity extends AppCompatActivity {
 
 
-    Utils utils = null;
+    private Utils utils = null;
+    private TableLayout.LayoutParams rowParams = null;
+    private TableRow.LayoutParams colParams = null;
+    private ScrollView layMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_list);
-
+//        setContentView(R.layout.activity_item_list);
+//
         Log.d("CREATE", "onCreate start");
         utils = new Utils();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
-
-
-        View recyclerView = findViewById(R.id.item_list);
-        assert recyclerView != null;
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        toolbar.setTitle(getTitle());
+//
+//
+//
+//        View recyclerView = findViewById(R.id.item_list);
+//        assert recyclerView != null;
 
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
-        setupRecyclerView((RecyclerView) recyclerView, new ItemList(listBundle));
+        //setupRecyclerView((RecyclerView) recyclerView, new ItemList(listBundle));
+
+        //MFRI neu
+        //View tabView = findViewById(R.id.tableLayout1);
+        ItemList items = new ItemList(listBundle);
+        setContentView(R.layout.activity_item_list);
+        rowParams = new TableLayout.LayoutParams();
+        rowParams.setMargins(0, 0, 0, 1);
+        colParams = new TableRow.LayoutParams();
+        colParams.setMargins(0, 0, 1, 0);
+        colParams.width = 0;
+        colParams.height = TableRow.LayoutParams.FILL_PARENT;
+        TableLayout tableLayout = new TableLayout(this);
+        TableLayout.LayoutParams tabLayoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
+        tableLayout.setLayoutParams(tabLayoutParams);
+        tableLayout.setStretchAllColumns(true);
+        tableLayout.setBackgroundColor(this.getResources().getColor(
+                R.color.table_background));
+
+        for(int i=0; i<items.ITEMS.size();i++){
+            //add rows
+           tableLayout.addView(addRow(items.ITEMS.get(i)));
+        }
+
+        //display the table
+        layMain = (ScrollView)findViewById(R.id.table);
+        layMain.removeAllViews();
+        layMain.addView(tableLayout);
         Log.d("CREATE", "onCreate end");
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView, ItemList itemList) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, itemList.ITEMS, false));
-    }
-
-    public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final ItemListActivity mParentActivity;
-        private final List<DownloadListItem> mValues;
 
 
-        SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<DownloadListItem> items,
-                                      boolean twoPane) {
-            mValues = items;
-            mParentActivity = parent;
+    public TableRow addRow(DownloadListItem item) {
+        TableRow tr = new TableRow(this);
+        tr.setBackgroundColor(this.getResources().getColor(
+                R.color.table_background));
 
-        }
+        tr.setLayoutParams(rowParams);
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_list_content, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-
-            holder.mContentView.setText(mValues.get(position).content);
-            holder.mDateOfPublicationView.setText(mValues.get(position).dateOfPublication);
-            holder.setSubmitButtonOnClickListener(position);
-
-            holder.itemView.setTag(mValues.get(position));
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            //final TextView mIdView;
-            final Button mContentView;
-            public TextView mDateOfPublicationView;
-
-            ViewHolder(View view) {
-                super(view);
-                mContentView = (Button) view.findViewById(R.id.content);
-                mDateOfPublicationView = (TextView) view.findViewById(R.id.dateOfPublication);
+        for (int iCol = 0; iCol < 2; iCol++) {
+            TextView tvCol = null;
+            switch (iCol)
+            {
+                case 0:
+                    tvCol = new Button(this);
+                    tvCol.setText(item.content);
+                    setSubmitButtonOnClickListener((Button)tvCol, item);
+                    tvCol.setBackgroundColor(this.getResources().getColor(
+                            R.color.row_background));
+                    if(item.url!=null&&item.url.equals("none")
+                            &&item.content!=null&&!item.content.equals("Content"))
+                        tvCol.setBackgroundColor(Color.parseColor("#7fffd4"));
+                    if(item.url!=null&&!item.url.equals("none")
+                            &&item.content!=null&&!item.content.equals("Content"))
+                        tvCol.setBackgroundColor(Color.RED);
+                    break;
+                default:
+                    tvCol = new TextView(this);
+                    tvCol.setText(item.dateOfPublication);
+                    tvCol.setBackgroundColor(this.getResources().getColor(
+                            R.color.row_background));
+                    break;
             }
 
-            public void setSubmitButtonOnClickListener(final int position) {
 
-                Log.d("ItemListActivity", "setSubmitButtonOnClickListener("+position+")start => URL: "+mValues.get(position).url);
-                if(mValues.get(position).url!=null&&mValues.get(position).url.equals("none"))
-                     mContentView.setBackgroundColor(Color.BLUE);
-                else {
-                    if(position!=0)
-                        mContentView.setBackgroundColor(Color.RED);
-                }
-                mContentView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d("DOWNLOAD_ITEM", "onClick start");
-                        //Header row, no download
-                        if (position == 0) {
-                            return;
-                        }
-                        Intent theDownloadIntent = utils.prepareItemDownload(mValues.get(position),getApplicationContext(),true);
-                        showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null);
-                        startService(theDownloadIntent);
+            tvCol.setGravity(Gravity.CENTER | Gravity.CENTER);
+            tvCol.setPadding(3, 3, 3, 3);
+            tvCol.setTextColor(this.getResources().getColor(
+                    R.color.text_black));
+            tvCol.setLayoutParams(colParams);
 
-                    }
-                });
+            tr.addView(tvCol);
+        }
+
+        return tr;
+    }
+
+    public void setSubmitButtonOnClickListener(Button button, final DownloadListItem item) {
+
+        Log.d("ItemListActivity", "setSubmitButtonOnClickListener()start => URL: "+item.url);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DOWNLOAD_ITEM", "onClick start");
+
+
+                Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true);
+                showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null);
+                startService(theDownloadIntent);
 
             }
-        }
+        });
+
+
     }
+
 
     private BroadcastReceiver bReceiver = new BroadcastReceiver() {
 
