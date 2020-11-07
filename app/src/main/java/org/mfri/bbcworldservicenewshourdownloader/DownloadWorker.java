@@ -53,7 +53,7 @@ public class DownloadWorker extends Worker {
             Log.d("WORK", "DownloadWorker.doWork() start download");
             theContext.startService(theDownloadIntent);
             //get out of download loop if network state has changed
-            if (!BBCWorldServiceDownloaderUtils.isDeviceConnected(theContext) || !BBCWorldServiceDownloaderUtils.isDeviceOnWlan(theContext))
+            //if (!BBCWorldServiceDownloaderUtils.isDeviceConnected(theContext) || !BBCWorldServiceDownloaderUtils.isDeviceOnWlan(theContext))
                 return Result.retry();
         }
 
