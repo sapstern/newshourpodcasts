@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class Utils {
+public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
 
     /*
@@ -52,7 +52,7 @@ public class Utils {
         Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/Podcasts");
+        File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         File[] podcastArry = myDir.listFiles();
         if(podcastArry==null)
             return null;
@@ -186,15 +186,17 @@ public class Utils {
      * @param item                current item
      * @param theContext
      * @param isToastOnFileExists If we need notification and toast on the info that there is a file of the given name already sitting in filesystem
+     * @param isStartedInBackground whether this service will be started from background task
      * @return
      */
-    public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists) {
+    public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists, boolean isStartedInBackground) {
         Bundle bundle = new Bundle();
         bundle.putString("url", item.url);
        //String fileName = prepareFilename(item.content,item.dateOfPublication);
 
         bundle.putString("fileName", item.fileName);
         bundle.putBoolean("isToastOnFileExists", isToastOnFileExists);
+        bundle.putBoolean("isStartedInBackground", isStartedInBackground);
         Intent intent = new Intent(theContext, DownloadService.class);
         intent.putExtras(bundle);
         return intent;
@@ -225,11 +227,11 @@ public class Utils {
      */
     public File fileExists(String fileName) {
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/Podcasts");
+        File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         if (!myDir.exists()) {
             return null;
         }
-        File theFile = new File(root + "/Podcasts/" + fileName);
+        File theFile = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/" + fileName);
         if (theFile.exists()) {
             return theFile;
         }

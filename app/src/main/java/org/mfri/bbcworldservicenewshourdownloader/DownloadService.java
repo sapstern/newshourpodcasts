@@ -52,13 +52,11 @@ public class DownloadService extends IntentService {
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
         final Bundle bundle = intent.getExtras();
         final String fileName = bundle.getString("fileName");
-       // final boolean isToastOnFileExists = bundle.getBoolean("isToastOnFileExists");
-        File theFile = new Utils().fileExists(fileName);
+        File theFile = new BBCWorldServiceDownloaderUtils().fileExists(fileName);
         if (theFile!=null) {
-            //String fleName = Environment.getExternalStorageDirectory().toString() + "/Podcasts/" + fileName;
             if(bundle.getBoolean("isToastOnFileExists")) {
                 Toast.makeText(getApplicationContext(), "File exists: " + theFile.getName(), Toast.LENGTH_LONG).show();
-                sendBroadcast(true, theFile.getName(), fileName);
+                sendBroadcast(true, theFile.getName(), fileName, bundle.getBoolean("isStartedInBackground"));
             }
             return;
         }
@@ -76,7 +74,7 @@ public class DownloadService extends IntentService {
                                     String fileNameSaved = savePodcast(fileName, response);
 
                                     Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
-                                    sendBroadcast(true, fileNameSaved, fileName);
+                                    sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -107,7 +105,7 @@ public class DownloadService extends IntentService {
     private String savePodcast(String fileName, byte[] barry) throws IOException {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/Podcasts");
+        File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         if (!myDir.exists()) {
             myDir.mkdirs();
         }
@@ -124,11 +122,12 @@ public class DownloadService extends IntentService {
 
     }
 
-    private void sendBroadcast(boolean success, String fileName, String fileNameWithoutDir) {
+    private void sendBroadcast(boolean success, String fileName, String fileNameWithoutDir, boolean isStartedInBackground) {
         Intent intent = new Intent("messageFromDownloadService"); //put the same message as in the filter you used in the activity when registering the receiver
         intent.putExtra("success", success);
         intent.putExtra("fileName", fileName);
         intent.putExtra("fileNameWithoutDir", fileNameWithoutDir);
+        intent.putExtra("isStartedInBackground", isStartedInBackground);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

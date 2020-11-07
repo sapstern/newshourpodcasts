@@ -32,7 +32,7 @@ public class ListService extends IntentService {
         Log.d("HANDLE_INTENT", "onHandleIntent start");
 
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        Utils utils = new Utils();
+        BBCWorldServiceDownloaderUtils utils = new BBCWorldServiceDownloaderUtils();
         Bundle theDownloadedPodcastBundle;
         try {
             theDownloadedPodcastBundle = utils.getDownloadedPodcasts();

@@ -29,12 +29,12 @@ public class DownloadWorker extends Worker {
         boolean isWorking = true;
         Log.d("WORK", "DownloadWorker.doWork() start");
 
-        if (!Utils.isDeviceConnected(theContext) || !Utils.isDeviceOnWlan(theContext)) {
+        if (!BBCWorldServiceDownloaderUtils.isDeviceConnected(theContext) || !BBCWorldServiceDownloaderUtils.isDeviceOnWlan(theContext)) {
             Log.d("WORK", "DownloadWorker.doWork() device not on wlan");
             return Result.retry();
         }
         //Check network state for wlan connection
-        Utils utils = new Utils();
+        BBCWorldServiceDownloaderUtils utils = new BBCWorldServiceDownloaderUtils();
         //connected: lets first get all available downloads from bbc
         Bundle downLoadOptionsBundle = null;
         try {
@@ -49,11 +49,11 @@ public class DownloadWorker extends Worker {
             return Result.retry();
         for (int i = 1; i < itemList.ITEMS.size(); i++) {
             DownloadListItem currentItem = itemList.ITEMS.get(i);
-            Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false);
+            Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true);
             Log.d("WORK", "DownloadWorker.doWork() start download");
             theContext.startService(theDownloadIntent);
             //get out of download loop if network state has changed
-            if (!Utils.isDeviceConnected(theContext) || !Utils.isDeviceOnWlan(theContext))
+            if (!BBCWorldServiceDownloaderUtils.isDeviceConnected(theContext) || !BBCWorldServiceDownloaderUtils.isDeviceOnWlan(theContext))
                 return Result.retry();
         }
 

@@ -1,6 +1,5 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,28 +7,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.List;
+import java.io.File;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * An activity representing a list of Items. This activity
@@ -42,7 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemListActivity extends AppCompatActivity {
 
 
-    private Utils utils = null;
+    private BBCWorldServiceDownloaderUtils utils = null;
     private TableLayout.LayoutParams rowParams = null;
     private TableRow.LayoutParams colParams = null;
     private ScrollView layMain;
@@ -52,7 +46,7 @@ public class ItemListActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_item_list);
 //
         Log.d("CREATE", "onCreate start");
-        utils = new Utils();
+        utils = new BBCWorldServiceDownloaderUtils();
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        toolbar.setTitle(getTitle());
@@ -98,41 +92,33 @@ public class ItemListActivity extends AppCompatActivity {
 
     public TableRow addRow(DownloadListItem item) {
         TableRow tr = new TableRow(this);
-        tr.setBackgroundColor(this.getResources().getColor(
-                R.color.table_background));
+        tr.setBackgroundColor(this.getResources().getColor(R.color.table_background));
 
         tr.setLayoutParams(rowParams);
 
-        for (int iCol = 0; iCol < 2; iCol++) {
-            TextView tvCol = null;
-            switch (iCol)
+        for (int i = 0; i < 2; i++) {
+            TextView tvCol = tvCol = new Button(this);
+            switch (i)
             {
                 case 0:
-                    tvCol = new Button(this);
                     tvCol.setText(item.content);
                     setSubmitButtonOnClickListener((Button)tvCol, item);
-                    tvCol.setBackgroundColor(this.getResources().getColor(
-                            R.color.row_background));
-                    if(item.url!=null&&item.url.equals("none")
-                            &&item.content!=null&&!item.content.equals("Content"))
-                        tvCol.setBackgroundColor(Color.parseColor("#7fffd4"));
-                    if(item.url!=null&&!item.url.equals("none")
-                            &&item.content!=null&&!item.content.equals("Content"))
-                        tvCol.setBackgroundColor(Color.RED);
+                    tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
                     break;
                 default:
-                    tvCol = new TextView(this);
+                    tvCol.setClickable(false);
                     tvCol.setText(item.dateOfPublication);
-                    tvCol.setBackgroundColor(this.getResources().getColor(
-                            R.color.row_background));
+                    tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
                     break;
             }
-
-
+            //Set background color according to the download state
+            if(item.url!=null&&item.url.equals("none")&&item.content!=null&&!item.content.equals("Content"))
+                tvCol.setBackgroundColor(this.getResources().getColor(R.color.aqua_marine_downloaded));
+            if(item.url!=null&&!item.url.equals("none")&&item.content!=null&&!item.content.equals("Content"))
+                tvCol.setBackgroundColor(this.getResources().getColor(R.color.aqua_pink_downloaded));
             tvCol.setGravity(Gravity.CENTER | Gravity.CENTER);
             tvCol.setPadding(3, 3, 3, 3);
-            tvCol.setTextColor(this.getResources().getColor(
-                    R.color.text_black));
+            tvCol.setTextColor(this.getResources().getColor(R.color.text_black));
             tvCol.setLayoutParams(colParams);
 
             tr.addView(tvCol);
@@ -151,7 +137,7 @@ public class ItemListActivity extends AppCompatActivity {
                 Log.d("DOWNLOAD_ITEM", "onClick start");
 
 
-                Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true);
+                Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false);
                 showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null);
                 startService(theDownloadIntent);
 
@@ -169,12 +155,16 @@ public class ItemListActivity extends AppCompatActivity {
 
             String fileName = intent.getExtras().getString("fileName");
             if(fileName!= null && !fileName.equals("")) {
-
+                if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
+                    Intent viewIntent = new Intent(Intent.ACTION_VIEW);
+                    String root = Environment.getExternalStorageDirectory().toString();
+                    File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/"+fileName);
+                    viewIntent.setDataAndType(Uri.fromFile(file), "audio/*");
+                    startActivity(Intent.createChooser(viewIntent, null));
+                    return;
+                }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
                 showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir);
-                Intent mediaPlayerintent = new Intent(getApplicationContext(), MediaPlayerActivity.class);
-                mediaPlayerintent.putExtra("fileNameWithoutDir", fileNameWithoutDir);
-                startActivity(mediaPlayerintent);
             }
 
 
