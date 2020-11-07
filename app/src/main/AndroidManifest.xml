@@ -38,16 +38,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.mfri.bbcworldservicenewshourdownloader.ItemMainActivity" />
         </activity>
-        <activity
-            android:name=".MediaPlayerActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleInstance">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicenewshourdownloader.ItemListActivity" />
-        </activity>
         <service
             android:name=".ListService"
             android:exported="false" />
