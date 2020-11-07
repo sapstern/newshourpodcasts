@@ -159,8 +159,10 @@ public class ItemListActivity extends AppCompatActivity {
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW);
                     String root = Environment.getExternalStorageDirectory().toString();
                     File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/"+fileName);
-                    viewIntent.setDataAndType(Uri.fromFile(file), "audio/*");
-                    startActivity(Intent.createChooser(viewIntent, null));
+                    Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+                    viewIntent.setDataAndType(fileURI, "audio/*");
+                    viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(viewIntent, fileName));
                     return;
                 }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
