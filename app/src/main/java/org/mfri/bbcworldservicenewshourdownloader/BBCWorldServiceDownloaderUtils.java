@@ -1,5 +1,7 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
 import androidx.core.net.ConnectivityManagerCompat;
 
 import org.jsoup.Jsoup;
@@ -237,5 +240,27 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
         }
         return null;
     }
+    public void showNotification(String title, String message, boolean isIntend, String fileNameWithoutDir, Context context, NotificationManager mNotificationManager) {
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("1234567",
+                    "BBC_POD_DL",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("Download podcasts ongoing");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "1234567")
+                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
+                .setContentTitle(title) // title for notification
+                .setContentText(message)// message for notification
+                .setAutoCancel(true); // clear notification after click
+//        if (isIntend) {
+//            Intent intent = new Intent(getApplicationContext(), MediaPlayerActivity.class);
+//            //MFRI hier noch mediaplayer activity richtig aufrufen
+//            intent.putExtra("fileNameWithoutDir", fileNameWithoutDir);
+//            PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            mBuilder.setContentIntent(pi);
+//        }
+        mNotificationManager.notify(0, mBuilder.build());
+    }
 }

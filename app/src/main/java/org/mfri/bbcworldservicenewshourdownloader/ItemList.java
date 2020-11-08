@@ -22,11 +22,6 @@ public class ItemList {
     public  final List<DownloadListItem> ITEMS = new ArrayList<DownloadListItem>();
 
 
-
-
-
-
-
     public ItemList(Bundle bundle) {
         //Define table header => Empty ListItem
         ITEMS.add(new DownloadListItem("","Content","", "Published", ""));

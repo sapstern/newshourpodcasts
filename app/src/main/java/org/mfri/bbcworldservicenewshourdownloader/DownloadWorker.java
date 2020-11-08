@@ -13,7 +13,8 @@ import java.io.IOException;
 
 public class DownloadWorker extends Worker {
 
-    private Context theContext;
+    private final Context theContext;
+
 
     public DownloadWorker(
             @NonNull Context context,
@@ -47,21 +48,39 @@ public class DownloadWorker extends Worker {
         Log.d("WORK", "DownloadWorker.doWork() got items: " + itemList.ITEMS.size());
         if (itemList.ITEMS.size() < 2)
             return Result.retry();
-        for (int i = 1; i < itemList.ITEMS.size(); i++) {
-            DownloadListItem currentItem = itemList.ITEMS.get(i);
-            Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true);
-            Log.d("WORK", "DownloadWorker.doWork() start download");
-            theContext.startService(theDownloadIntent);
-            //get out of download loop if network state has changed
-            //if (!BBCWorldServiceDownloaderUtils.isDeviceConnected(theContext) || !BBCWorldServiceDownloaderUtils.isDeviceOnWlan(theContext))
-                return Result.retry();
-        }
 
-
-        // Indicate whether the work finished successfully with the Result
-        return Result.success();
+        return getResult(utils, itemList);
 
     }
+
+    private Result getResult(BBCWorldServiceDownloaderUtils utils, ItemList itemList) {
+        Log.d("WORK", "DownloadWorker.doWork() start download size of list is "+itemList.ITEMS.size());
+        if (itemList.ITEMS.size() < 1)
+            return Result.retry();
+        DownloadListItem currentItem = itemList.ITEMS.get(1);
+        Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true);
+
+        theContext.startService(theDownloadIntent);
+        Log.d("WORK", "DownloadWorker.doWork() start download intent started ");
+        try {
+                //System.out.println(new Date());
+                Thread.sleep(60 * 1000);
+        } catch (InterruptedException e) {
+            Log.d("WORK", "DownloadWorker.doWork() start download interrupted ");
+            Thread.currentThread().interrupt();
+        }
+        Log.d("WORK", "DownloadWorker.doWork() start download after pause ");
+        //get out of download loop if network state has changed
+        if (!BBCWorldServiceDownloaderUtils.isDeviceConnected(theContext) || !BBCWorldServiceDownloaderUtils.isDeviceOnWlan(theContext))
+            return Result.retry();
+        else {
+            itemList.ITEMS.remove(1);
+            return getResult(utils, itemList);
+        }
+
+    }
+
+
 }
 
 

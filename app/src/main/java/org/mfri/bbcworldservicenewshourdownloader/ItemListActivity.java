@@ -43,24 +43,13 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_item_list);
-//
+
         Log.d("CREATE", "onCreate start");
         utils = new BBCWorldServiceDownloaderUtils();
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        toolbar.setTitle(getTitle());
-//
-//
-//
-//        View recyclerView = findViewById(R.id.item_list);
-//        assert recyclerView != null;
 
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
-        //setupRecyclerView((RecyclerView) recyclerView, new ItemList(listBundle));
 
-        //MFRI neu
-        //View tabView = findViewById(R.id.tableLayout1);
+        //MFRI ne
         ItemList items = new ItemList(listBundle);
         setContentView(R.layout.activity_item_list);
         rowParams = new TableLayout.LayoutParams();
@@ -85,6 +74,7 @@ public class ItemListActivity extends AppCompatActivity {
         layMain = (ScrollView)findViewById(R.id.table);
         layMain.removeAllViews();
         layMain.addView(tableLayout);
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("messageFromDownloadService"));
         Log.d("CREATE", "onCreate end");
     }
 
@@ -135,16 +125,11 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("DOWNLOAD_ITEM", "onClick start");
-
-
                 Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false);
-                showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null);
+                utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null, getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
                 startService(theDownloadIntent);
-
             }
         });
-
-
     }
 
 
@@ -166,11 +151,8 @@ public class ItemListActivity extends AppCompatActivity {
                     return;
                 }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
-                showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir);
+                utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
             }
-
-
-
         }
     };
 
@@ -181,32 +163,8 @@ public class ItemListActivity extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
     }
 
-    public void showNotification(String title, String message, boolean isIntend, String fileNameWithoutDir) {
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("1234567",
-                    "BBC_POD_DL",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("Download podcasts ongoing");
-            mNotificationManager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "1234567")
-                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
-                .setContentTitle(title) // title for notification
-                .setContentText(message)// message for notification
-                .setAutoCancel(true); // clear notification after click
-//        if (isIntend) {
-//            Intent intent = new Intent(getApplicationContext(), MediaPlayerActivity.class);
-//            //MFRI hier noch mediaplayer activity richtig aufrufen
-//            intent.putExtra("fileNameWithoutDir", fileNameWithoutDir);
-//            PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            mBuilder.setContentIntent(pi);
-//        }
-        mNotificationManager.notify(0, mBuilder.build());
-    }
 
 }
