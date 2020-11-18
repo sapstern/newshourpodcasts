@@ -40,6 +40,7 @@ public class ItemListActivity extends AppCompatActivity {
     private TableLayout.LayoutParams rowParams = null;
     private TableRow.LayoutParams colParams = null;
     private ScrollView layMain;
+    private ItemList theItemList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +51,13 @@ public class ItemListActivity extends AppCompatActivity {
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
 
         //MFRI ne
-        ItemList items = new ItemList(listBundle);
+        theItemList = new ItemList(listBundle);
         setContentView(R.layout.activity_item_list);
+        setupTableLayout(theItemList);
+        Log.d("CREATE", "onCreate end");
+    }
+
+    private void setupTableLayout(ItemList items) {
         rowParams = new TableLayout.LayoutParams();
         rowParams.setMargins(0, 0, 0, 1);
         colParams = new TableRow.LayoutParams();
@@ -67,7 +73,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         for(int i=0; i<items.ITEMS.size();i++){
             //add rows
-           tableLayout.addView(addRow(items.ITEMS.get(i)));
+            tableLayout.addView(addRow(items.ITEMS.get(i)));
         }
 
         //display the table
@@ -75,9 +81,7 @@ public class ItemListActivity extends AppCompatActivity {
         layMain.removeAllViews();
         layMain.addView(tableLayout);
         LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("messageFromDownloadService"));
-        Log.d("CREATE", "onCreate end");
     }
-
 
 
     public TableRow addRow(DownloadListItem item) {
@@ -141,6 +145,7 @@ public class ItemListActivity extends AppCompatActivity {
             String fileName = intent.getExtras().getString("fileName");
             if(fileName!= null && !fileName.equals("")) {
                 if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
+                    //Setup of implicid intend
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW);
                     String root = Environment.getExternalStorageDirectory().toString();
                     File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/"+fileName);
@@ -150,9 +155,16 @@ public class ItemListActivity extends AppCompatActivity {
                     startActivity(Intent.createChooser(viewIntent, fileName));
                     return;
                 }
+                //should not be null anyway
+                if(theItemList!=null) {
+                    //Refresh the view with every downloade
+                    setupTableLayout(theItemList);
+                    findViewById(R.id.item_list).invalidate();
+                }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
                 utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
             }
+
         }
     };
 
