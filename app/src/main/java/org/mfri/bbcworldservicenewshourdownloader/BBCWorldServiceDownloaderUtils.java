@@ -22,7 +22,11 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -30,6 +34,8 @@ import java.util.StringTokenizer;
 public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
 
+    Bundle currentDownloadOptions = null;
+    Date timeStampOfcurrentDownloadOptions = null;
     /*
      * Checks the network state for connection
      *
@@ -59,6 +65,12 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
         File[] podcastArry = myDir.listFiles();
         if(podcastArry==null)
             return null;
+        // Sort by date
+        Arrays.sort(podcastArry, new Comparator<File>(){
+            public int compare(File f1, File f2)
+            {
+                return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
+            } });
         int i=0;
         for (; i<podcastArry.length;i++) {
             if(     podcastArry[i]!=null
@@ -110,8 +122,12 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
      * */
     public synchronized Bundle getCurrentDownloadOptions() throws IOException {
 
+        if(currentDownloadOptions!=null && isWithinTimeFrame(timeStampOfcurrentDownloadOptions)) {
+            return currentDownloadOptions;
+        }
+        currentDownloadOptions = new Bundle();
+        timeStampOfcurrentDownloadOptions = new Date();
 
-        Bundle bundle = new Bundle();
         //MFRI jsoup rein
         String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
         Document doc = null;
@@ -147,15 +163,31 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                 
                 DownloadListItem item = new DownloadListItem(String.valueOf(s), theDescription, "https:" + theElements.get(i).attr("href"), publicationDate, theFilename);
                 publicationDate = "Mon 01 Januar 0000, 00:00";
-                bundle.putParcelable("ITEM_" + s, item);
+                currentDownloadOptions.putParcelable("ITEM_" + s, item);
                 s++;
             }
             Log.d("onHandleIntent size: ", String.valueOf(s));
-            bundle.putInt("LIST_SIZE", s);
+            currentDownloadOptions.putInt("LIST_SIZE", s);
         }
 
+        timeStampOfcurrentDownloadOptions = new Date();
         Log.d("HANDLE", "handleActionDownloadList exit");
-        return bundle;
+        return currentDownloadOptions;
+    }
+    /**
+     * checks whether we are now less than 12 hours after the last run
+     * If not, returns false
+     *
+     * @param timeStampOfcurrentDownloadOptions
+     * @return
+     */
+    private boolean isWithinTimeFrame(Date timeStampOfcurrentDownloadOptions) {
+
+        if(timeStampOfcurrentDownloadOptions==null)
+            return false;
+
+        return Math.abs(timeStampOfcurrentDownloadOptions.getTime() - new Date().getTime()) > MILLIS_PER_12H;
+
     }
 
     /**
