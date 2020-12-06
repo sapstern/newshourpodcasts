@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -175,8 +176,14 @@ public class ItemListActivity extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
-        //LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
+
     }
 
+    @Override
+    public void onBackPressed()
+    {
+            moveTaskToBack(true); // exist app
+     }
 
 }

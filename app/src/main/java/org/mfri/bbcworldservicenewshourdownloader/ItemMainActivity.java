@@ -39,25 +39,28 @@ public class ItemMainActivity extends Activity {
                     == PackageManager.PERMISSION_GRANTED) {
                 isPermissionGiven =  true;
             } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE }, 0);
                 isPermissionGiven =  false;
             }
         }
 
         if (isPermissionGiven){
-            PeriodicWorkRequest downLoadRequest =
-                    new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
-                            // Constraints
-                            .build();
-            WorkManager
-                    .getInstance(this)
-                    .enqueue(downLoadRequest);
-            Intent intent = new Intent(this, ListService.class);
-            this.startService(intent);
+            startBackgroundWorkerAndService();
         }
     }
 
+    private void startBackgroundWorkerAndService() {
+        PeriodicWorkRequest downLoadRequest =
+                new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
+                        // Constraints
+                        .build();
+        WorkManager
+                .getInstance(this)
+                .enqueue(downLoadRequest);
 
+        Intent intent = new Intent(this, ListService.class);
+        this.startService(intent);
+    }
 
 
     @Override
@@ -80,15 +83,7 @@ public class ItemMainActivity extends Activity {
                     //Log.e("value", "Permission Denied, You cannot use local drive .");
                 }
                 if (isPerpermissionForAllGranted) {
-                    PeriodicWorkRequest downLoadRequest =
-                            new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
-                                    // Constraints
-                                    .build();
-                    WorkManager
-                            .getInstance(this)
-                            .enqueue(downLoadRequest);
-                    Intent intent = new Intent(this, ListService.class);
-                    this.startService(intent);
+                    startBackgroundWorkerAndService();
 
                 }
                 break;
