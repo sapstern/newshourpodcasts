@@ -28,8 +28,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
 
 public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
@@ -185,8 +187,31 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
 
         if(timeStampOfcurrentDownloadOptions==null)
             return false;
+        Date currentDate = new Date();
+        //first check simply whether last timstamp is more than 12 hours
+        if (Math.abs(timeStampOfcurrentDownloadOptions.getTime() - currentDate.getTime()) > MILLIS_PER_12H)
+            return false;
 
-        return Math.abs(timeStampOfcurrentDownloadOptions.getTime() - new Date().getTime()) > MILLIS_PER_12H;
+        //Get a GMT timezone calendar
+        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+
+        cal.setTime(currentDate);
+        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+        //Check whether last relevant publication date was at 15 00 GMT or 22 00 GMT
+        boolean isBetween15And22 = currentHour > 15 && currentHour < 22;
+        if(isBetween15And22){
+            cal.set(Calendar.HOUR, 15);
+        }
+        else{
+            cal.set(Calendar.HOUR, 22);
+        }
+        cal.set(Calendar.MINUTE, 00);
+        //Now compare the timestamp of the last run was made after the last publication date
+        //Then we do not need to fetch the currently available downloads again
+        if(timeStampOfcurrentDownloadOptions.getTime() > cal.getTime().getTime())
+            return true;
+
+        return false;
 
     }
 
