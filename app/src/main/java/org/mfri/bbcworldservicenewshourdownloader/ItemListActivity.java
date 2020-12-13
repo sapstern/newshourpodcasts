@@ -25,6 +25,7 @@ import java.io.File;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * An activity representing a list of Items. This activity
@@ -55,6 +56,19 @@ public class ItemListActivity extends AppCompatActivity {
         theItemList = new ItemList(listBundle);
         setContentView(R.layout.activity_item_list);
         setupTableLayout(theItemList);
+        //add swipe refresh
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(getApplicationContext(), ListService.class);
+                getApplication().startService(intent);
+                pullToRefresh.setRefreshing(false);
+
+            }
+        });
+
+
         Log.d("CREATE", "onCreate end");
     }
 
@@ -160,7 +174,8 @@ public class ItemListActivity extends AppCompatActivity {
                 if(theItemList!=null) {
                     //Refresh the view with every downloade
                     setupTableLayout(theItemList);
-                    findViewById(R.id.item_list).invalidate();
+                    if (findViewById(R.id.item_list)!=null)
+                         findViewById(R.id.item_list).invalidate();
                 }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
                 utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));

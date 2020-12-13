@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
     //* Android Workmanager stuff begin
     def work_version = "2.4.0"
     // (Java only)
