@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -52,7 +54,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
 
-        //MFRI ne
+        //MFRI 
         theItemList = new ItemList(listBundle);
         setContentView(R.layout.activity_item_list);
         setupTableLayout(theItemList);
@@ -194,6 +196,13 @@ public class ItemListActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(bReceiver);
 
     }
+    @Override
+   public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.d("SAVE_STATE", "onSaveInstanceState start");
+        savedInstanceState.putParcelableArrayList("ITEM_LIST", (ArrayList<? extends Parcelable>) theItemList.ITEMS);
+        Log.d("SAVE_STATE", "onSaveInstanceState exit");
+   }
 
     @Override
     public void onBackPressed()
