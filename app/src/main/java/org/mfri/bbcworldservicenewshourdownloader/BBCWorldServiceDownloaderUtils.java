@@ -24,11 +24,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
@@ -59,27 +64,27 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
     }
 
 
+
     public synchronized Bundle getDownloadedPodcasts() throws IOException{
         Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
+        ArrayList<TempDLItem> tab = new ArrayList<>();
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         File[] podcastArry = myDir.listFiles();
         if(podcastArry==null)
             return null;
-        // Sort by date
-        Arrays.sort(podcastArry, new Comparator<File>(){
-            public int compare(File f1, File f2)
-            {
-                return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
-            } });
-        int i=0;
-        for (; i<podcastArry.length;i++) {
+
+
+        int counter = 0;
+        //Date lastDate = new Date(-3600000);
+        for (int i=0; i<podcastArry.length; i++) {
             if(     podcastArry[i]!=null
                  &&!podcastArry[i].isDirectory()
                  && podcastArry[i].getName().startsWith("Newshour_")
                  && podcastArry[i].getName().endsWith(".mp3")
               ){
+                counter++;
                 String theFileName = podcastArry[i].getName();
                 StringTokenizer toki = new StringTokenizer(podcastArry[i].getName().substring(0, podcastArry[i].getName().indexOf(".mp3")), "_");
                 StringBuilder theDescriptionBuilder = new StringBuilder();
@@ -109,13 +114,33 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                     }
                 }
 
-                DownloadListItem item = new DownloadListItem(String.valueOf(i), theDescriptionBuilder.toString() , "none", theDateBuilder.toString(), theFileName);
-                bundle.putParcelable("ITEM_" + i, item);
+                String dateString = theDateBuilder.toString();
+                TempDLItem localItem = new TempDLItem("X", theDescriptionBuilder.toString(), "none", dateString, theFileName);
+                localItem.compareDate = getDateFromPatternString(dateString);
+                tab.add(localItem);
             }
         }
-        Log.d("Utils", "getDownloadedPodcasts() end size of list: "+i );
-        bundle.putInt("LIST_SIZE", i);
+        Collections.sort(tab);
+        for(int i=0;i<tab.size();i++)
+        {
+            TempDLItem currentItem = tab.get(i);
+            DownloadListItem item = new DownloadListItem(String.valueOf(i),currentItem.content,currentItem.url,currentItem.dateOfPublication,currentItem.fileName);
+            bundle.putParcelable("ITEM_" +i, item);
+        }
+        Log.d("Utils", "getDownloadedPodcasts() end size of list: "+counter );
+        bundle.putInt("LIST_SIZE", counter);
         return bundle;
+    }
+
+    public Date getDateFromPatternString(String patternString){
+        DateFormat df = new SimpleDateFormat("EEE_dd_MMMMMMMMMMM_yyyy_kk_mm", Locale.ENGLISH);
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            return df.parse(patternString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+           return null;
+        }
     }
     /*
      * Checks connection state for wlan
