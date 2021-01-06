@@ -10,9 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.net.ConnectivityManagerCompat;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -22,21 +19,17 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.net.ConnectivityManagerCompat;
 
 public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
@@ -120,7 +113,9 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                 tab.add(localItem);
             }
         }
+        //Sort by date descending
         Collections.sort(tab);
+        //Convert TempDLItem to DownloadListItem
         for(int i=0;i<tab.size();i++)
         {
             TempDLItem currentItem = tab.get(i);
@@ -132,6 +127,10 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
         return bundle;
     }
 
+    /**
+     * @param patternString
+     * @return
+     */
     public Date getDateFromPatternString(String patternString){
         DateFormat df = new SimpleDateFormat("EEE_dd_MMMMMMMMMMM_yyyy_kk_mm", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -142,16 +141,20 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
            return null;
         }
     }
-    /*
-     * Checks connection state for wlan
-     * used in ListService as well as BackgroundDownloadService
-     * @return
-     * */
-    public synchronized Bundle getCurrentDownloadOptions() throws IOException {
+
+    /**
+     * loads dl options from BBC
+     * @param context
+     * @return bundle hplding download options
+     * @throws IOException
+     */
+    public synchronized Bundle getCurrentDownloadOptions(Context context) throws IOException {
 
         if(currentDownloadOptions!=null && isWithinTimeFrame(timeStampOfcurrentDownloadOptions)) {
             return currentDownloadOptions;
         }
+        if(!isDeviceConnected(context))
+            return null;
         currentDownloadOptions = new Bundle();
         timeStampOfcurrentDownloadOptions = new Date();
 

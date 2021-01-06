@@ -39,11 +39,13 @@ public class DownloadWorker extends Worker {
         //connected: lets first get all available downloads from bbc
         Bundle downLoadOptionsBundle = null;
         try {
-            downLoadOptionsBundle = utils.getCurrentDownloadOptions();
+            downLoadOptionsBundle = utils.getCurrentDownloadOptions(theContext);
         } catch (IOException e) {
             e.printStackTrace();
             return Result.retry();
         }
+        if (downLoadOptionsBundle==null)
+            return Result.retry();
         ItemList itemList = new ItemList(downLoadOptionsBundle);
         Log.d("WORK", "DownloadWorker.doWork() got items: " + itemList.ITEMS.size());
         if (itemList.ITEMS.size() < 2)

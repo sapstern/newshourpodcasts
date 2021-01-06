@@ -7,12 +7,6 @@ import android.os.ResultReceiver;
 import android.util.Log;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 
 /**
@@ -49,7 +43,7 @@ public class ListService extends IntentService {
         Bundle downloadOptionsBundle;
         while (true){
             try {
-                downloadOptionsBundle = utils.getCurrentDownloadOptions();
+                downloadOptionsBundle = utils.getCurrentDownloadOptions(this);
                 break;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -57,37 +51,12 @@ public class ListService extends IntentService {
             }
         }
 
-        if(theDownloadedPodcastBundle!=null && downloadOptionsBundle!=null){
-            int theSizeOfDownloadOptions = downloadOptionsBundle.getInt("LIST_SIZE");
-            int theSizeOfDownloadedPodcasts = theDownloadedPodcastBundle.getInt("LIST_SIZE");
-            int sizeAll = theSizeOfDownloadOptions;
-
-            for (int i=0;i<theSizeOfDownloadedPodcasts;i++){
-                DownloadListItem item = theDownloadedPodcastBundle.getParcelable("ITEM_"+i);
-
-                boolean isFound = false;
-                for (int j=0;j<theSizeOfDownloadOptions;j++){
-                    DownloadListItem itemOptions = downloadOptionsBundle.getParcelable("ITEM_"+j);
-                    if(item.fileName.equals(itemOptions.fileName)){
-
-                        downloadOptionsBundle.remove("ITEM_" + j);
-                            //Neuer ITEM, weil url final ist, somit nicht auf "none" gesetzt werden kann, also ersetzen
-                            //DownloadListItem itemTemp = new DownloadListItem(String.valueOf(j), itemOptions.content, "none", itemOptions.dateOfPublication, itemOptions.fileName);
-                            downloadOptionsBundle.putParcelable("ITEM_" + j, item);
-
-                        isFound = true;
-                        break;
-                    }
-                }
-                //Nicht gefunden, anhaengen an original download optionss
-                if(isFound==false){
-                    sizeAll++;
-                    downloadOptionsBundle.putParcelable("ITEM_"+sizeAll, item);
-                }
-            }
-            downloadOptionsBundle.remove("LIST_SIZE");
-            sizeAll++;
-            downloadOptionsBundle.putInt("LIST_SIZE",sizeAll);
+        if(theDownloadedPodcastBundle!=null){
+            if(downloadOptionsBundle!=null)
+                 mergeBundles(theDownloadedPodcastBundle, downloadOptionsBundle);
+            else
+                //Just use already downloaded podcasts if not connected to internet
+                downloadOptionsBundle = theDownloadedPodcastBundle;
         }
 
         Intent itemListIntent = new Intent(this, ItemListActivity.class);
@@ -99,6 +68,43 @@ public class ListService extends IntentService {
         stopSelf();
     }
 
+    /**
+     * merge fresh download options with already downloaded item options
+     * @param theDownloadedPodcastBundle
+     * @param downloadOptionsBundle
+     */
+    private void mergeBundles(Bundle theDownloadedPodcastBundle, Bundle downloadOptionsBundle) {
+        int theSizeOfDownloadOptions = downloadOptionsBundle.getInt("LIST_SIZE");
+        int theSizeOfDownloadedPodcasts = theDownloadedPodcastBundle.getInt("LIST_SIZE");
+        int sizeAll = theSizeOfDownloadOptions;
+
+        for (int i=0;i<theSizeOfDownloadedPodcasts;i++){
+            DownloadListItem item = theDownloadedPodcastBundle.getParcelable("ITEM_"+i);
+
+            boolean isFound = false;
+            for (int j=0;j<theSizeOfDownloadOptions;j++){
+                DownloadListItem itemOptions = downloadOptionsBundle.getParcelable("ITEM_"+j);
+                if(item.fileName.equals(itemOptions.fileName)){
+
+                    downloadOptionsBundle.remove("ITEM_" + j);
+                        //Neuer ITEM, weil url final ist, somit nicht auf "none" gesetzt werden kann, also ersetzen
+                        //DownloadListItem itemTemp = new DownloadListItem(String.valueOf(j), itemOptions.content, "none", itemOptions.dateOfPublication, itemOptions.fileName);
+                        downloadOptionsBundle.putParcelable("ITEM_" + j, item);
+
+                    isFound = true;
+                    break;
+                }
+            }
+            //Nicht gefunden, anhaengen an original download optionss
+            if(isFound==false){
+                sizeAll++;
+                downloadOptionsBundle.putParcelable("ITEM_"+sizeAll, item);
+            }
+        }
+        downloadOptionsBundle.remove("LIST_SIZE");
+        sizeAll++;
+        downloadOptionsBundle.putInt("LIST_SIZE",sizeAll);
+    }
 
 
 }
