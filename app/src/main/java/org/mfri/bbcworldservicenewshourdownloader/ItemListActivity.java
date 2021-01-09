@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,10 +22,14 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.File;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -69,11 +74,22 @@ public class ItemListActivity extends AppCompatActivity {
 
             }
         });
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.bbc_toolbar);
+        setSupportActionBar(myToolbar);
 
         Log.d("CREATE", "onCreate end");
     }
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.bbc_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bbc_menu, menu);
+        return true;
+    }
     private void setupTableLayout(ItemList items) {
         rowParams = new TableLayout.LayoutParams();
         rowParams.setMargins(0, 0, 0, 1);
@@ -120,6 +136,7 @@ public class ItemListActivity extends AppCompatActivity {
                     tvCol.setClickable(false);
                     tvCol.setText(item.dateOfPublication);
                     tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
+
                     break;
             }
             //Set background color according to the download state
