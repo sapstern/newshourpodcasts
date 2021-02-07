@@ -134,11 +134,15 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
     public Date getDateFromPatternString(String patternString){
         DateFormat df = new SimpleDateFormat("EEE_dd_MMMMMMMMMMM_yyyy_kk_mm", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return getParsedDate(patternString, df);
+    }
+
+    private Date getParsedDate(String patternString, DateFormat df) {
         try {
-            return df.parse(patternString);
+           return df.parse(patternString);
         } catch (ParseException e) {
             e.printStackTrace();
-           return null;
+            return new Date(1220227200);
         }
     }
 
@@ -302,6 +306,7 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                 break;
             theContentDesc = theContentDesc.replace("'", "_");
         }
+
         return "Newshour_"+theContentDesc+"_"+theDate+".mp3";
     }
 
