@@ -85,15 +85,23 @@ public class ItemListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_favorite:
-                //Setup of implicid intend
-                Intent manageIntent = new Intent(Intent.ACTION_VIEW);
+                Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.sec.android.app.myfiles");
                 String root = Environment.getExternalStorageDirectory().toString();
                 File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
                 Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
-
-                manageIntent.setDataAndType(fileURI, "resource/folder");
-                manageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(Intent.createChooser(manageIntent, "manage files"));
+                if (intent != null) {
+                    intent.setData(fileURI);
+                    startActivity(intent);
+                }
+                //Setup of implicid intend
+//                Intent manageIntent = new Intent(Intent.ACTION_VIEW);
+//                String root = Environment.getExternalStorageDirectory().toString();
+//                File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
+//                Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
+//
+//                manageIntent.setDataAndType(fileURI, "resource/folder");
+//                manageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                startActivity(Intent.createChooser(manageIntent, "manage files"));
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
