@@ -85,11 +85,12 @@ public class ItemListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_favorite:
-                Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.sec.android.app.myfiles");
+                Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.ghisler.android.TotalCommander");
                 String root = Environment.getExternalStorageDirectory().toString();
                 File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
                 Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
                 if (intent != null) {
+                    intent.setAction("com.ghisler.android.TotalCommander.DirBrowseActivity");
                     intent.setData(fileURI);
                     startActivity(intent);
                 }
