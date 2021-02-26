@@ -85,13 +85,17 @@ public class ItemListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_favorite:
+                //Intent intent = new Intent("com.ghisler.android.TotalCommander","com.ghisler.android.TotalCommander.DirBrowseActivity");
                 Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.ghisler.android.TotalCommander");
+
                 String root = Environment.getExternalStorageDirectory().toString();
-                File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
+                File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/");
                 Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
                 if (intent != null) {
-                    intent.setAction("com.ghisler.android.TotalCommander.DirBrowseActivity");
-                    intent.setData(fileURI);
+                    intent.setClassName("com.ghisler.android.TotalCommander","com.ghisler.android.TotalCommander.DirBrowseActivity");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.setDataAndType(fileURI, "resource/folder");
+                    //intent.setData(fileURI);
                     startActivity(intent);
                 }
                 //Setup of implicid intend
@@ -104,9 +108,13 @@ public class ItemListActivity extends AppCompatActivity {
 //                manageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 //                startActivity(Intent.createChooser(manageIntent, "manage files"));
                 break;
-            // action with ID action_settings was selected
-            case R.id.action_settings:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+
+            case R.id.action_higher_qual:
+                Toast.makeText(this, "Higher quality (approx 45 MB per podcast) downloads selected", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+            case R.id.action_lower_qual:
+                Toast.makeText(this, "Lower quality (approx 22,5 MB per podcast) downloads selected", Toast.LENGTH_SHORT)
                         .show();
                 break;
             default:
