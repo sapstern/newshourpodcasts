@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.net.ConnectivityManagerCompat;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -27,9 +30,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.net.ConnectivityManagerCompat;
 
 public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
@@ -284,7 +284,6 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
     public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists, boolean isStartedInBackground) {
         Bundle bundle = new Bundle();
         bundle.putString("url", item.url);
-       //String fileName = prepareFilename(item.content,item.dateOfPublication);
 
         bundle.putString("fileName", item.fileName);
         bundle.putBoolean("isToastOnFileExists", isToastOnFileExists);
@@ -295,6 +294,11 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
 
     }
 
+    /**
+     * @param theContentDesc
+     * @param theDate
+     * @return
+     */
     private String prepareFilename(String theContentDesc, String theDate) {
         theDate = theDate.replace(",", "");
         theDate = theDate.replaceAll(" ", "_");

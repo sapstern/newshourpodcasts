@@ -34,6 +34,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.work.WorkManager;
 
 /**
  * An activity representing a list of Items. This activity
@@ -218,7 +219,7 @@ public class ItemListActivity extends AppCompatActivity {
             String fileName = intent.getExtras().getString("fileName");
             if(fileName!= null && !fileName.equals("")) {
                 if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
-                    //Setup of implicid intend
+                    //Setup of implicit intend
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW);
                     String root = Environment.getExternalStorageDirectory().toString();
                     File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/"+fileName);

@@ -2,20 +2,14 @@ package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.PermissionChecker;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
@@ -36,7 +30,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
             e.printStackTrace();
         }
 
-
+        // Permission stuff
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (       checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission. READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
@@ -49,21 +43,6 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE }, 0);
             }
         }
-
-
-    }
-
-    private void startBackgroundWorkerAndService() {
-        PeriodicWorkRequest downLoadRequest =
-                new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
-                        // Constraints
-                        .build();
-        WorkManager
-                .getInstance(this)
-                .enqueue(downLoadRequest);
-
-        Intent intent = new Intent(this, ListService.class);
-        this.startService(intent);
     }
 
     @Override
@@ -78,6 +57,24 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
                 System.exit(0);
                 break;
         }
+    }
+    private void startBackgroundWorkerAndService() {
+        //Schedule background download processing
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .build();
+        PeriodicWorkRequest downLoadRequest =
+                new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
+                        // Constraints
+                        .setConstraints(constraints)
+                        .build();
 
+        WorkManager
+                .getInstance(this)
+                .enqueue(downLoadRequest);
+
+        //Proceed to next activity (display list of download options)
+        Intent intent = new Intent(this, ListService.class);
+        this.startService(intent);
     }
 }

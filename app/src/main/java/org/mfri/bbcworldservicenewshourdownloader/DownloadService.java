@@ -48,55 +48,52 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent start");
-        List<Hashtable<String, String>> resultList = null;
-        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        final Bundle bundle = intent.getExtras();
-        final String fileName = bundle.getString("fileName");
-        File theFile = new BBCWorldServiceDownloaderUtils().fileExists(fileName);
-        if (theFile!=null) {
-            if(bundle.getBoolean("isToastOnFileExists")) {
-                Toast.makeText(getApplicationContext(), "File exists: " + theFile.getName(), Toast.LENGTH_LONG).show();
-                sendBroadcast(true, theFile.getName(), fileName, bundle.getBoolean("isStartedInBackground"));
+        synchronized (intent) {
+            List<Hashtable<String, String>> resultList = null;
+            final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+            final Bundle bundle = intent.getExtras();
+            final String fileName = bundle.getString("fileName");
+            File theFile = new BBCWorldServiceDownloaderUtils().fileExists(fileName);
+            if (theFile != null) {
+                if (bundle.getBoolean("isToastOnFileExists")) {
+//                    Toast.makeText(getApplicationContext(), "File exists: " + theFile.getName(), Toast.LENGTH_LONG).show();
+                    sendBroadcast(true, theFile.getName(), fileName, bundle.getBoolean("isStartedInBackground"));
+                }
+                return;
             }
-            return;
-        }
-        RequestQueue queue = Volley.newRequestQueue(this);
-        InputStreamVolleyRequest bytesRequest = new InputStreamVolleyRequest(Request.Method.GET, bundle.getString("url"),
-                new Response.Listener<byte[]>() {
-                    @Override
-                    public void onResponse(byte[] response) {
-                        // TODO handle the response
-                        try {
-                            if (response != null) {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            InputStreamVolleyRequest bytesRequest = new InputStreamVolleyRequest(Request.Method.GET, bundle.getString("url"),
+                    new Response.Listener<byte[]>() {
+                        @Override
+                        public void onResponse(byte[] response) {
+                            try {
+                                if (response != null) {
+                                    try {
+                                        String fileNameSaved = savePodcast(fileName, response);
+                                        Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
+                                        sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
 
-                                try {
-
-                                    String fileNameSaved = savePodcast(fileName, response);
-
-                                    Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
-                                    sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(getApplicationContext(), "Error saving file " + fileName +": "+e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
-
+                            } catch (Exception e) {
+                                // TODO Auto-generated catch block
+                                Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            // TODO Auto-generated catch block
-                            Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
-                            e.printStackTrace();
                         }
-                    }
-                }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO handle the error
-                error.printStackTrace();
-            }
-        }, null);
-        queue.add(bytesRequest);
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO handle the error
+                    error.printStackTrace();
+                }
+            }, null);
+            queue.add(bytesRequest);
+        }
 
     }
 
