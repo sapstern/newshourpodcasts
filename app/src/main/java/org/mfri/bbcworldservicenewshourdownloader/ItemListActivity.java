@@ -7,10 +7,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.preference.EditTextPreference;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -111,11 +114,13 @@ public class ItemListActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_higher_qual:
-                Toast.makeText(this, "Higher quality (approx 45 MB per podcast) downloads selected", Toast.LENGTH_SHORT)
+                utils.setPrefs("Higher quality (128kbps)", this);
+                Toast.makeText(this, "Higher quality (approx 45 MB per podcast) downloads selected", Toast.LENGTH_LONG)
                         .show();
                 break;
             case R.id.action_lower_qual:
-                Toast.makeText(this, "Lower quality (approx 22,5 MB per podcast) downloads selected", Toast.LENGTH_SHORT)
+                utils.setPrefs("Lower quality (64kbps)", this);
+                Toast.makeText(this, "Lower quality (approx 22,5 MB per podcast) downloads selected", Toast.LENGTH_LONG)
                         .show();
                 break;
             default:
@@ -124,6 +129,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         return true;
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

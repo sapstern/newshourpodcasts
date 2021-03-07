@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -36,6 +37,16 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
 
     Bundle currentDownloadOptions = null;
     Date timeStampOfcurrentDownloadOptions = null;
+
+    public String getPrefs(Context context){
+        SharedPreferences settings = context.getSharedPreferences("dl-prefs", 0);
+        return settings.getString("dl-quality", "Lower quality (64kbps)");
+    }
+    public void setPrefs(String theQuality, Context context) {
+        SharedPreferences settings = context.getSharedPreferences("dl-prefs", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("dl-quality", theQuality).apply();
+    }
     /*
      * Checks the network state for connection
      *
@@ -187,7 +198,8 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                     Log.d("PUB_DATE", publicationDate);
                 }
             }
-            if (theElements.get(i).text().startsWith("Lower quality (64kbps)")) {
+            String theQuality = getPrefs(context);
+            if (theElements.get(i).text().startsWith(theQuality)) {
                 Log.d("ELEMENT", theElements.get(i).text());
                 Log.d("ATTRIBUT_TEXT", theElements.get(i).attr("download"));
                 Log.d("ATTRIBUT_HREF", theElements.get(i).attr("href"));
