@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import java.io.File;
 import java.io.IOException;
 
 public class DownloadWorker extends Worker {

@@ -8,13 +8,9 @@
         app:showAsAction="never" />
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_higher_qual"
-        android:title="@string/action_set_higher_qual"
+    <item android:id="@+id/action_start_settings"
+        android:title="@string/action_start_settings"
         app:showAsAction="never"/>
 
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_lower_qual"
-        android:title="@string/action_set_lower_qual"
-        app:showAsAction="never"/>
 
 </menu>

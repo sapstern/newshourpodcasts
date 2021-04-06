@@ -1,8 +1,6 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
-import android.preference.EditTextPreference;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -25,19 +22,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.io.File;
-import java.text.BreakIterator;
-import java.util.ArrayList;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * An activity representing a list of Items. This activity
@@ -113,15 +106,12 @@ public class ItemListActivity extends AppCompatActivity {
 //                startActivity(Intent.createChooser(manageIntent, "manage files"));
                 break;
 
-            case R.id.action_higher_qual:
-                utils.setPrefs("dl-prefs", "Higher quality (128kbps)", this);
-                Toast.makeText(this, "Higher quality (approx 45 MB per podcast) downloads selected", Toast.LENGTH_LONG)
-                        .show();
-                break;
-            case R.id.action_lower_qual:
-                utils.setPrefs("dl-prefs", "Lower quality (64kbps)", this);
-                Toast.makeText(this, "Lower quality (approx 22,5 MB per podcast) downloads selected", Toast.LENGTH_LONG)
-                        .show();
+            case R.id.action_start_settings:
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("show_settings", true).apply();
+                Intent intent_settings = new Intent(this, SettingsActivity.class);
+                startActivity(intent_settings);
                 break;
             default:
                 break;
@@ -210,9 +200,11 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("DOWNLOAD_ITEM", "onClick start");
-                WorkManager
-                        .getInstance(getApplicationContext())
-                        .cancelWorkById(utils.getDownLoadRequest().getId());
+                if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true){
+                    WorkManager
+                            .getInstance(getApplicationContext())
+                            .cancelWorkById(utils.getDownLoadRequest().getId());
+                }
                 Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false);
                 utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null, getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
                 startService(theDownloadIntent);
@@ -237,9 +229,11 @@ public class ItemListActivity extends AppCompatActivity {
                     viewIntent.setDataAndType(fileURI, "audio/*");
                     viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(viewIntent, fileName));
-                    WorkManager
-                            .getInstance(getApplicationContext())
-                            .enqueue(utils.getDownLoadRequest());
+                    if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true) {
+                        WorkManager
+                                .getInstance(getApplicationContext())
+                                .enqueue(utils.getDownLoadRequest());
+                    }
                     return;
                 }
                 //should not be null anyway
@@ -247,7 +241,7 @@ public class ItemListActivity extends AppCompatActivity {
                     //Refresh the view with every downloade
                     setupTableLayout(theItemList);
                     if (findViewById(R.id.item_list)!=null)
-                         findViewById(R.id.item_list).invalidate();
+                        findViewById(R.id.item_list).invalidate();
                 }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
                 utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
@@ -268,17 +262,17 @@ public class ItemListActivity extends AppCompatActivity {
 
     }
     @Override
-   public void onSaveInstanceState(Bundle savedInstanceState){
+    public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         Log.d("SAVE_STATE", "onSaveInstanceState start");
         savedInstanceState.putParcelableArrayList("ITEM_LIST", (ArrayList<? extends Parcelable>) theItemList.ITEMS);
         Log.d("SAVE_STATE", "onSaveInstanceState exit");
-   }
+    }
 
     @Override
     public void onBackPressed()
     {
-            moveTaskToBack(true); // exist app
-     }
+        moveTaskToBack(true); // exist app
+    }
 
 }

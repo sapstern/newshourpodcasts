@@ -13,9 +13,9 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.net.ConnectivityManagerCompat;
+import androidx.preference.PreferenceManager;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
-import androidx.work.Operation;
 import androidx.work.PeriodicWorkRequest;
 
 import org.jsoup.Jsoup;
@@ -35,7 +35,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
@@ -76,8 +75,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         return DOWNLOADCONSTRAINTS;
     }
     public String getPrefs(String key, String defaultValue, Context context){
-        SharedPreferences settings = context.getSharedPreferences(key, 0);
-        return settings.getString(key, defaultValue);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(key, defaultValue);
     }
     public void setPrefs(String key, String value, Context context) {
         SharedPreferences settings = context.getSharedPreferences(key, 0);
@@ -235,7 +234,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                     Log.d("PUB_DATE", publicationDate);
                 }
             }
-            String theQuality = getPrefs("dl-prefs", "Lower quality (64kbps)",context);
+            String theQuality = context.getSharedPreferences("dl_qual", 0).getString("dl_qual","Lower quality (64kbps)");
             if (theElements.get(i).text().startsWith(theQuality)) {
                 Log.d("ELEMENT", theElements.get(i).text());
                 Log.d("ATTRIBUT_TEXT", theElements.get(i).attr("download"));

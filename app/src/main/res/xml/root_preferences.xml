@@ -2,7 +2,7 @@
     <PreferenceCategory app:title="@string/init_run">
 
         <SwitchPreferenceCompat
-            app:key="initial_run"
+            app:key="show_settings"
             app:title="@string/show_settigs"
             app:defaultValue="true"/>
 
@@ -15,7 +15,7 @@
         <ListPreference
             app:title="@string/dl_qual"
             app:defaultValue="@string/low_qual"
-            app:key="dl_quality"
+            app:key="dl_qual"
             app:entries="@array/dl_qual_arry"
             app:entryValues="@array/dl_qual_arry"/>
 

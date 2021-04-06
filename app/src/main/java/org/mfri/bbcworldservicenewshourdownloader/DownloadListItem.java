@@ -3,8 +3,6 @@ package org.mfri.bbcworldservicenewshourdownloader;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 public class DownloadListItem implements Parcelable {
         public final String id;
         public final String content;

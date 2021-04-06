@@ -1,7 +1,5 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,23 +9,28 @@ import android.widget.Button;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.work.WorkManager;
+import androidx.preference.PreferenceManager;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    BBCWorldServiceDownloaderUtils utils = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        //First run: basic settings
+        utils = BBCWorldServiceDownloaderUtils.getInstance();
+
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("show_settings", true)!=true){
+            startMainActivity();
+        }
+
 
         Button theBackButton = findViewById(R.id.settings_back_button);
         theBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("SETTINGS_ACTION", "onClick start");
-                Intent intent = new Intent(getApplicationContext(), ItemMainActivity.class);
-                startActivity(intent);
+                startMainActivity();
             }
         });
         if (savedInstanceState == null) {
@@ -40,6 +43,11 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), ItemMainActivity.class);
+        startActivity(intent);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

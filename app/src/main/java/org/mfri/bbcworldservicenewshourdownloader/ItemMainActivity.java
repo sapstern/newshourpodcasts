@@ -8,13 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
-import androidx.work.Constraints;
-import androidx.work.NetworkType;
-import androidx.work.Operation;
-import androidx.work.PeriodicWorkRequest;
+import androidx.preference.PreferenceManager;
 import androidx.work.WorkManager;
-
-import java.util.concurrent.TimeUnit;
 
 public class ItemMainActivity extends Activity implements BBCWorldServiceDownloaderStaticValues{
 
@@ -61,11 +56,13 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
         }
     }
     private void startBackgroundWorkerAndService() {
-        //Schedule background download processing
+        //Schedule background download processing (if user wants it)
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dl_background", true)==true){
+            WorkManager
+                    .getInstance(this)
+                    .enqueue(utils.getDownLoadRequest());
+        }
 
-        WorkManager
-                .getInstance(this)
-                .enqueue(utils.getDownLoadRequest());
 
         //Proceed to next activity (display list of download options)
         Intent intent = new Intent(this, ListService.class);
