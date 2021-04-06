@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dl_qual_arry">
+        <item>Higher quality (128kbps)</item>
+        <item>Lower quality (64kbps)</item>
+    </string-array>
+</resources>

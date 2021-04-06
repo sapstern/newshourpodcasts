@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
+import androidx.work.Operation;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
@@ -18,12 +19,13 @@ import java.util.concurrent.TimeUnit;
 public class ItemMainActivity extends Activity implements BBCWorldServiceDownloaderStaticValues{
 
     Bundle theBundle = null;
+    BBCWorldServiceDownloaderUtils utils = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_main);
-
+        utils = BBCWorldServiceDownloaderUtils.getInstance();
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {
@@ -40,7 +42,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
             ) {
                 startBackgroundWorkerAndService();
             } else {
-               ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE }, 0);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE }, 0);
             }
         }
     }
@@ -60,18 +62,10 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
     }
     private void startBackgroundWorkerAndService() {
         //Schedule background download processing
-        Constraints constraints = new Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.UNMETERED)
-                .build();
-        PeriodicWorkRequest downLoadRequest =
-                new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
-                        // Constraints
-                        .setConstraints(constraints)
-                        .build();
 
         WorkManager
                 .getInstance(this)
-                .enqueue(downLoadRequest);
+                .enqueue(utils.getDownLoadRequest());
 
         //Proceed to next activity (display list of download options)
         Intent intent = new Intent(this, ListService.class);

@@ -1,0 +1,25 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/init_run">
+
+        <SwitchPreferenceCompat
+            app:key="initial_run"
+            app:title="@string/show_settigs"
+            app:defaultValue="true"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/download_header">
+        <SwitchPreferenceCompat
+            app:key="dl_background"
+            app:title="@string/background_behaviour"
+            app:defaultValue="true"/>
+        <ListPreference
+            app:title="@string/dl_qual"
+            app:defaultValue="@string/low_qual"
+            app:key="dl_quality"
+            app:entries="@array/dl_qual_arry"
+            app:entryValues="@array/dl_qual_arry"/>
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

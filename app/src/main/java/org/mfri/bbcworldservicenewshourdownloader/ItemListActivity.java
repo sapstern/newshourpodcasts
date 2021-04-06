@@ -60,7 +60,7 @@ public class ItemListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Log.d("CREATE", "onCreate start");
-        utils = new BBCWorldServiceDownloaderUtils();
+        utils = BBCWorldServiceDownloaderUtils.getInstance();
 
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
 
@@ -114,12 +114,12 @@ public class ItemListActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_higher_qual:
-                utils.setPrefs("Higher quality (128kbps)", this);
+                utils.setPrefs("dl-prefs", "Higher quality (128kbps)", this);
                 Toast.makeText(this, "Higher quality (approx 45 MB per podcast) downloads selected", Toast.LENGTH_LONG)
                         .show();
                 break;
             case R.id.action_lower_qual:
-                utils.setPrefs("Lower quality (64kbps)", this);
+                utils.setPrefs("dl-prefs", "Lower quality (64kbps)", this);
                 Toast.makeText(this, "Lower quality (approx 22,5 MB per podcast) downloads selected", Toast.LENGTH_LONG)
                         .show();
                 break;
@@ -210,6 +210,9 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("DOWNLOAD_ITEM", "onClick start");
+                WorkManager
+                        .getInstance(getApplicationContext())
+                        .cancelWorkById(utils.getDownLoadRequest().getId());
                 Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false);
                 utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null, getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
                 startService(theDownloadIntent);
@@ -234,6 +237,9 @@ public class ItemListActivity extends AppCompatActivity {
                     viewIntent.setDataAndType(fileURI, "audio/*");
                     viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(viewIntent, fileName));
+                    WorkManager
+                            .getInstance(getApplicationContext())
+                            .enqueue(utils.getDownLoadRequest());
                     return;
                 }
                 //should not be null anyway
@@ -245,6 +251,7 @@ public class ItemListActivity extends AppCompatActivity {
                 }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
                 utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+
             }
 
         }

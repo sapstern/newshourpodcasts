@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import java.io.File;
 import java.io.IOException;
 
 public class DownloadWorker extends Worker {
@@ -29,7 +30,7 @@ public class DownloadWorker extends Worker {
         // Do the work here
         Log.d("WORK", "DownloadWorker.doWork() start");
 
-        BBCWorldServiceDownloaderUtils utils = new BBCWorldServiceDownloaderUtils();
+        BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
         // lets first get all available downloads from bbc
         Bundle downLoadOptionsBundle = null;
         try {
@@ -53,7 +54,14 @@ public class DownloadWorker extends Worker {
         Log.d("WORK", "DownloadWorker.doWork() start download size of list is "+itemList.ITEMS.size());
         if (itemList.ITEMS.size() < 1)
             return Result.failure();
-        DownloadListItem currentItem = itemList.ITEMS.get(1);
+        DownloadListItem currentItem = null;
+        for(int i = 0;i<itemList.ITEMS.size();i++) {
+            //int currentPos = i+1;
+            currentItem = itemList.ITEMS.get(i);
+            if( utils.fileExists(currentItem.fileName) == null )
+                break;
+        }
+
         Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true);
 
         theContext.startService(theDownloadIntent);

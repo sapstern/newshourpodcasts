@@ -13,6 +13,10 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.net.ConnectivityManagerCompat;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.Operation;
+import androidx.work.PeriodicWorkRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,21 +35,54 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
+public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
+
+    private Bundle currentDownloadOptions = null;
+    private Date timeStampOfcurrentDownloadOptions = null;
+
+    private PeriodicWorkRequest downLoadRequest = null;
+
+    private static Constraints DOWNLOADCONSTRAINTS = null;
+
+    private static final BBCWorldServiceDownloaderUtils INSTANCE = new BBCWorldServiceDownloaderUtils();
 
 
-    Bundle currentDownloadOptions = null;
-    Date timeStampOfcurrentDownloadOptions = null;
-
-    public String getPrefs(Context context){
-        SharedPreferences settings = context.getSharedPreferences("dl-prefs", 0);
-        return settings.getString("dl-quality", "Lower quality (64kbps)");
+    private BBCWorldServiceDownloaderUtils(){
     }
-    public void setPrefs(String theQuality, Context context) {
-        SharedPreferences settings = context.getSharedPreferences("dl-prefs", 0);
+
+    public static BBCWorldServiceDownloaderUtils getInstance()
+    {
+        return INSTANCE;
+    }
+
+    public PeriodicWorkRequest getDownLoadRequest(){
+        if(downLoadRequest == null){
+            downLoadRequest = new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
+                    .setConstraints(getDownLoadConstraints())
+                    .build();
+        }
+        return downLoadRequest;
+    }
+
+    private static Constraints getDownLoadConstraints(){
+        if (DOWNLOADCONSTRAINTS==null) {
+            DOWNLOADCONSTRAINTS =  new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.UNMETERED)
+                    .build();
+        }
+        return DOWNLOADCONSTRAINTS;
+    }
+    public String getPrefs(String key, String defaultValue, Context context){
+        SharedPreferences settings = context.getSharedPreferences(key, 0);
+        return settings.getString(key, defaultValue);
+    }
+    public void setPrefs(String key, String value, Context context) {
+        SharedPreferences settings = context.getSharedPreferences(key, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("dl-quality", theQuality).apply();
+        editor.putString(key, value).apply();
     }
     /*
      * Checks the network state for connection
@@ -84,10 +121,10 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
         //Date lastDate = new Date(-3600000);
         for (int i=0; i<podcastArry.length; i++) {
             if(     podcastArry[i]!=null
-                 &&!podcastArry[i].isDirectory()
-                 && podcastArry[i].getName().startsWith("Newshour_")
-                 && podcastArry[i].getName().endsWith(".mp3")
-              ){
+                    &&!podcastArry[i].isDirectory()
+                    && podcastArry[i].getName().startsWith("Newshour_")
+                    && podcastArry[i].getName().endsWith(".mp3")
+            ){
                 counter++;
                 String theFileName = podcastArry[i].getName();
                 StringTokenizer toki = new StringTokenizer(podcastArry[i].getName().substring(0, podcastArry[i].getName().indexOf(".mp3")), "_");
@@ -97,19 +134,19 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                 while (toki.hasMoreElements()){
                     String currentToken = toki.nextToken();
                     if( currentToken.equals("Mon")
-                        ||  currentToken.equals("Tue")
-                        ||  currentToken.equals("Wed")
-                        ||  currentToken.equals("Thu")
-                        ||  currentToken.equals("Fri")
-                        ||  currentToken.equals("Sat")
-                        ||  currentToken.equals("Sun")
+                            ||  currentToken.equals("Tue")
+                            ||  currentToken.equals("Wed")
+                            ||  currentToken.equals("Thu")
+                            ||  currentToken.equals("Fri")
+                            ||  currentToken.equals("Sat")
+                            ||  currentToken.equals("Sun")
                     ){
-                      isDate = true;
+                        isDate = true;
                     }
                     if(isDate){
                         theDateBuilder.append(currentToken);
                         if(toki.hasMoreElements())
-                             theDateBuilder.append("_");
+                            theDateBuilder.append("_");
                     }else {
                         if(!currentToken.startsWith("Newshour"))
                             theDescriptionBuilder.append(currentToken);
@@ -150,7 +187,7 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
 
     private Date getParsedDate(String patternString, DateFormat df) {
         try {
-           return df.parse(patternString);
+            return df.parse(patternString);
         } catch (ParseException e) {
             e.printStackTrace();
             return new Date(1220227200);
@@ -198,7 +235,7 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                     Log.d("PUB_DATE", publicationDate);
                 }
             }
-            String theQuality = getPrefs(context);
+            String theQuality = getPrefs("dl-prefs", "Lower quality (64kbps)",context);
             if (theElements.get(i).text().startsWith(theQuality)) {
                 Log.d("ELEMENT", theElements.get(i).text());
                 Log.d("ATTRIBUT_TEXT", theElements.get(i).attr("download"));
@@ -206,7 +243,7 @@ public class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloader
                 String theDescription = theElements.get(i).attr("download").substring(0, theElements.get(i).attr("download").indexOf("-"));
                 theDescription = theDescription.replace("Newshour,", "").trim();
                 String theFilename = prepareFilename(theDescription, publicationDate );
-                
+
                 DownloadListItem item = new DownloadListItem(String.valueOf(s), theDescription, "https:" + theElements.get(i).attr("href"), publicationDate, theFilename);
                 publicationDate = "Mon 01 Januar 0000, 00:00";
                 currentDownloadOptions.putParcelable("ITEM_" + s, item);

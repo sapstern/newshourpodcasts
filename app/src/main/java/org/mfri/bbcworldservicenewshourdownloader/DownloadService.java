@@ -21,6 +21,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.work.WorkManager;
 
 
 /**
@@ -32,6 +33,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  */
 public class DownloadService extends IntentService {
 
+    private BBCWorldServiceDownloaderUtils utils = null;
     /**
      * @deprecated
      */
@@ -53,7 +55,8 @@ public class DownloadService extends IntentService {
             final ResultReceiver receiver = intent.getParcelableExtra("receiver");
             final Bundle bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
-            File theFile = new BBCWorldServiceDownloaderUtils().fileExists(fileName);
+            utils = BBCWorldServiceDownloaderUtils.getInstance();
+            File theFile = utils.fileExists(fileName);
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
 //                    Toast.makeText(getApplicationContext(), "File exists: " + theFile.getName(), Toast.LENGTH_LONG).show();

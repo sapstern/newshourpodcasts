@@ -5,5 +5,14 @@
     <string name="action_favorite">Manage Files</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
+    <!-- Preference Titles -->
+    <string name="download_header">Download preferences</string>
+    <string name="init_run">Initial settings</string>
+    <!-- Initial Prefs-->
+    <string name="show_settigs">Show settings on app start</string>
+    <!-- Download Preferences -->
+    <string name="dl_qual">Download quality</string>
+    <string name="background_behaviour">Download in background</string>
+    <string name="low_qual">Lower quality (64kbps)</string>
 
 </resources>
