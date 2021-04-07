@@ -234,7 +234,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                     Log.d("PUB_DATE", publicationDate);
                 }
             }
-            String theQuality = context.getSharedPreferences("dl_qual", 0).getString("dl_qual","Lower quality (64kbps)");
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            String theQuality = prefs.getString("dl_qual","Lower quality (64kbps)");
             if (theElements.get(i).text().startsWith(theQuality)) {
                 Log.d("ELEMENT", theElements.get(i).text());
                 Log.d("ATTRIBUT_TEXT", theElements.get(i).attr("download"));

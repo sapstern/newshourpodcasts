@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/matthias/gitBBCPodcastDownloader/keystore/bbc_newshour_downloader.jks')
+            storePassword 'qwertzuiop'
+            keyAlias 'key0'
+            keyPassword 'qwertzuiop'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 

@@ -65,6 +65,7 @@ public class DownloadService extends IntentService {
                 return;
             }
             RequestQueue queue = Volley.newRequestQueue(this);
+            Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent url: "+bundle.getString("url"));
             InputStreamVolleyRequest bytesRequest = new InputStreamVolleyRequest(Request.Method.GET, bundle.getString("url"),
                     new Response.Listener<byte[]>() {
                         @Override

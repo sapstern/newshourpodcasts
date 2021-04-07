@@ -61,6 +61,10 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
             WorkManager
                     .getInstance(this)
                     .enqueue(utils.getDownLoadRequest());
+        }else{
+            WorkManager
+                    .getInstance(getApplicationContext())
+                    .cancelWorkById(utils.getDownLoadRequest().getId());
         }
 
 

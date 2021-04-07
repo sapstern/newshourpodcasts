@@ -54,8 +54,9 @@ public class DownloadWorker extends Worker {
         if (itemList.ITEMS.size() < 1)
             return Result.failure();
         DownloadListItem currentItem = null;
-        for(int i = 0;i<itemList.ITEMS.size();i++) {
-            //int currentPos = i+1;
+        for(int i = 1;i<itemList.ITEMS.size();i++) {
+            //find first item which has not been downloaded yet
+            //start at pos 1, as the item at 0 holds only the description
             currentItem = itemList.ITEMS.get(i);
             if( utils.fileExists(currentItem.fileName) == null )
                 break;
