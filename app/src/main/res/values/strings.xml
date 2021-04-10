@@ -13,5 +13,7 @@
     <string name="dl_qual">Download quality</string>
     <string name="background_behaviour">Download in background</string>
     <string name="low_qual">Lower quality (64kbps)</string>
+    <string name="tc_behaviour">Total Commander app installed</string>
+    <string name="tc_header">"File (Podcasts) Management "</string>
 
 </resources>
