@@ -1,6 +1,7 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +21,16 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
         utils = BBCWorldServiceDownloaderUtils.getInstance();
 
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("show_settings", true)!=true){
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("show_init_settings", true)==false
+         && PreferenceManager.getDefaultSharedPreferences(this).getBoolean("show_settings", false)==false){
             startMainActivity();
         }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("show_settings", false).apply();
+        editor.putBoolean("show_init_settings", false).apply();
+        editor.commit();
 
 
         Button theBackButton = findViewById(R.id.settings_back_button);

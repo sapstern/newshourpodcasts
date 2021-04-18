@@ -110,10 +110,11 @@ public class ItemListActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_start_settings:
+                Intent intent_settings = new Intent(this, SettingsActivity.class);
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("show_settings", true).apply();
-                Intent intent_settings = new Intent(this, SettingsActivity.class);
+                editor.commit();
                 startActivity(intent_settings);
                 break;
             default:
