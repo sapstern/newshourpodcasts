@@ -117,6 +117,10 @@ public class ItemListActivity extends AppCompatActivity {
                 editor.commit();
                 startActivity(intent_settings);
                 break;
+            case R.id.action_about:
+                Intent intent_about = new Intent(this, AboutActivity.class);
+                startActivity(intent_about);
+                break;
             default:
                 break;
         }

@@ -12,5 +12,11 @@
         android:title="@string/action_start_settings"
         app:showAsAction="never"/>
 
+    <!-- About, should always be in the overflow -->
+    <item android:id="@+id/action_about"
+        android:title="@string/about"
+        app:showAsAction="never"/>
+
+
 
 </menu>
