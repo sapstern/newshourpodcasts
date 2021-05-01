@@ -29,6 +29,8 @@ import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
 
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -120,6 +122,9 @@ public class ItemListActivity extends AppCompatActivity {
             case R.id.action_about:
                 Intent intent_about = new Intent(this, AboutActivity.class);
                 startActivity(intent_about);
+                break;
+            case R.id.action_licenses:
+                startActivity(new Intent(this, OssLicensesMenuActivity.class));
                 break;
             default:
                 break;
