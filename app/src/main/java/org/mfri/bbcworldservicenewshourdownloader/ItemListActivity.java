@@ -179,7 +179,10 @@ public class ItemListActivity extends AppCompatActivity {
             {
                 case 0:
                     tvCol.setText(item.content);
-                    setSubmitButtonOnClickListener((Button)tvCol, item);
+                    if (item.content != "CONTENT")
+                        setSubmitButtonOnClickListener((Button)tvCol, item);
+                    else
+                        tvCol.setClickable(false);
                     tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
                     break;
                 default:

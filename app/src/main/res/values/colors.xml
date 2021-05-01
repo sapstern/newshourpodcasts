@@ -6,6 +6,6 @@
     <color name="table_background">#999999</color>
     <color name="row_background">#ffffff</color>
     <color name="text_black">#000000</color>
-    <color name="aqua_marine_downloaded">#7fffd4</color>
-    <color name="aqua_pink_downloaded">#ff7faa</color>
+    <color name="aqua_marine_downloaded">#A5FCCD</color>
+    <color name="aqua_pink_downloaded">#F5BFFF</color>
 </resources>
