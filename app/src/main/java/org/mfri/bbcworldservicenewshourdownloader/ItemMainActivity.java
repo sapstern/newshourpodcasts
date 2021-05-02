@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
@@ -20,6 +21,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_main);
+       
         utils = BBCWorldServiceDownloaderUtils.getInstance();
         try {
             Class.forName("android.os.AsyncTask");

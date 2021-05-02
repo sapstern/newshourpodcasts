@@ -11,7 +11,10 @@
     <item android:id="@+id/action_start_settings"
         android:title="@string/action_start_settings"
         app:showAsAction="never"/>
-
+    <!-- Doc, should always be in the overflow -->
+    <item android:id="@+id/action_documentation"
+        android:title="Documentation"
+        app:showAsAction="never"/>
     <!-- About, should always be in the overflow -->
     <item android:id="@+id/action_about"
         android:title="@string/about"

@@ -34,14 +34,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * An activity representing a list of Items. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
 
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 public class ItemListActivity extends AppCompatActivity {
 
 
@@ -119,11 +112,22 @@ public class ItemListActivity extends AppCompatActivity {
                 editor.commit();
                 startActivity(intent_settings);
                 break;
+            case R.id.action_documentation:
+                Intent intent_doc = new Intent(this, WebViewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("page", "docu");
+                intent_doc.putExtra("bundle_page", bundle);
+                startActivity(intent_doc);
+                break;
             case R.id.action_about:
-                Intent intent_about = new Intent(this, AboutActivity.class);
+                Intent intent_about = new Intent(this, WebViewActivity.class);
+                Bundle bundle_about = new Bundle();
+                bundle_about.putString("page", "about");
+                intent_about.putExtra("bundle_page", bundle_about);
                 startActivity(intent_about);
                 break;
             case R.id.action_licenses:
+                OssLicensesMenuActivity.setActivityTitle(getString(R.string.custom_license_title));
                 startActivity(new Intent(this, OssLicensesMenuActivity.class));
                 break;
             default:
@@ -156,7 +160,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         for(int i=0; i<items.ITEMS.size();i++){
             //add rows
-            tableLayout.addView(addRow(items.ITEMS.get(i)));
+            tableLayout.addView(addRow(items.ITEMS.get(i), i));
         }
 
         //display the table
@@ -167,29 +171,26 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
 
-    public TableRow addRow(DownloadListItem item) {
+    public TableRow addRow(DownloadListItem item, int rowNumber) {
         TableRow tr = new TableRow(this);
         tr.setBackgroundColor(this.getResources().getColor(R.color.table_background));
 
         tr.setLayoutParams(rowParams);
 
         for (int i = 0; i < 2; i++) {
-            TextView tvCol = tvCol = new Button(this);
+            TextView tvCol = null;
             switch (i)
             {
                 case 0:
-                    tvCol.setText(item.content);
-                    if (item.content != "CONTENT")
+                    if ( rowNumber > 0 ){
+                        tvCol = setupColumn(true, item.content);
                         setSubmitButtonOnClickListener((Button)tvCol, item);
+                    }
                     else
-                        tvCol.setClickable(false);
-                    tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
+                        tvCol = setupColumn(false, item.content);
                     break;
                 default:
-                    tvCol.setClickable(false);
-                    tvCol.setText(item.dateOfPublication);
-                    tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
-
+                    tvCol = setupColumn(false, item.dateOfPublication);
                     break;
             }
             //Set background color according to the download state
@@ -206,6 +207,14 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         return tr;
+    }
+
+    private TextView  setupColumn(boolean isClickable, String theText) {
+        TextView tvCol = new Button(this);
+        tvCol.setClickable(isClickable);
+        tvCol.setText(theText);
+        tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
+        return tvCol;
     }
 
     public void setSubmitButtonOnClickListener(Button button, final DownloadListItem item) {
