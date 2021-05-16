@@ -15,7 +15,11 @@
     <string name="background_behaviour">Download in background</string>
     <string name="low_qual">Lower quality (64kbps)</string>
     <string name="tc_behaviour">Total Commander app installed</string>
+    <string name="select_dir">"Select download root location"</string>
+
+
     <string name="tc_header">"File (Podcasts) Management "</string>
+
     <string name="custom_license_title">"Open Source Libraries Used "</string>
 
 </resources>

@@ -8,6 +8,7 @@ public interface BBCWorldServiceDownloaderStaticValues {
     public final static int REQUEST_PERMISSION_INTERNET=2;
     public final static int REQUEST_PERMISSION_NETWORK_STATE=3;
     public final static int REQUEST_PERMISSION_WIFI_STATE=4;
+    int REQUEST_DIRECTORY=0;
 
    
 }
