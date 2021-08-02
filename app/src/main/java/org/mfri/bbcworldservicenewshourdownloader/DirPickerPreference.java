@@ -1,17 +1,16 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.preference.Preference;
+
+
 import net.rdrei.android.dirchooser.DirectoryChooserActivity;
 import net.rdrei.android.dirchooser.DirectoryChooserConfig;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityManagerCompat;
-import androidx.preference.Preference;
 
 
 public class DirPickerPreference extends Preference implements BBCWorldServiceDownloaderStaticValues{

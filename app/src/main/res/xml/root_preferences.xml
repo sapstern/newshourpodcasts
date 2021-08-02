@@ -11,6 +11,8 @@
             app:key="dl_qual"
             app:entries="@array/dl_qual_arry"
             app:entryValues="@array/dl_qual_arry"/>
+        <DirPickerPreference app:title="@string/dl_dir_root"
+            app:key="dl_dir_root"/>
 
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/tc_header">
