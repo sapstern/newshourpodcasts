@@ -23,6 +23,7 @@ public class DownloadWorker extends Worker {
         theContext = context;
     }
 
+    @NonNull
     @Override
     public Result doWork() {
 
@@ -31,7 +32,7 @@ public class DownloadWorker extends Worker {
 
         BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
         // lets first get all available downloads from bbc
-        Bundle downLoadOptionsBundle = null;
+        Bundle downLoadOptionsBundle;
         try {
             downLoadOptionsBundle = utils.getCurrentDownloadOptions(theContext);
         } catch (IOException e) {
@@ -58,10 +59,11 @@ public class DownloadWorker extends Worker {
             //find first item which has not been downloaded yet
             //start at pos 1, as the item at 0 holds only the description
             currentItem = itemList.ITEMS.get(i);
-            if( utils.fileExists(currentItem.fileName) == null )
+            if( utils.fileExists(currentItem.fileName, getApplicationContext()) == null )
                 break;
         }
 
+        assert currentItem != null;
         Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true);
 
         theContext.startService(theDownloadIntent);

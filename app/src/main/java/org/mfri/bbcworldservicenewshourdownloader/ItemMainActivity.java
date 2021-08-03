@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.ProgressBar;
 
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
@@ -14,7 +13,6 @@ import androidx.work.WorkManager;
 
 public class ItemMainActivity extends Activity implements BBCWorldServiceDownloaderStaticValues{
 
-    Bundle theBundle = null;
     BBCWorldServiceDownloaderUtils utils = null;
 
     @Override
@@ -45,7 +43,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
         switch (requestCode) {
             case 0:

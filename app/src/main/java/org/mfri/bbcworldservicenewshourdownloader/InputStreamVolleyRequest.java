@@ -10,7 +10,7 @@ import java.util.Map;
 
 class InputStreamVolleyRequest extends Request<byte[]> {
     private final Response.Listener<byte[]> mListener;
-    private Map<String, String> mParams;
+    private final Map<String, String> mParams;
 
     //create a static map for directly accessing headers
     public Map<String, String> responseHeaders ;
@@ -30,7 +30,7 @@ class InputStreamVolleyRequest extends Request<byte[]> {
     protected Map<String, String> getParams()
             throws com.android.volley.AuthFailureError {
         return mParams;
-    };
+    }
 
 
     @Override

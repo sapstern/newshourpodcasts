@@ -1,14 +1,18 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.app.IntentService;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,7 +60,7 @@ public class DownloadService extends IntentService {
             final Bundle bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
             utils = BBCWorldServiceDownloaderUtils.getInstance();
-            File theFile = utils.fileExists(fileName);
+            File theFile = utils.fileExists(fileName, getApplicationContext());
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
 //                    Toast.makeText(getApplicationContext(), "File exists: " + theFile.getName(), Toast.LENGTH_LONG).show();
@@ -105,10 +109,15 @@ public class DownloadService extends IntentService {
 
     private String savePodcast(String fileName, byte[] barry) throws IOException {
 
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
+        String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
+
+        File myDir = new File(root+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         if (!myDir.exists()) {
-            myDir.mkdirs();
+
+            if(!myDir.mkdirs()){
+                Toast.makeText(getApplicationContext(), "Directory "+myDir+" not created, switch directory settings to internal storage", Toast.LENGTH_LONG).show();
+            }
+
         }
 
 

@@ -12,7 +12,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.net.ConnectivityManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
@@ -32,6 +32,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
@@ -74,15 +76,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         return DOWNLOADCONSTRAINTS;
     }
-    public String getPrefs(String key, String defaultValue, Context context){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(key, defaultValue);
-    }
-    public void setPrefs(String key, String value, Context context) {
-        SharedPreferences settings = context.getSharedPreferences(key, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(key, value).apply();
-    }
+
     /*
      * Checks the network state for connection
      *
@@ -94,22 +88,12 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    /*
-     * Checks connection state for wlan
-     *
-     * */
-    public static boolean isDeviceOnWlan(Context theContext) {
-        ConnectivityManager cm = (ConnectivityManager) theContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return !ConnectivityManagerCompat.isActiveNetworkMetered(cm);
-    }
 
-
-
-    public synchronized Bundle getDownloadedPodcasts() throws IOException{
+    public synchronized Bundle getDownloadedPodcasts(Context context) throws IOException{
         Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
         ArrayList<TempDLItem> tab = new ArrayList<>();
-        String root = Environment.getExternalStorageDirectory().toString();
+        String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
         File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         File[] podcastArry = myDir.listFiles();
         if(podcastArry==null)
@@ -118,38 +102,38 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
         int counter = 0;
         //Date lastDate = new Date(-3600000);
-        for (int i=0; i<podcastArry.length; i++) {
-            if(     podcastArry[i]!=null
-                    &&!podcastArry[i].isDirectory()
-                    && podcastArry[i].getName().startsWith("Newshour_")
-                    && podcastArry[i].getName().endsWith(".mp3")
-            ){
+        for (File file : podcastArry) {
+            if (file != null
+                    && !file.isDirectory()
+                    && file.getName().startsWith("Newshour_")
+                    && file.getName().endsWith(".mp3")
+            ) {
                 counter++;
-                String theFileName = podcastArry[i].getName();
-                StringTokenizer toki = new StringTokenizer(podcastArry[i].getName().substring(0, podcastArry[i].getName().indexOf(".mp3")), "_");
+                String theFileName = file.getName();
+                StringTokenizer toki = new StringTokenizer(file.getName().substring(0, file.getName().indexOf(".mp3")), "_");
                 StringBuilder theDescriptionBuilder = new StringBuilder();
                 StringBuilder theDateBuilder = new StringBuilder();
                 boolean isDate = false;
-                while (toki.hasMoreElements()){
+                while (toki.hasMoreElements()) {
                     String currentToken = toki.nextToken();
-                    if( currentToken.equals("Mon")
-                            ||  currentToken.equals("Tue")
-                            ||  currentToken.equals("Wed")
-                            ||  currentToken.equals("Thu")
-                            ||  currentToken.equals("Fri")
-                            ||  currentToken.equals("Sat")
-                            ||  currentToken.equals("Sun")
-                    ){
+                    if (currentToken.equals("Mon")
+                            || currentToken.equals("Tue")
+                            || currentToken.equals("Wed")
+                            || currentToken.equals("Thu")
+                            || currentToken.equals("Fri")
+                            || currentToken.equals("Sat")
+                            || currentToken.equals("Sun")
+                    ) {
                         isDate = true;
                     }
-                    if(isDate){
+                    if (isDate) {
                         theDateBuilder.append(currentToken);
-                        if(toki.hasMoreElements())
+                        if (toki.hasMoreElements())
                             theDateBuilder.append("_");
-                    }else {
-                        if(!currentToken.startsWith("Newshour"))
+                    } else {
+                        if (!currentToken.startsWith("Newshour"))
                             theDescriptionBuilder.append(currentToken);
-                        if(toki.hasMoreElements())
+                        if (toki.hasMoreElements())
                             theDescriptionBuilder.append(" ");
                     }
                 }
@@ -289,10 +273,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         cal.set(Calendar.MINUTE, 00);
         //Now compare the timestamp of the last run was made after the last publication date
         //Then we do not need to fetch the currently available downloads again
-        if(timeStampOfcurrentDownloadOptions.getTime() > cal.getTime().getTime())
-            return true;
-
-        return false;
+        return timeStampOfcurrentDownloadOptions.getTime() > cal.getTime().getTime();
 
     }
 
@@ -310,6 +291,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
             Date date = format.parse(dateInString);
             Calendar cal = Calendar.getInstance();
+            assert date != null;
             cal.setTime(date);
             cal.add(Calendar.DATE, -30);
             date = cal.getTime();
@@ -371,8 +353,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * @param fileName
      * @return
      */
-    public File fileExists(String fileName) {
-        String root = Environment.getExternalStorageDirectory().toString();
+    public File fileExists(String fileName, Context context) {
+        String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
         File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
         if (!myDir.exists()) {
             return null;
@@ -383,7 +365,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         return null;
     }
-    public void showNotification(String title, String message, boolean isIntend, String fileNameWithoutDir, Context context, NotificationManager mNotificationManager) {
+    public void showNotification(String title, String message, Context context, NotificationManager mNotificationManager) {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("1234567",
@@ -405,5 +387,46 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 //            mBuilder.setContentIntent(pi);
 //        }
         mNotificationManager.notify(0, mBuilder.build());
+    }
+    /*
+    * Method to check storage options
+    * ContextCompat.getExternalFilesDirs(context, null) gives an array of File
+    * position [0] always points to the internal root dir
+    *
+    * */
+    public static CharSequence[] getStoragePaths(Context context) {
+
+            if(ContextCompat.getExternalFilesDirs(context, null).length >=2 )
+                return addToDirArry(2, ContextCompat.getExternalFilesDirs(context, null));
+            else
+                return addToDirArry(1, ContextCompat.getExternalFilesDirs(context, null));
+
+
+    }
+    private static String[] addToDirArry(int count, File[] fileArry){
+        List<String> resultList = new LinkedList<String>();
+        for(int i=0; i < count;i++){
+            int endIndex = fileArry[i].getAbsolutePath().indexOf("Android/data/");
+            String rootDir = null;
+            if(endIndex!=-1)
+                rootDir = fileArry[i].getAbsolutePath().substring(0,fileArry[i].getAbsolutePath().indexOf("Android/data/"));
+            else
+                rootDir = fileArry[i].getAbsolutePath();
+            resultList.add(rootDir);
+        }
+        String[] resultArry = new String[resultList.size()];
+        for(int i=0;i<resultList.size();i++)
+            resultArry[i] = resultList.get(i);
+        return resultArry;
+
+    }
+
+    public Intent getSettingsIntend(Context context) {
+        Intent intent_settings = new Intent(context, SettingsActivity.class);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("show_settings", true).apply();
+        editor.commit();
+        return intent_settings;
     }
 }

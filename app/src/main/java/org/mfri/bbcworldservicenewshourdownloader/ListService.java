@@ -35,7 +35,7 @@ public class ListService extends IntentService {
         BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
         Bundle theDownloadedPodcastBundle;
         try {
-            theDownloadedPodcastBundle = utils.getDownloadedPodcasts();
+            theDownloadedPodcastBundle = utils.getDownloadedPodcasts(this);
         } catch (IOException e) {
             e.printStackTrace();
             theDownloadedPodcastBundle = null;

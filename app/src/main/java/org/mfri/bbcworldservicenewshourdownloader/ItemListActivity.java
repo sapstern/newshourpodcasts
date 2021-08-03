@@ -41,7 +41,6 @@ public class ItemListActivity extends AppCompatActivity {
     private BBCWorldServiceDownloaderUtils utils = null;
     private TableLayout.LayoutParams rowParams = null;
     private TableRow.LayoutParams colParams = null;
-    private ScrollView layMain;
     private ItemList theItemList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +57,13 @@ public class ItemListActivity extends AppCompatActivity {
         setupTableLayout(theItemList);
         //add swipe refresh
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Intent intent = new Intent(getApplicationContext(), ListService.class);
-                getApplication().startService(intent);
-                pullToRefresh.setRefreshing(false);
+        pullToRefresh.setOnRefreshListener(() -> {
+            Intent intent = new Intent(getApplicationContext(), ListService.class);
+            getApplication().startService(intent);
+            pullToRefresh.setRefreshing(false);
 
-            }
         });
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.bbc_toolbar);
+        Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
         setSupportActionBar(myToolbar);
 
         Log.d("CREATE", "onCreate end");
@@ -80,7 +76,7 @@ public class ItemListActivity extends AppCompatActivity {
                 if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("tc_installed", false)==true) {
                     Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.ghisler.android.TotalCommander");
 
-                    String root = Environment.getExternalStorageDirectory().toString();
+                    String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
                     File file = new File(root + "/" + BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR + "/");
                     Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
                     if (intent != null) {
@@ -94,7 +90,7 @@ public class ItemListActivity extends AppCompatActivity {
                 else {
                     //Setup of implicid intend
                     Intent manageIntent = new Intent(Intent.ACTION_DEFAULT);
-                    String root = Environment.getExternalStorageDirectory().toString();
+                    String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
                     File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
                     Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
 
@@ -105,12 +101,7 @@ public class ItemListActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_start_settings:
-                Intent intent_settings = new Intent(this, SettingsActivity.class);
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("show_settings", true).apply();
-                editor.commit();
-                startActivity(intent_settings);
+                startActivity(utils.getSettingsIntend(this));
                 break;
             case R.id.action_documentation:
                 Intent intent_doc = new Intent(this, WebViewActivity.class);
@@ -139,6 +130,7 @@ public class ItemListActivity extends AppCompatActivity {
 
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bbc_menu, menu);
@@ -164,7 +156,7 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         //display the table
-        layMain = (ScrollView)findViewById(R.id.table);
+        ScrollView layMain = findViewById(R.id.table);
         layMain.removeAllViews();
         layMain.addView(tableLayout);
         LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("messageFromDownloadService"));
@@ -198,7 +190,7 @@ public class ItemListActivity extends AppCompatActivity {
                 tvCol.setBackgroundColor(this.getResources().getColor(R.color.aqua_marine_downloaded));
             if(item.url!=null&&!item.url.equals("none")&&item.content!=null&&!item.content.equals("Content"))
                 tvCol.setBackgroundColor(this.getResources().getColor(R.color.aqua_pink_downloaded));
-            tvCol.setGravity(Gravity.CENTER | Gravity.CENTER);
+            tvCol.setGravity(Gravity.CENTER);
             tvCol.setPadding(3, 3, 3, 3);
             tvCol.setTextColor(this.getResources().getColor(R.color.text_black));
             tvCol.setLayoutParams(colParams);
@@ -221,24 +213,21 @@ public class ItemListActivity extends AppCompatActivity {
 
         Log.d("ItemListActivity", "setSubmitButtonOnClickListener()start => URL: "+item.url);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("DOWNLOAD_ITEM", "onClick start");
-                if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true){
-                    WorkManager
-                            .getInstance(getApplicationContext())
-                            .cancelWorkById(utils.getDownLoadRequest().getId());
-                }
-                Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false);
-                utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), false, null, getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-                startService(theDownloadIntent);
+        button.setOnClickListener(view -> {
+            Log.d("DOWNLOAD_ITEM", "onClick start");
+            if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true){
+                WorkManager
+                        .getInstance(getApplicationContext())
+                        .cancelWorkById(utils.getDownLoadRequest().getId());
             }
+            Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false);
+            utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+            startService(theDownloadIntent);
         });
     }
 
 
-    private BroadcastReceiver bReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver bReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -248,7 +237,7 @@ public class ItemListActivity extends AppCompatActivity {
                 if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
                     //Setup of implicit intend
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW);
-                    String root = Environment.getExternalStorageDirectory().toString();
+                    String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
                     File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/"+fileName);
                     Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
                     viewIntent.setDataAndType(fileURI, "audio/*");
@@ -269,7 +258,7 @@ public class ItemListActivity extends AppCompatActivity {
                         findViewById(R.id.item_list).invalidate();
                 }
                 String fileNameWithoutDir = intent.getExtras().getString("fileNameWithoutDir");
-                utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, true, fileNameWithoutDir, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+                utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
 
             }
 
