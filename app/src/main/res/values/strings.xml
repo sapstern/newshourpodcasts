@@ -21,6 +21,6 @@
     <string name="tc_header">"File (Podcasts) Management "</string>
 
     <string name="custom_license_title">"Open Source Libraries Used "</string>
-    <string name="dl_dir_root">Root Dir (Internal/External)</string>
+    <string name="dl_dir_root">Download directory (Internal/External)</string>
 
 </resources>

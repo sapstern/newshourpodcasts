@@ -77,13 +77,13 @@ public class ItemListActivity extends AppCompatActivity {
                     Intent intent = getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.ghisler.android.TotalCommander");
 
                     String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-                    File file = new File(root + "/" + BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR + "/");
+                    File file = new File(root);
+                    BBCWorldServiceDownloaderUtils.checkDir(file, this);
                     Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
                     if (intent != null) {
                         intent.setClassName("com.ghisler.android.TotalCommander", "com.ghisler.android.TotalCommander.DirBrowseActivity");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         intent.setDataAndType(fileURI, "resource/folder");
-                        //intent.setData(fileURI);
                         startActivity(intent);
                     }
                 }
@@ -91,9 +91,9 @@ public class ItemListActivity extends AppCompatActivity {
                     //Setup of implicid intend
                     Intent manageIntent = new Intent(Intent.ACTION_DEFAULT);
                     String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-                    File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
+                    File file = new File(root);
+                    BBCWorldServiceDownloaderUtils.checkDir(file, this);
                     Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
-
                     manageIntent.setDataAndType(fileURI, "resource/folder");
                     manageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(manageIntent, "manage files"));
@@ -238,7 +238,7 @@ public class ItemListActivity extends AppCompatActivity {
                     //Setup of implicit intend
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW);
                     String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-                    File file = new File(root+"/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/"+fileName);
+                    File file = new File(root+"/"+fileName);
                     Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
                     viewIntent.setDataAndType(fileURI, "audio/*");
                     viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

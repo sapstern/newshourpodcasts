@@ -10,7 +10,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -94,7 +96,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         Bundle bundle = new Bundle();
         ArrayList<TempDLItem> tab = new ArrayList<>();
         String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-        File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
+        File myDir = new File(root );
         File[] podcastArry = myDir.listFiles();
         if(podcastArry==null)
             return null;
@@ -336,15 +338,21 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         theDate = theDate.replaceAll(":", "_");
         theContentDesc = theContentDesc.replaceAll(" ", "_");
         theContentDesc = theContentDesc.replaceAll(":", "_");
-        for (int i = 0; i < 10; i++) {
-            if (theContentDesc.indexOf("'") == -1)
-                break;
-            theContentDesc = theContentDesc.replace("'", "_");
-        }
+        theContentDesc = replaceInName(theContentDesc, "'", "_");
+        theContentDesc = replaceInName(theContentDesc, "\"", "");
 
         return "Newshour_"+theContentDesc+"_"+theDate+".mp3";
     }
 
+    @NonNull
+    private String replaceInName(String theContentDesc, String s, String s2) {
+        for (int i = 0; i < 10; i++) {
+            if (theContentDesc.indexOf(s) == -1)
+                break;
+            theContentDesc = theContentDesc.replace(s, s2);
+        }
+        return theContentDesc;
+    }
 
 
     /**
@@ -355,11 +363,11 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      */
     public File fileExists(String fileName, Context context) {
         String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-        File myDir = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
+        File myDir = new File(root );
         if (!myDir.exists()) {
             return null;
         }
-        File theFile = new File(root + "/"+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR+"/" + fileName);
+        File theFile = new File(root +"/" + fileName);
         if (theFile.exists()) {
             return theFile;
         }
@@ -406,13 +414,14 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     private static String[] addToDirArry(int count, File[] fileArry){
         List<String> resultList = new LinkedList<String>();
         for(int i=0; i < count;i++){
-            int endIndex = fileArry[i].getAbsolutePath().indexOf("Android/data/");
-            String rootDir = null;
-            if(endIndex!=-1)
-                rootDir = fileArry[i].getAbsolutePath().substring(0,fileArry[i].getAbsolutePath().indexOf("Android/data/"));
-            else
-                rootDir = fileArry[i].getAbsolutePath();
-            resultList.add(rootDir);
+            //int endIndex = fileArry[i].getAbsolutePath().indexOf("Android/data/");
+            //String rootDir = null;
+            //if(endIndex!=-1)
+            //    rootDir = fileArry[i].getAbsolutePath().substring(0,fileArry[i].getAbsolutePath().indexOf("Android/data/"));
+            //else
+            //    rootDir = fileArry[i].getAbsolutePath();
+            //resultList.add(rootDir);
+            resultList.add(fileArry[i].getAbsolutePath());
         }
         String[] resultArry = new String[resultList.size()];
         for(int i=0;i<resultList.size();i++)
@@ -428,5 +437,13 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         editor.putBoolean("show_settings", true).apply();
         editor.commit();
         return intent_settings;
+    }
+
+    public static void checkDir(File myDir, Context context) {
+        if (!myDir.exists()) {
+            if(!myDir.mkdirs()){
+                Toast.makeText(context, "Directory "+ myDir +" not created, switch directory settings to internal storage", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

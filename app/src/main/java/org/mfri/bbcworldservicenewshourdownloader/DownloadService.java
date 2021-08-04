@@ -1,16 +1,13 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.app.IntentService;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 
@@ -23,9 +20,6 @@ import com.android.volley.toolbox.Volley;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Hashtable;
-import java.util.List;
-
 
 
 /**
@@ -37,7 +31,6 @@ import java.util.List;
  */
 public class DownloadService extends IntentService {
 
-    private BBCWorldServiceDownloaderUtils utils = null;
     /**
      * @deprecated
      */
@@ -55,11 +48,10 @@ public class DownloadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent start");
         synchronized (intent) {
-            List<Hashtable<String, String>> resultList = null;
             final ResultReceiver receiver = intent.getParcelableExtra("receiver");
             final Bundle bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
-            utils = BBCWorldServiceDownloaderUtils.getInstance();
+            BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
             File theFile = utils.fileExists(fileName, getApplicationContext());
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
@@ -111,14 +103,8 @@ public class DownloadService extends IntentService {
 
         String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
 
-        File myDir = new File(root+BBCWorldServiceDownloaderStaticValues.BBC_PODCAST_DIR);
-        if (!myDir.exists()) {
-
-            if(!myDir.mkdirs()){
-                Toast.makeText(getApplicationContext(), "Directory "+myDir+" not created, switch directory settings to internal storage", Toast.LENGTH_LONG).show();
-            }
-
-        }
+        File myDir = new File(root);
+        BBCWorldServiceDownloaderUtils.checkDir(myDir, this);
 
 
         File file = new File(myDir, fileName);
@@ -128,9 +114,12 @@ public class DownloadService extends IntentService {
         FileOutputStream out = new FileOutputStream(file);
         out.write(barry);
         out.close();
-        return file.getPath() + "/" + file.getName();
+        String tmpFileName = file.getName();
+        return file.getName();
 
     }
+
+
 
     private void sendBroadcast(boolean success, String fileName, String fileNameWithoutDir, boolean isStartedInBackground) {
         Intent intent = new Intent("messageFromDownloadService"); //put the same message as in the filter you used in the activity when registering the receiver
