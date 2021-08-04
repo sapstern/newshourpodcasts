@@ -79,7 +79,7 @@ public class ItemListActivity extends AppCompatActivity {
                     String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
                     File file = new File(root);
                     BBCWorldServiceDownloaderUtils.checkDir(file, this);
-                    Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
+                    Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(this, this.getPackageName() + ".provider", file);
                     if (intent != null) {
                         intent.setClassName("com.ghisler.android.TotalCommander", "com.ghisler.android.TotalCommander.DirBrowseActivity");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -88,12 +88,12 @@ public class ItemListActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    //Setup of implicid intend
+                    //Setup of implicit intend
                     Intent manageIntent = new Intent(Intent.ACTION_DEFAULT);
                     String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-                    File file = new File(root);
+                    File file = new File(root+"/");
                     BBCWorldServiceDownloaderUtils.checkDir(file, this);
-                    Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", file);
+                    Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(this, this.getPackageName() + ".provider", file);
                     manageIntent.setDataAndType(fileURI, "resource/folder");
                     manageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(manageIntent, "manage files"));
