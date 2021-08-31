@@ -11,5 +11,8 @@
 /build
 /captures
 keystore
+./keystore
+/keystore
+/./keystore
 .externalNativeBuild
 .cxx
