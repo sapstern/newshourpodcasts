@@ -4,7 +4,7 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 android {
     signingConfigs {
         debug {
-            storeFile file('/home/matthias/gitBBCPodcastDownloader/keystore/bbc_newshour_downloader.jks')
+            storeFile file('/home/matthias/gitBBCPodcastDownloader_keystore/keystore/bbc_newshour_downloader.jks')
             storePassword '****'
             keyAlias 'key0'
             keyPassword '****'
