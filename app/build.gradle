@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+//apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 
 android {
     signingConfigs {
         debug {
             storeFile file('/home/matthias/gitBBCPodcastDownloader_keystore/keystore/bbc_newshour_downloader.jks')
-            storePassword '****'
+            storePassword 'qwertzuiop'
             keyAlias 'key0'
-            keyPassword '****'
+            keyPassword 'qwertzuiop'
         }
     }
     compileSdkVersion 30
@@ -68,6 +69,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "com.mikepenz:aboutlibraries:6.2.3"
     //implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
     
+}
+repositories {
+    mavenCentral()
 }

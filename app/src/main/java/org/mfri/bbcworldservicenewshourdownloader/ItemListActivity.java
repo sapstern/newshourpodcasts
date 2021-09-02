@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,13 +13,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,7 +26,8 @@ import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
 
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -118,8 +116,9 @@ public class ItemListActivity extends AppCompatActivity {
                 startActivity(intent_about);
                 break;
             case R.id.action_licenses:
-                OssLicensesMenuActivity.setActivityTitle(getString(R.string.custom_license_title));
-                startActivity(new Intent(this, OssLicensesMenuActivity.class));
+                new LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR).start(this);
+//                OssLicensesMenuActivity.setActivityTitle(getString(R.string.custom_license_title));
+//                startActivity(new Intent(this, OssLicensesMenuActivity.class));
                 break;
             default:
                 break;
