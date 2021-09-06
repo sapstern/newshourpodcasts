@@ -17,8 +17,8 @@ android {
         applicationId "org.mfri.bbcworldservicenewshourdownloader"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 206
-        versionName "206"
+        versionCode 111
+        versionName "v1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
