@@ -116,9 +116,7 @@ public class ItemListActivity extends AppCompatActivity {
                 startActivity(intent_about);
                 break;
             case R.id.action_licenses:
-                new LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR).start(this);
-//                OssLicensesMenuActivity.setActivityTitle(getString(R.string.custom_license_title));
-//                startActivity(new Intent(this, OssLicensesMenuActivity.class));
+                new LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR).withActivityTitle("Open Source Libs used by "+getString(R.string.app_name)).start(this);
                 break;
             default:
                 break;
