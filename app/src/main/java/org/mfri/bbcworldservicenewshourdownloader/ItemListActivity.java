@@ -108,15 +108,15 @@ public class ItemListActivity extends AppCompatActivity {
                 intent_doc.putExtra("bundle_page", bundle);
                 startActivity(intent_doc);
                 break;
+            case R.id.action_licenses:
+                new LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR).withActivityTitle("Open Source Libs used by "+getString(R.string.app_name)).start(this);
+                break;
             case R.id.action_about:
                 Intent intent_about = new Intent(this, WebViewActivity.class);
                 Bundle bundle_about = new Bundle();
                 bundle_about.putString("page", "about");
                 intent_about.putExtra("bundle_page", bundle_about);
                 startActivity(intent_about);
-                break;
-            case R.id.action_licenses:
-                new LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR).withActivityTitle("Open Source Libs used by "+getString(R.string.app_name)).start(this);
                 break;
             default:
                 break;

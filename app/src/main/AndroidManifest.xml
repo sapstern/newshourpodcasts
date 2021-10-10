@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/noun_podcast_l_3512342"
+        android:roundIcon="@mipmap/radio_icon_96_px"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo"
         android:usesCleartextTraffic="true"
@@ -45,13 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.mfri.bbcworldservicenewshourdownloader.ItemMainActivity" />
         </activity>
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <service
             android:name=".ListService"
             android:exported="false" />

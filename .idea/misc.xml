@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout-w900dp/item_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_list_content.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/bbc_menu.xml" value="0.1296875" />
       </map>
     </option>
   </component>

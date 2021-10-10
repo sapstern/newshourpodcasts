@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BBC Worldservice Newshour Downloader</string>
+    <string name="app_name">BBC World Service Newshour Downloader</string>
     <string name="action_start_settings">Settings</string>
     <string name="action_favorite">Manage Files</string>
     <string name="title_activity_settings">SettingsActivity</string>
