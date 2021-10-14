@@ -1,0 +1,3 @@
+This app provides functionallity in facilitating downloads of BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p002vsnk">Newshour</a> news podcasts.
+It has been written by the programmer without any commercial interest and is meant to be useful for anyone who likes to listen to the "BBC World Service Newshour" program.
+The programmer is not an employee nor in any other form affiliated to the publisher of the podcasts.

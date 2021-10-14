@@ -1,0 +1,2 @@
+This app provides functionallity in facilitating downloads of BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p002vsnk">Newshour</a> news podcasts.
+
