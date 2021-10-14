@@ -2,6 +2,7 @@ package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -185,7 +187,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * @return bundle hplding download options
      * @throws IOException
      */
-    public synchronized Bundle getCurrentDownloadOptions(Context context) throws IOException {
+    public synchronized Bundle getCurrentDownloadOptions(Context context)  {
 
         if(currentDownloadOptions!=null && isWithinTimeFrame(timeStampOfcurrentDownloadOptions)) {
             return currentDownloadOptions;
@@ -198,7 +200,12 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         //MFRI jsoup rein
         String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
         Document doc = null;
-        doc = Jsoup.connect("https://www.bbc.co.uk/programmes/p002vsnk/episodes/downloads").userAgent(userAgent).get();
+        try {
+            doc = Jsoup.connect("https://www.bbc.co.uk/programmes/p002vsnk/episodes/downloads").userAgent(userAgent).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
         Elements theElements = doc.select("a[href]");
         String publicationDate = "Mon 01 Januar 0000, 00:00";
         int i = 0;
@@ -336,6 +343,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         theDate = theDate.replace(",", "");
         theDate = theDate.replaceAll(" ", "_");
         theDate = theDate.replaceAll(":", "_");
+        theContentDesc = theContentDesc.replace("?", "");
         theContentDesc = theContentDesc.replaceAll(" ", "_");
         theContentDesc = theContentDesc.replaceAll(":", "_");
         theContentDesc = replaceInName(theContentDesc, "'", "_");
@@ -382,18 +390,15 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
             channel.setDescription("Download podcasts ongoing");
             mNotificationManager.createNotificationChannel(channel);
         }
+        // Create an explicit intent for an SettingsActivity => Entrypoint of the app
+        Intent intent = new Intent(context, SettingsActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "1234567")
                 .setSmallIcon(R.mipmap.ic_launcher) // notification icon
                 .setContentTitle(title) // title for notification
                 .setContentText(message)// message for notification
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true); // clear notification after click
-//        if (isIntend) {
-//            Intent intent = new Intent(getApplicationContext(), MediaPlayerActivity.class);
-//            //MFRI hier noch mediaplayer activity richtig aufrufen
-//            intent.putExtra("fileNameWithoutDir", fileNameWithoutDir);
-//            PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            mBuilder.setContentIntent(pi);
-//        }
         mNotificationManager.notify(0, mBuilder.build());
     }
     /*
@@ -437,6 +442,67 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         editor.putBoolean("show_settings", true).apply();
         editor.commit();
         return intent_settings;
+    }
+
+    @Nullable
+    public Bundle getDownloadOptionsBundle(Context context){
+
+        Bundle theDownloadedPodcastBundle;
+        try {
+            theDownloadedPodcastBundle = this.getDownloadedPodcasts(context);
+        } catch (IOException e) {
+            e.printStackTrace();
+            theDownloadedPodcastBundle = null;
+        }
+        Bundle downloadOptionsBundle = this.getCurrentDownloadOptions(context);
+
+
+        if(theDownloadedPodcastBundle!=null){
+            if(downloadOptionsBundle!=null)
+                mergeBundles(theDownloadedPodcastBundle, downloadOptionsBundle);
+            else
+                //Just use already downloaded podcasts if not connected to internet
+                downloadOptionsBundle = theDownloadedPodcastBundle;
+        }
+        return downloadOptionsBundle;
+    }
+
+    /**
+     * merge fresh download options with already downloaded item options
+     * @param theDownloadedPodcastBundle
+     * @param downloadOptionsBundle
+     */
+    private void mergeBundles(Bundle theDownloadedPodcastBundle, Bundle downloadOptionsBundle) {
+        int theSizeOfDownloadOptions = downloadOptionsBundle.getInt("LIST_SIZE");
+        int theSizeOfDownloadedPodcasts = theDownloadedPodcastBundle.getInt("LIST_SIZE");
+        int sizeAll = theSizeOfDownloadOptions;
+
+        for (int i=0;i<theSizeOfDownloadedPodcasts;i++){
+            DownloadListItem item = theDownloadedPodcastBundle.getParcelable("ITEM_"+i);
+
+            boolean isFound = false;
+            for (int j=0;j<theSizeOfDownloadOptions;j++){
+                DownloadListItem itemOptions = downloadOptionsBundle.getParcelable("ITEM_"+j);
+                if(item.fileName!=null && itemOptions.fileName!=null)
+                    if(item.fileName.equals(itemOptions.fileName)){
+                        downloadOptionsBundle.remove("ITEM_" + j);
+                        //Neuer ITEM, weil url final ist, somit nicht auf "none" gesetzt werden kann, also ersetzen
+                        //DownloadListItem itemTemp = new DownloadListItem(String.valueOf(j), itemOptions.content, "none", itemOptions.dateOfPublication, itemOptions.fileName);
+                        downloadOptionsBundle.putParcelable("ITEM_" + j, item);
+
+                        isFound = true;
+                        break;
+                    }
+            }
+            //Nicht gefunden, anhaengen an original download optionss
+            if(isFound==false){
+                sizeAll++;
+                downloadOptionsBundle.putParcelable("ITEM_"+sizeAll, item);
+            }
+        }
+        downloadOptionsBundle.remove("LIST_SIZE");
+        sizeAll++;
+        downloadOptionsBundle.putInt("LIST_SIZE",sizeAll);
     }
 
     public static void checkDir(File myDir, Context context) {

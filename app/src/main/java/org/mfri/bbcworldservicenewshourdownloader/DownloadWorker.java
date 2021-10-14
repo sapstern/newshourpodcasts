@@ -32,13 +32,8 @@ public class DownloadWorker extends Worker {
 
         BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
         // lets first get all available downloads from bbc
-        Bundle downLoadOptionsBundle;
-        try {
-            downLoadOptionsBundle = utils.getCurrentDownloadOptions(theContext);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Result.failure();
-        }
+        Bundle downLoadOptionsBundle = utils.getCurrentDownloadOptions(theContext);
+
         if (downLoadOptionsBundle==null)
             return Result.failure();
         ItemList itemList = new ItemList(downLoadOptionsBundle);

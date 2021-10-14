@@ -30,6 +30,7 @@ import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -46,10 +47,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         Log.d("CREATE", "onCreate start");
         utils = BBCWorldServiceDownloaderUtils.getInstance();
-
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
 
-        //MFRI 
         theItemList = new ItemList(listBundle);
         setContentView(R.layout.activity_item_list);
         setupTableLayout(theItemList);
