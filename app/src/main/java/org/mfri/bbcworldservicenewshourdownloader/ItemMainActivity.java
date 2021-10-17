@@ -56,7 +56,13 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
         }
     }
     private void startBackgroundWorkerAndService() {
-        //Schedule background download processing (if user wants it)
+        //Start delete service if selected
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("keep_forever", true)!=true){
+            Intent intent = new Intent(this, DeleteOldPodcastsService.class);
+            this.startService(intent);
+        }
+
+            //Schedule background download processing (if user wants it)
         if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dl_background", true)==true){
             WorkManager
                     .getInstance(this)

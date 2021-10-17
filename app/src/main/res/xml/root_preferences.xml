@@ -17,6 +17,10 @@
             app:key="tc_installed"
             app:title="@string/tc_behaviour"
             app:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            app:key="keep_forever"
+            app:title="@string/keep_forever"
+            app:defaultValue="false"/>
         <ListPreference
             app:title="@string/dl_dir_root"
             app:key="dl_dir_root"/>

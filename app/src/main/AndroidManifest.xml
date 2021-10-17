@@ -45,7 +45,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.mfri.bbcworldservicenewshourdownloader.ItemMainActivity" />
         </activity>
-
+        <service
+            android:name=".DeleteOldPodcastsService"
+            android:exported="false" />
         <service
             android:name=".ListService"
             android:exported="false" />

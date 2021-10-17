@@ -93,9 +93,25 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
 
-    public synchronized Bundle getDownloadedPodcasts(Context context) throws IOException{
+    public synchronized Bundle getDownloadedPodcastsBundle(Context context) throws IOException{
         Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
+        ArrayList<TempDLItem> tab = getDownloadedPodcastsList(context);
+        if (tab == null) return null;
+        //Convert TempDLItem to DownloadListItem
+        for(int i=0;i<tab.size();i++)
+        {
+            TempDLItem currentItem = tab.get(i);
+            DownloadListItem item = new DownloadListItem(String.valueOf(i),currentItem.content,currentItem.url,currentItem.dateOfPublication,currentItem.fileName);
+            bundle.putParcelable("ITEM_" +i, item);
+        }
+        Log.d("Utils", "getDownloadedPodcasts() end size of list: "+tab.size() );
+        bundle.putInt("LIST_SIZE", tab.size());
+        return bundle;
+    }
+
+    @Nullable
+    public ArrayList<TempDLItem> getDownloadedPodcastsList(Context context) {
         ArrayList<TempDLItem> tab = new ArrayList<>();
         String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
         File myDir = new File(root );
@@ -104,15 +120,15 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
             return null;
 
 
-        int counter = 0;
-        //Date lastDate = new Date(-3600000);
+        //int counter = 0;
+
         for (File file : podcastArry) {
             if (file != null
                     && !file.isDirectory()
                     && file.getName().startsWith("Newshour_")
                     && file.getName().endsWith(".mp3")
             ) {
-                counter++;
+                //counter++;
                 String theFileName = file.getName();
                 StringTokenizer toki = new StringTokenizer(file.getName().substring(0, file.getName().indexOf(".mp3")), "_");
                 StringBuilder theDescriptionBuilder = new StringBuilder();
@@ -150,16 +166,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         //Sort by date descending
         Collections.sort(tab);
-        //Convert TempDLItem to DownloadListItem
-        for(int i=0;i<tab.size();i++)
-        {
-            TempDLItem currentItem = tab.get(i);
-            DownloadListItem item = new DownloadListItem(String.valueOf(i),currentItem.content,currentItem.url,currentItem.dateOfPublication,currentItem.fileName);
-            bundle.putParcelable("ITEM_" +i, item);
-        }
-        Log.d("Utils", "getDownloadedPodcasts() end size of list: "+counter );
-        bundle.putInt("LIST_SIZE", counter);
-        return bundle;
+        return tab;
     }
 
     /**
@@ -449,7 +456,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
         Bundle theDownloadedPodcastBundle;
         try {
-            theDownloadedPodcastBundle = this.getDownloadedPodcasts(context);
+            theDownloadedPodcastBundle = this.getDownloadedPodcastsBundle(context);
         } catch (IOException e) {
             e.printStackTrace();
             theDownloadedPodcastBundle = null;
