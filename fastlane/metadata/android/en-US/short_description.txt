@@ -1,2 +1,1 @@
-This app provides downloads of BBC World Service news podcasts.
-
+BBC World Service Newshour news podcasts downloader.
