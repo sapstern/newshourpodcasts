@@ -42,6 +42,10 @@ public class ItemListActivity extends AppCompatActivity {
     private TableLayout.LayoutParams rowParams = null;
     private TableRow.LayoutParams colParams = null;
     private ItemList theItemList;
+    //private int firstVisibleInListview;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,8 @@ public class ItemListActivity extends AppCompatActivity {
         theItemList = new ItemList(listBundle);
         setContentView(R.layout.activity_item_list);
         setupTableLayout(theItemList);
+
+        //firstVisibleInListview = 0;
         //add swipe refresh
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
         pullToRefresh.setOnRefreshListener(() -> {
@@ -64,7 +70,16 @@ public class ItemListActivity extends AppCompatActivity {
         tableLayout.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                pullToRefresh.setEnabled(false);
+                ScrollView layMain = findViewById(R.id.table);
+                Log.d("SCROLL", "onScrollChanged start Y: "+layMain.getScrollY());
+                //Log.d("SCROLL", "onScrollChanged start firstVisibleInListview: "+firstVisibleInListview);
+
+                        if (layMain.getScrollY() == 0)
+                            pullToRefresh.setEnabled(true);
+                        else
+                            pullToRefresh.setEnabled(false);
+
+                //firstVisibleInListview = layMain.getScrollY();
             }
         });
         Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
