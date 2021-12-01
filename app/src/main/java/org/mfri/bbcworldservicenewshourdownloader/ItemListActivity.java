@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -30,7 +31,6 @@ import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -38,6 +38,7 @@ public class ItemListActivity extends AppCompatActivity {
 
 
     private BBCWorldServiceDownloaderUtils utils = null;
+    private TableLayout tableLayout = null;
     private TableLayout.LayoutParams rowParams = null;
     private TableRow.LayoutParams colParams = null;
     private ItemList theItemList;
@@ -60,11 +61,18 @@ public class ItemListActivity extends AppCompatActivity {
             pullToRefresh.setRefreshing(false);
 
         });
+        tableLayout.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                pullToRefresh.setEnabled(false);
+            }
+        });
         Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
         setSupportActionBar(myToolbar);
 
         Log.d("CREATE", "onCreate end");
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -139,7 +147,7 @@ public class ItemListActivity extends AppCompatActivity {
         colParams.setMargins(0, 0, 1, 0);
         colParams.width = 0;
         colParams.height = TableRow.LayoutParams.FILL_PARENT;
-        TableLayout tableLayout = new TableLayout(this);
+        tableLayout = new TableLayout(this);
         TableLayout.LayoutParams tabLayoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
         tableLayout.setLayoutParams(tabLayoutParams);
         tableLayout.setStretchAllColumns(true);
@@ -284,5 +292,6 @@ public class ItemListActivity extends AppCompatActivity {
     {
         moveTaskToBack(true); // exist app
     }
+
 
 }
