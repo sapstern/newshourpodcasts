@@ -6,7 +6,6 @@ The programmer is not an employee nor in any other form affiliated to the publis
 Publisher of content: BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/">https://www.bbc.co.uk</a>
 The app developer does not take over any responsibility for the content of these downloads.
 
-Credits for the radio icon used inside this app:
-<img src="https://icons.iconarchive.com/icons/martz90/hex/48/radio-icon.png" alt="Radio Icon"/>
+Credits for the radio icon used inside this app: <a moz-do-not-send="true" href="https://icons.iconarchive.com/icons/martz90/hex/48/radio-icon.png">Radio Icon</a>
 Author: <a moz-do-not-send="true" href="https://iconarchive.com/artist/martz90.html">By Martz90</a>.
 License: <a moz-do-not-send="true" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC Attribution-Noncommercial-No Derivate 4.0</a>.
