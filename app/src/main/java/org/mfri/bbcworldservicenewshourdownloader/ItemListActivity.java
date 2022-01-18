@@ -42,7 +42,6 @@ public class ItemListActivity extends AppCompatActivity {
     private TableLayout.LayoutParams rowParams = null;
     private TableRow.LayoutParams colParams = null;
     private ItemList theItemList;
-    //private int firstVisibleInListview;
 
 
 
@@ -58,7 +57,6 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_list);
         setupTableLayout(theItemList);
 
-        //firstVisibleInListview = 0;
         //add swipe refresh
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
         pullToRefresh.setOnRefreshListener(() -> {
@@ -72,14 +70,10 @@ public class ItemListActivity extends AppCompatActivity {
             public void onScrollChanged() {
                 ScrollView layMain = findViewById(R.id.table);
                 Log.d("SCROLL", "onScrollChanged start Y: "+layMain.getScrollY());
-                //Log.d("SCROLL", "onScrollChanged start firstVisibleInListview: "+firstVisibleInListview);
-
                         if (layMain.getScrollY() == 0)
                             pullToRefresh.setEnabled(true);
                         else
                             pullToRefresh.setEnabled(false);
-
-                //firstVisibleInListview = layMain.getScrollY();
             }
         });
         Toolbar myToolbar = findViewById(R.id.bbc_toolbar);

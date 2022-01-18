@@ -1,7 +1,10 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
 import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.ResultReceiver;
@@ -17,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.mfri.bbcworldservicenewshourdownloader.VolleyRequest;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,6 +36,8 @@ import java.io.IOException;
  */
 public class DownloadService extends IntentService {
 
+
+    private Bundle bundle;
     /**
      * @deprecated
      */
@@ -49,54 +56,65 @@ public class DownloadService extends IntentService {
         Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent start");
         synchronized (intent) {
             final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-            final Bundle bundle = intent.getExtras();
+            this.bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
             File theFile = utils.fileExists(fileName, getApplicationContext());
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
-//                    Toast.makeText(getApplicationContext(), "File exists: " + theFile.getName(), Toast.LENGTH_LONG).show();
                     sendBroadcast(true, theFile.getName(), fileName, bundle.getBoolean("isStartedInBackground"));
                 }
                 return;
             }
-            RequestQueue queue = Volley.newRequestQueue(this);
-            Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent url: "+bundle.getString("url"));
-            InputStreamVolleyRequest bytesRequest = new InputStreamVolleyRequest(Request.Method.GET, bundle.getString("url"),
-                    new Response.Listener<byte[]>() {
-                        @Override
-                        public void onResponse(byte[] response) {
-                            try {
-                                if (response != null) {
-                                    try {
-                                        String fileNameSaved = savePodcast(fileName, response);
-                                        Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
-                                        sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
 
-                                }
-                            } catch (Exception e) {
-                                // TODO Auto-generated catch block
-                                Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
+            lbm.registerReceiver(bReceiver, new IntentFilter("DOWNLOAD_REDIRECT"));
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO handle the error
-                    error.printStackTrace();
-                }
-            }, null);
-            queue.add(bytesRequest);
+            Log.d("DownloadService", "onHandleIntent start LocalBroadcastManager started");
+
+            executeVolleyRequest(fileName, bundle.getString("url"));
+
         }
 
     }
 
+    private void executeVolleyRequest(String fileName, String url) {
+
+        Log.d("HANDLE_INTENT", "DownloadService: executeVolleyRequest url: "+ url);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        VolleyRequest bytesRequest = new VolleyRequest(Request.Method.GET, url,
+                new Response.Listener<byte[]>() {
+                    @Override
+                    public void onResponse(byte[] response) {
+
+                        try {
+                            if (response != null) {
+                                try {
+                                    String fileNameSaved = savePodcast(fileName, response);
+                                    Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
+                                    sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO handle the error
+                error.printStackTrace();
+            }
+        }, null, getApplicationContext());
+
+        queue.add(bytesRequest);
+    }
 
 
     private String savePodcast(String fileName, byte[] barry) throws IOException {
@@ -114,7 +132,6 @@ public class DownloadService extends IntentService {
         FileOutputStream out = new FileOutputStream(file);
         out.write(barry);
         out.close();
-        String tmpFileName = file.getName();
         return file.getName();
 
     }
@@ -122,11 +139,31 @@ public class DownloadService extends IntentService {
 
 
     private void sendBroadcast(boolean success, String fileName, String fileNameWithoutDir, boolean isStartedInBackground) {
-        Intent intent = new Intent("messageFromDownloadService"); //put the same message as in the filter you used in the activity when registering the receiver
+        Intent intent = new Intent("IMPLICIT_INTENT_START_PODCAST"); //put the same message as in the filter you used in the activity when registering the receiver
         intent.putExtra("success", success);
         intent.putExtra("fileName", fileName);
         intent.putExtra("fileNameWithoutDir", fileNameWithoutDir);
         intent.putExtra("isStartedInBackground", isStartedInBackground);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    private final BroadcastReceiver bReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("BroadcastReceiver", "onReceive start");
+            switch (intent.getAction()){
+                case "DOWNLOAD_REDIRECT":
+                    Log.d("BroadcastReceiver", "onReceive start redirect Volley request to: "+intent.getExtras().getString("redirectUrl"));
+                    executeVolleyRequest(bundle.getString("fileName"), intent.getExtras().getString("redirectUrl"));
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+
+    };
+
 }
