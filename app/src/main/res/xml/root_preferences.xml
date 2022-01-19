@@ -21,6 +21,10 @@
             app:key="keep_forever"
             app:title="@string/keep_forever"
             app:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            app:key="allow_redirect"
+            app:title="Allow server redirect"
+            app:defaultValue="false"/>
         <ListPreference
             app:title="@string/dl_dir_root"
             app:key="dl_dir_root"/>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,11 +28,13 @@ public class VolleyRequest extends InputStreamVolleyRequest{
 
         final int status = error.networkResponse.statusCode;
         // Handle 30x
+
         if(HttpURLConnection.HTTP_MOVED_PERM == status || status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_SEE_OTHER) {
             final String location = error.networkResponse.headers.get("Location");
             Log.d("VOLLEY_ERROR", "Location: " + location);
-            sendBroadcast(location);
-
+            if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("allow_redirect", false)==true){
+                sendBroadcast(location);
+            }
         }
     }
     private void sendBroadcast(String redirectUrl) {
