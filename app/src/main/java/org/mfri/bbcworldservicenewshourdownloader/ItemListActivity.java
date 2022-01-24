@@ -172,7 +172,7 @@ public class ItemListActivity extends AppCompatActivity {
         ScrollView layMain = findViewById(R.id.table);
         layMain.removeAllViews();
         layMain.addView(tableLayout);
-        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("messageFromDownloadService"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("IMPLICIT_INTENT_START_PODCAST"));
     }
 
 
@@ -280,7 +280,7 @@ public class ItemListActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("messageFromDownloadService"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("IMPLICIT_INTENT_START_PODCAST"));
     }
 
     protected void onPause() {
