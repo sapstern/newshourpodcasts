@@ -42,10 +42,10 @@ public class DeleteOldPodcastsService extends IntentService {
         synchronized (intent) {
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
             try {
-                ArrayList<TempDLItem> list = utils.getDownloadedPodcastsList(this);
+                ArrayList<DownloadItem> list = utils.getDownloadedPodcastsList(this);
                 if (list != null) {
                     for(int i=0; i<list.size();i++){
-                        TempDLItem item = list.get(i);
+                        DownloadItem item = list.get(i);
                         Calendar calendarDateMin30 = Calendar.getInstance(); // this would default to now
                         calendarDateMin30.add(Calendar.DAY_OF_MONTH, -30);
                         if(item.compareDate.getTime() < calendarDateMin30.getTime().getTime()){

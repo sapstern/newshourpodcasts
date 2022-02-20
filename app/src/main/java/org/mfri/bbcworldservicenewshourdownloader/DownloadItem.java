@@ -2,7 +2,7 @@ package org.mfri.bbcworldservicenewshourdownloader;
 
 import java.util.Date;
 
-public class TempDLItem implements Comparable<TempDLItem> {
+public class DownloadItem implements Comparable<DownloadItem> {
         public  String id;
         public  String content;
         public  String url;
@@ -10,8 +10,11 @@ public class TempDLItem implements Comparable<TempDLItem> {
         public  String fileName;
         public Date compareDate;
 
+        public DownloadItem(){
 
-        public TempDLItem(String id, String content, String url, String dateOfPublication, String fileName) {
+        }
+
+        public DownloadItem(String id, String content, String url, String dateOfPublication, String fileName) {
             this.id = id;
             this.content = content;
             this.url = url;
@@ -22,10 +25,10 @@ public class TempDLItem implements Comparable<TempDLItem> {
 
 
     @Override
-    public int compareTo(TempDLItem tempDLItem) {
-        if (this.compareDate == null || tempDLItem.compareDate == null)
+    public int compareTo(DownloadItem downloadItem) {
+        if (this.compareDate == null || downloadItem.compareDate == null)
             return 0;
-        return tempDLItem.compareDate.compareTo(this.compareDate);
+        return downloadItem.compareDate.compareTo(this.compareDate);
     }
 }
 

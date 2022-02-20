@@ -1,5 +1,6 @@
 package org.mfri.bbcworldservicenewshourdownloader;
 
+import android.app.ListActivity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,12 +14,17 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +33,7 @@ import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
@@ -78,6 +85,23 @@ public class ItemListActivity extends AppCompatActivity {
         });
         Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
         setSupportActionBar(myToolbar);
+        Spinner theSpinner = findViewById(R.id.spinner_nav);
+
+        ArrayAdapter<String> bbcProgramsAdapter = new ArrayAdapter<String>(ItemListActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bbc_programs));
+        bbcProgramsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        theSpinner.setAdapter(bbcProgramsAdapter);
+        theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), theSpinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getApplicationContext(), "Nothing selected", Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         Log.d("CREATE", "onCreate end");
     }

@@ -22,6 +22,9 @@ import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -32,10 +35,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -96,12 +101,12 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     public synchronized Bundle getDownloadedPodcastsBundle(Context context) throws IOException{
         Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
-        ArrayList<TempDLItem> tab = getDownloadedPodcastsList(context);
+        ArrayList<DownloadItem> tab = getDownloadedPodcastsList(context);
         if (tab == null) return null;
         //Convert TempDLItem to DownloadListItem
         for(int i=0;i<tab.size();i++)
         {
-            TempDLItem currentItem = tab.get(i);
+            DownloadItem currentItem = tab.get(i);
             DownloadListItem item = new DownloadListItem(String.valueOf(i),currentItem.content,currentItem.url,currentItem.dateOfPublication,currentItem.fileName);
             bundle.putParcelable("ITEM_" +i, item);
         }
@@ -111,8 +116,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     @Nullable
-    public ArrayList<TempDLItem> getDownloadedPodcastsList(Context context) {
-        ArrayList<TempDLItem> tab = new ArrayList<>();
+    public ArrayList<DownloadItem> getDownloadedPodcastsList(Context context) {
+        ArrayList<DownloadItem> tab = new ArrayList<>();
         String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
         File myDir = new File(root );
         File[] podcastArry = myDir.listFiles();
@@ -159,8 +164,9 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                 }
 
                 String dateString = theDateBuilder.toString();
-                TempDLItem localItem = new TempDLItem("X", theDescriptionBuilder.toString(), "none", dateString, theFileName);
-                localItem.compareDate = getDateFromPatternString(dateString);
+
+                DownloadItem localItem = new DownloadItem("X", theDescriptionBuilder.toString(), "none", dateString, theFileName);
+                localItem.compareDate = getDateFromPatternString(dateString, "E d MMMM yyyy, HH:mm");
                 tab.add(localItem);
             }
         }
@@ -170,13 +176,15 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     /**
-     * @param patternString
+     * @param dateString
+     * @param datePattern
      * @return
      */
-    public Date getDateFromPatternString(String patternString){
-        DateFormat df = new SimpleDateFormat("EEE_dd_MMMMMMMMMMM_yyyy_kk_mm", Locale.ENGLISH);
+    public Date getDateFromPatternString(String dateString, String datePattern){
+
+        DateFormat df = new SimpleDateFormat(datePattern, Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return getParsedDate(patternString, df);
+        return getParsedDate(dateString, df);
     }
 
     private Date getParsedDate(String patternString, DateFormat df) {
@@ -213,6 +221,21 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
             e.printStackTrace();
             return null;
         }
+        List<DownloadItem> theDownloadItemsFromJson = null;
+        Elements theJsonElements = doc.select("script[type]");
+        for(int i=0;i<theJsonElements.size();i++){
+            if(        theJsonElements.get(i).attr("type") != null
+                    && theJsonElements.get(i).attr("type").equals("application/ld+json")
+                    && theJsonElements.get(i).data().trim().startsWith("{\"@type\":\"RadioSeries\"")){
+                System.out.println(theJsonElements.get(i));
+                try {
+                    theDownloadItemsFromJson = parseJson(theJsonElements.get(i).data());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        ArrayList<DownloadItem> dlItemList = new ArrayList<DownloadItem>();
         Elements theElements = doc.select("a[href]");
         String publicationDate = "Mon 01 Januar 0000, 00:00";
         int i = 0;
@@ -221,6 +244,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
             if (theElements.get(i).attr("title") != null && theElements.get(i).attr("title").indexOf("days left to listen") != -1) {
                 String theTitle = theElements.get(i).attr("title");
+                int startIndexOfText = theTitle.indexOf("days left to listen");
+                int dateOffset = Integer.parseInt((theTitle.substring(0, startIndexOfText)).trim());
                 Log.d("TITLE", theTitle);
                 int startIndex = theTitle.indexOf("(");
                 int endIndex = theTitle.indexOf(")");
@@ -230,32 +255,100 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                     publicationDate = theTitle.substring(startIndex, endIndex);
                     //publicationDate = (publicationDate + "_" + theTitle.substring(startIndex, endIndex)).trim();
                     //Thu 24 September 2020, 15:00
-                    publicationDate = getPublicationDate(publicationDate);
+                    publicationDate = getPublicationDate(publicationDate, dateOffset);
                     Log.d("PUB_DATE", publicationDate);
                 }
             }
+            Log.d("ELEMENT", theElements.get(i).text());
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             String theQuality = prefs.getString("dl_qual","Lower quality (64kbps)");
             if (theElements.get(i).text().startsWith(theQuality)) {
-                Log.d("ELEMENT", theElements.get(i).text());
+
                 Log.d("ATTRIBUT_TEXT", theElements.get(i).attr("download"));
                 Log.d("ATTRIBUT_HREF", theElements.get(i).attr("href"));
-                String theDescription = theElements.get(i).attr("download").substring(0, theElements.get(i).attr("download").indexOf("-"));
-                theDescription = theDescription.replace("Newshour,", "").trim();
+                String[] tokens = theElements.get(i).attr("download").split("-");
+                String theDescription = "";
+                String theId = "";
+                for (int j=0;j< tokens.length;j++) {
+                    switch (j) {
+                        case 0:
+                            theDescription = tokens[j];
+                            break;
+                        case 1:
+                            theId = tokens[j];
+                            theId = theId.replace(".mp3", "").trim();
+                            break;
+                    }
+                }
+                //theDescription = theDescription.replace("Newshour,", "").trim();
+                //if (publicationDate.equals("Mon 01 Januar 0000, 00:00"))
+                    publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
                 String theFilename = prepareFilename(theDescription, publicationDate );
+                DownloadItem item = new DownloadItem(String.valueOf(s), theDescription, "https:" + theElements.get(i).attr("href"), publicationDate, theFilename);
+                //MFRI comparedate
+                item.compareDate = getDateFromPatternString(publicationDate, "E d MMMM yyyy, HH:mm");
 
-                DownloadListItem item = new DownloadListItem(String.valueOf(s), theDescription, "https:" + theElements.get(i).attr("href"), publicationDate, theFilename);
                 publicationDate = "Mon 01 Januar 0000, 00:00";
-                currentDownloadOptions.putParcelable("ITEM_" + s, item);
+                //currentDownloadOptions.putParcelable("ITEM_" + s, item);
+                dlItemList.add(item);
                 s++;
             }
             Log.d("onHandleIntent size: ", String.valueOf(s));
-            currentDownloadOptions.putInt("LIST_SIZE", s);
-        }
+            //Sort by date descending
 
+        }
+        Collections.sort(dlItemList);
+        for (int z=0; z<dlItemList.size();z++){
+            DownloadItem dlitem = dlItemList.get(z);
+            DownloadListItem item = new DownloadListItem(dlitem.id, dlitem.content, dlitem.url, dlitem.dateOfPublication, dlitem.fileName);
+            currentDownloadOptions.putParcelable("ITEM_" + z, item);
+        }
+        currentDownloadOptions.putInt("LIST_SIZE", s);
         timeStampOfcurrentDownloadOptions = new Date();
         Log.d("HANDLE", "handleActionDownloadList exit");
         return currentDownloadOptions;
+    }
+
+    private String parsePublicationDate(String theId, List<DownloadItem> theDownloadItemsFromJson) {
+
+        Iterator<DownloadItem> iterator = theDownloadItemsFromJson.iterator();
+        while (iterator.hasNext()){
+            DownloadItem item = iterator.next();
+            if(item.id.equals(theId)){
+                return processDateFromJson(item.dateOfPublication);
+            }
+        }
+        return "Mon 01 Januar 0000, 00:00";
+    }
+
+    private static String processDateFromJson(String dateInString) {
+
+        DateFormat formatIn = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        DateFormat formatOut = new SimpleDateFormat("E d MMMM yyyy, HH:mm", Locale.ENGLISH);
+        try {
+            Date date = formatIn.parse(dateInString);
+            //date = getDate(date, 30, "add");
+            return formatOut.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Mon 01 Januar 0000, 00:00";
+        }
+    }
+
+    private List<DownloadItem> parseJson(String jsonString) throws JSONException {
+        List<DownloadItem> resultList = new LinkedList<DownloadItem>();
+        JSONObject jsonObj = new JSONObject(jsonString);
+        // Getting JSON Array node
+        JSONArray episodes = jsonObj.getJSONArray("hasPart");
+        for (int i=0;i<episodes.length();i++){
+            DownloadItem currentItem = new DownloadItem();
+            JSONObject currentEpisode = episodes.getJSONObject(i);
+            currentItem.id = currentEpisode.getString("identifier");
+            currentItem.content = currentEpisode.getString("description");
+            currentItem.dateOfPublication = currentEpisode.getString("datePublished");
+            resultList.add(currentItem);
+        }
+        return resultList;
     }
     /**
      * checks whether we are now less than 12 hours after the last run
@@ -298,25 +391,35 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * e.G. Wed 23 September 2020, 22:00 will result in Tuesday, 25 August 2020
      *
      * @param dateInString
+     * @param dateOffset days to subtract from date
      * @return
      */
-    private static String getPublicationDate(String dateInString) {
+    private static String getPublicationDate(String dateInString, int dateOffset) {
 
         DateFormat format = new SimpleDateFormat("E d MMMM yyyy, HH:mm", Locale.ENGLISH);
         try {
 
             Date date = format.parse(dateInString);
-            Calendar cal = Calendar.getInstance();
-            assert date != null;
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -30);
-            date = cal.getTime();
+            date = getDate(date, dateOffset, "subtract");
             return format.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
             return "Mon 01 Januar 0000, 00:00";
         }
 
+    }
+
+    @NonNull
+    private static Date getDate(Date date, int offset, String theProcess) {
+        Calendar cal = Calendar.getInstance();
+        assert date != null;
+        cal.setTime(date);
+        if(theProcess.equals("add"))
+            cal.add(Calendar.DATE, + offset);
+        else
+            cal.add(Calendar.DATE, - offset);
+        date = cal.getTime();
+        return date;
     }
 
     /**
@@ -409,17 +512,17 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         mNotificationManager.notify(0, mBuilder.build());
     }
     /*
-    * Method to check storage options
-    * ContextCompat.getExternalFilesDirs(context, null) gives an array of File
-    * position [0] always points to the internal root dir
-    *
-    * */
+     * Method to check storage options
+     * ContextCompat.getExternalFilesDirs(context, null) gives an array of File
+     * position [0] always points to the internal root dir
+     *
+     * */
     public static CharSequence[] getStoragePaths(Context context) {
 
-            if(ContextCompat.getExternalFilesDirs(context, null).length >=2 )
-                return addToDirArry(2, ContextCompat.getExternalFilesDirs(context, null));
-            else
-                return addToDirArry(1, ContextCompat.getExternalFilesDirs(context, null));
+        if(ContextCompat.getExternalFilesDirs(context, null).length >=2 )
+            return addToDirArry(2, ContextCompat.getExternalFilesDirs(context, null));
+        else
+            return addToDirArry(1, ContextCompat.getExternalFilesDirs(context, null));
 
 
     }
