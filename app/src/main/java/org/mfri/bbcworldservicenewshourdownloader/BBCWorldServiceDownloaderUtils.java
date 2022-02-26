@@ -230,6 +230,10 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                 System.out.println(theJsonElements.get(i));
                 try {
                     theDownloadItemsFromJson = parseJson(theJsonElements.get(i).data());
+                    if(theDownloadItemsFromJson!=null&&theJsonElements.size()>0){
+                        break;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -237,7 +241,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         ArrayList<DownloadItem> dlItemList = new ArrayList<DownloadItem>();
         Elements theElements = doc.select("a[href]");
-        String publicationDate = "Mon 01 Januar 0000, 00:00";
+        String publicationDate;
         int i = 0;
         int s = 0;
         for (; i < theElements.size(); i++) {
@@ -323,7 +327,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
     private static String processDateFromJson(String dateInString) {
 
-        DateFormat formatIn = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        //
+        DateFormat formatIn = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
         DateFormat formatOut = new SimpleDateFormat("E d MMMM yyyy, HH:mm", Locale.ENGLISH);
         try {
             Date date = formatIn.parse(dateInString);
@@ -345,7 +350,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
             JSONObject currentEpisode = episodes.getJSONObject(i);
             currentItem.id = currentEpisode.getString("identifier");
             currentItem.content = currentEpisode.getString("description");
-            currentItem.dateOfPublication = currentEpisode.getString("datePublished");
+            JSONObject publication = currentEpisode.getJSONObject("publication");
+            currentItem.dateOfPublication = publication.getString("startDate");
             resultList.add(currentItem);
         }
         return resultList;
