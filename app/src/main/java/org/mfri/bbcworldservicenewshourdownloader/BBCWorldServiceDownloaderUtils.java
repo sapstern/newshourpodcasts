@@ -288,11 +288,13 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                 //if (publicationDate.equals("Mon 01 Januar 0000, 00:00"))
                     publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
                 String theFilename = prepareFilename(theDescription, publicationDate );
+                if (publicationDate.equals("Mon 01 Januar 0000, 00:00")){
+                    continue;
+                }
                 DownloadItem item = new DownloadItem(String.valueOf(s), theDescription, "https:" + theElements.get(i).attr("href"), publicationDate, theFilename);
                 //MFRI comparedate
                 item.compareDate = getDateFromPatternString(publicationDate, "E d MMMM yyyy, HH:mm");
 
-                publicationDate = "Mon 01 Januar 0000, 00:00";
                 //currentDownloadOptions.putParcelable("ITEM_" + s, item);
                 dlItemList.add(item);
                 s++;
@@ -464,8 +466,13 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         theContentDesc = theContentDesc.replaceAll(":", "_");
         theContentDesc = replaceInName(theContentDesc, "'", "_");
         theContentDesc = replaceInName(theContentDesc, "\"", "");
+        theContentDesc = replaceInName(theContentDesc, ",", "");
+        theContentDesc= replaceInName(theContentDesc,"__", "_");
 
-        return "Newshour_"+theContentDesc+"_"+theDate+".mp3";
+        if(theContentDesc.startsWith("Newshour"))
+            return theContentDesc.replace("Newshour", "Newshour_")+"_"+theDate+".mp3";
+        else
+            return "Newshour_"+theContentDesc+"_"+theDate+".mp3";
     }
 
     @NonNull
