@@ -164,9 +164,9 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                 }
 
                 String dateString = theDateBuilder.toString();
-
+                Log.d("Utils", "getDownloadedPodcastsList got the following date for comparison: "+dateString);
                 DownloadItem localItem = new DownloadItem("X", theDescriptionBuilder.toString(), "none", dateString, theFileName);
-                localItem.compareDate = getDateFromPatternString(dateString, "E d MMMM yyyy, HH:mm");
+                localItem.compareDate = getDateFromPatternString(dateString, "E_d_MMMM_yyyy_HH_mm");
                 tab.add(localItem);
             }
         }

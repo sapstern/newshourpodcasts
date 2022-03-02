@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/button_selector.xml" value="0.192" />
+        <entry key="app/src/main/res/drawable/media.xml" value="0.192" />
         <entry key="app/src/main/res/layout-w900dp/item_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_item_list.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/layout/activity_item_main.xml" value="0.17708333333333334" />

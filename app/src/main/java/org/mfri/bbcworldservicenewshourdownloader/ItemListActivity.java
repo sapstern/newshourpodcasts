@@ -93,7 +93,9 @@ public class ItemListActivity extends AppCompatActivity {
         theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), theSpinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                if(theSpinner.getSelectedItem().toString().endsWith("Sportsworld"))
+                    Toast.makeText(getApplicationContext(), theSpinner.getSelectedItem().toString()+" not yet implemented", Toast.LENGTH_LONG).show();
+
             }
 
             @Override

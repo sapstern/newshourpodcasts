@@ -46,6 +46,7 @@ public class DeleteOldPodcastsService extends IntentService {
                 if (list != null) {
                     for(int i=0; i<list.size();i++){
                         DownloadItem item = list.get(i);
+                        Log.d("HANDLE_INTENT", "DeleteOldPodcastsService: item("+i+") => date of publication: "+item.dateOfPublication+" comparedate: "+item.compareDate);
                         Calendar calendarDateMin30 = Calendar.getInstance(); // this would default to now
                         calendarDateMin30.add(Calendar.DAY_OF_MONTH, -30);
                         if(item.compareDate.getTime() < calendarDateMin30.getTime().getTime()){
