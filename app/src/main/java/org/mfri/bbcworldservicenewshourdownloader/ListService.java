@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
-import java.io.IOException;
-
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -34,10 +30,18 @@ public class ListService extends IntentService {
         Log.d("HANDLE_INTENT", "onHandleIntent start");
 
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+        final String theProgram = intent.getExtras().getString("theProgram");
+        final String theActivityClassName = intent.getExtras().getString("theActivityClassName");
         BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
-        Bundle downloadOptionsBundle = utils.getDownloadOptionsBundle(this);
-
-        Intent itemListIntent = new Intent(this, ItemListActivity.class);
+        Bundle downloadOptionsBundle = utils.getDownloadOptionsBundle(this, theProgram);
+        Class theActivityClass = null;
+        try {
+            theActivityClass = Class.forName(theActivityClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        Intent itemListIntent = new Intent(this, theActivityClass);
         itemListIntent.putExtra("RESULT_LIST", downloadOptionsBundle);
         itemListIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(itemListIntent);

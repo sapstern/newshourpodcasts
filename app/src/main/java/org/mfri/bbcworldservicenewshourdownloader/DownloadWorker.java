@@ -9,18 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import java.io.IOException;
-
 public class DownloadWorker extends Worker {
 
     private final Context theContext;
-
+    //private int programFlag;
 
     public DownloadWorker(
             @NonNull Context context,
-            @NonNull WorkerParameters params) {
+            @NonNull WorkerParameters params
+            ) {
         super(context, params);
         theContext = context;
+
     }
 
     @NonNull
@@ -32,7 +32,7 @@ public class DownloadWorker extends Worker {
 
         BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
         // lets first get all available downloads from bbc
-        Bundle downLoadOptionsBundle = utils.getCurrentDownloadOptions(theContext);
+        Bundle downLoadOptionsBundle = utils.getCurrentDownloadOptions(theContext, getInputData().getString("PROGRAM_TYPE"));
 
         if (downLoadOptionsBundle==null)
             return Result.failure();
@@ -54,12 +54,12 @@ public class DownloadWorker extends Worker {
             //find first item which has not been downloaded yet
             //start at pos 1, as the item at 0 holds only the description
             currentItem = itemList.ITEMS.get(i);
-            if( utils.fileExists(currentItem.fileName, getApplicationContext()) == null )
+            if( utils.fileExists(currentItem.fileName, getApplicationContext(), getInputData().getString("PROGRAM_TYPE")) == null )
                 break;
         }
 
         assert currentItem != null;
-        Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true);
+        Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true, getInputData().getString("PROGRAM_TYPE"));
 
         theContext.startService(theDownloadIntent);
         Log.d("WORK", "DownloadWorker.doWork() start download intent started ");

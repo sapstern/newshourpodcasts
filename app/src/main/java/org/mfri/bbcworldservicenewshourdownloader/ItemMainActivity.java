@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
-import androidx.work.WorkManager;
 
 public class ItemMainActivity extends Activity implements BBCWorldServiceDownloaderStaticValues{
 
@@ -58,24 +57,22 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
     private void startBackgroundWorkerAndService() {
         //Start delete service if selected
         if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("keep_forever", true)!=true){
-            Intent intent = new Intent(this, DeleteOldPodcastsService.class);
-            this.startService(intent);
+
+            for (String currentProgram : URL_MAP.keySet()) {
+                Intent intent = new Intent(this, DeleteOldPodcastsService.class);
+                intent.putExtra("theProgram", currentProgram);
+                this.startService(intent);
+            }
+
         }
 
             //Schedule background download processing (if user wants it)
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dl_background", true)==true){
-            WorkManager
-                    .getInstance(this)
-                    .enqueue(utils.getDownLoadRequest());
-        }else{
-            WorkManager
-                    .getInstance(getApplicationContext())
-                    .cancelWorkById(utils.getDownLoadRequest().getId());
-        }
+        utils.processChoosenDownloadOptions(this);
 
 
         //Proceed to next activity (display list of download options)
-        Intent intent = new Intent(this, ListService.class);
-        this.startService(intent);
+       utils.startListService(this, PROGRAM_NEWSHOUR, "org.mfri.bbcworldservicenewshourdownloader.ItemListActivityNewshour");
     }
+
+
 }

@@ -38,12 +38,28 @@
                 android:value="org.mfri.bbcworldservicenewshourdownloader.SettingsActivity" />
         </activity>
         <activity
-            android:name=".ItemListActivity"
+            android:name=".ItemListActivityNewshour"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.mfri.bbcworldservicenewshourdownloader.ItemMainActivity" />
+        </activity>
+        <activity
+            android:name=".ItemListActivitySportsworld"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.mfri.bbcworldservicenewshourdownloader.ItemListActivityNewshour" />
+        </activity>
+        <activity
+            android:name=".ItemListActivitySportshour"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.mfri.bbcworldservicenewshourdownloader.ItemListActivityNewshour" />
         </activity>
         <service
             android:name=".DeleteOldPodcastsService"

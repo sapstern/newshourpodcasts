@@ -42,7 +42,7 @@ public class DeleteOldPodcastsService extends IntentService {
         synchronized (intent) {
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
             try {
-                ArrayList<DownloadItem> list = utils.getDownloadedPodcastsList(this);
+                ArrayList<DownloadItem> list = utils.getDownloadedPodcastsList(this, intent.getExtras().getString("theProgram"));
                 if (list != null) {
                     for(int i=0; i<list.size();i++){
                         DownloadItem item = list.get(i);

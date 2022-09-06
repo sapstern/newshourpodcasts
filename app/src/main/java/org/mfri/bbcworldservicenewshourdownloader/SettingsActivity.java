@@ -3,7 +3,6 @@ package org.mfri.bbcworldservicenewshourdownloader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +45,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("SETTINGS_ACTION", "onClick start");
+                //if user changed background download behavior
+                utils.processChoosenDownloadOptions(getApplicationContext());
                 startMainActivity();
             }
         });

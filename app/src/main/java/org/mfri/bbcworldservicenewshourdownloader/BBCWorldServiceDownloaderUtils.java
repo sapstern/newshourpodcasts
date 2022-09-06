@@ -19,9 +19,12 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import androidx.work.Constraints;
+import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,11 +38,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,10 +53,10 @@ import java.util.concurrent.TimeUnit;
 
 public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
-    private Bundle currentDownloadOptions = null;
-    private Date timeStampOfcurrentDownloadOptions = null;
+    private HashMap<String, Bundle> currentDownloadOptionsMap = null;
+    private HashMap<String, Date> timeStampOfcurrentDownloadOptionsMap = null;
 
-    private PeriodicWorkRequest downLoadRequest = null;
+    private HashMap<String, PeriodicWorkRequest> downLoadRequestMap = null;
 
     private static Constraints DOWNLOADCONSTRAINTS = null;
 
@@ -61,6 +64,10 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
 
     private BBCWorldServiceDownloaderUtils(){
+        downLoadRequestMap = new HashMap<String, PeriodicWorkRequest>();
+        currentDownloadOptionsMap = new HashMap<String, Bundle>();
+        timeStampOfcurrentDownloadOptionsMap = new HashMap<String, Date>();
+        downLoadRequestMap = new HashMap<String, PeriodicWorkRequest>();
     }
 
     public static BBCWorldServiceDownloaderUtils getInstance()
@@ -68,11 +75,15 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         return INSTANCE;
     }
 
-    public PeriodicWorkRequest getDownLoadRequest(){
+    public PeriodicWorkRequest getDownLoadRequest(String theProgram){
+
+        PeriodicWorkRequest downLoadRequest = downLoadRequestMap.get(theProgram);
         if(downLoadRequest == null){
             downLoadRequest = new PeriodicWorkRequest.Builder(DownloadWorker.class, 1, TimeUnit.HOURS)
+                    .setInputData(new Data.Builder().putString("PROGRAM_TYPE", theProgram).build())
                     .setConstraints(getDownLoadConstraints())
                     .build();
+
         }
         return downLoadRequest;
     }
@@ -98,10 +109,10 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
 
-    public synchronized Bundle getDownloadedPodcastsBundle(Context context) throws IOException{
+    public synchronized Bundle getDownloadedPodcastsBundle(Context context, String theProgram) throws IOException{
         Log.d("Utils", "getDownloadedPodcasts() start" );
         Bundle bundle = new Bundle();
-        ArrayList<DownloadItem> tab = getDownloadedPodcastsList(context);
+        ArrayList<DownloadItem> tab = getDownloadedPodcastsList(context, theProgram);
         if (tab == null) return null;
         //Convert TempDLItem to DownloadListItem
         for(int i=0;i<tab.size();i++)
@@ -116,24 +127,24 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     @Nullable
-    public ArrayList<DownloadItem> getDownloadedPodcastsList(Context context) {
+    public ArrayList<DownloadItem> getDownloadedPodcastsList(Context context, String theProgram) {
         ArrayList<DownloadItem> tab = new ArrayList<>();
         String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-        File myDir = new File(root );
+        File myDir = new File(root+"/"+theProgram);
         File[] podcastArry = myDir.listFiles();
         if(podcastArry==null)
             return null;
 
 
-        //int counter = 0;
+        String startOfFilename = StringUtils.capitalize(theProgram);
 
         for (File file : podcastArry) {
             if (file != null
                     && !file.isDirectory()
-                    && file.getName().startsWith("Newshour_")
+                    && file.getName().startsWith(startOfFilename+"_")
                     && file.getName().endsWith(".mp3")
             ) {
-                //counter++;
+
                 String theFileName = file.getName();
                 StringTokenizer toki = new StringTokenizer(file.getName().substring(0, file.getName().indexOf(".mp3")), "_");
                 StringBuilder theDescriptionBuilder = new StringBuilder();
@@ -156,7 +167,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                         if (toki.hasMoreElements())
                             theDateBuilder.append("_");
                     } else {
-                        if (!currentToken.startsWith("Newshour"))
+                        if (!currentToken.startsWith(startOfFilename))
                             theDescriptionBuilder.append(currentToken);
                         if (toki.hasMoreElements())
                             theDescriptionBuilder.append(" ");
@@ -197,14 +208,19 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     /**
+     *
      * loads dl options from BBC
      * @param context
      * @return bundle hplding download options
      * @throws IOException
      */
-    public synchronized Bundle getCurrentDownloadOptions(Context context)  {
+    public synchronized Bundle getCurrentDownloadOptions(Context context, String theProgram)  {
 
-        if(currentDownloadOptions!=null && isWithinTimeFrame(timeStampOfcurrentDownloadOptions)) {
+        Bundle currentDownloadOptions = currentDownloadOptionsMap.get(theProgram);
+        Date timeStampOfcurrentDownloadOptions = timeStampOfcurrentDownloadOptionsMap.get(theProgram);
+
+
+        if(currentDownloadOptions !=null && isWithinTimeFrame(timeStampOfcurrentDownloadOptions)) {
             return currentDownloadOptions;
         }
         if(!isDeviceConnected(context))
@@ -216,7 +232,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
         Document doc = null;
         try {
-            doc = Jsoup.connect("https://www.bbc.co.uk/programmes/p002vsnk/episodes/downloads").userAgent(userAgent).get();
+            doc = Jsoup.connect(URL_MAP.get(theProgram)).userAgent(userAgent).get();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -284,10 +300,9 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                             break;
                     }
                 }
-                //theDescription = theDescription.replace("Newshour,", "").trim();
-                //if (publicationDate.equals("Mon 01 Januar 0000, 00:00"))
-                    publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
-                String theFilename = prepareFilename(theDescription, publicationDate );
+
+                publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
+                String theFilename = prepareFilename(theDescription, publicationDate, theProgram);
                 if (publicationDate.equals("Mon 01 Januar 0000, 00:00")){
                     continue;
                 }
@@ -311,6 +326,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         currentDownloadOptions.putInt("LIST_SIZE", s);
         timeStampOfcurrentDownloadOptions = new Date();
+        currentDownloadOptionsMap.put(theProgram,currentDownloadOptions);
         Log.d("HANDLE", "handleActionDownloadList exit");
         return currentDownloadOptions;
     }
@@ -439,13 +455,14 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * @param isStartedInBackground whether this service will be started from background task
      * @return
      */
-    public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists, boolean isStartedInBackground) {
+    public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists, boolean isStartedInBackground, String theProgram) {
         Bundle bundle = new Bundle();
         bundle.putString("url", item.url);
 
         bundle.putString("fileName", item.fileName);
         bundle.putBoolean("isToastOnFileExists", isToastOnFileExists);
         bundle.putBoolean("isStartedInBackground", isStartedInBackground);
+        bundle.putString("theProgram", theProgram);
         Intent intent = new Intent(theContext, DownloadService.class);
         intent.putExtras(bundle);
         return intent;
@@ -457,7 +474,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * @param theDate
      * @return
      */
-    private String prepareFilename(String theContentDesc, String theDate) {
+    private String prepareFilename(String theContentDesc, String theDate, String theProgram) {
         theDate = theDate.replace(",", "");
         theDate = theDate.replaceAll(" ", "_");
         theDate = theDate.replaceAll(":", "_");
@@ -469,10 +486,12 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         theContentDesc = replaceInName(theContentDesc, ",", "");
         theContentDesc= replaceInName(theContentDesc,"__", "_");
 
-        if(theContentDesc.startsWith("Newshour"))
-            return theContentDesc.replace("Newshour", "Newshour_")+"_"+theDate+".mp3";
+        String startOfFilename = StringUtils.capitalize(theProgram);
+
+        if(theContentDesc.startsWith(startOfFilename))
+            return theContentDesc.replace(startOfFilename, startOfFilename+"_")+"_"+theDate+".mp3";
         else
-            return "Newshour_"+theContentDesc+"_"+theDate+".mp3";
+            return startOfFilename+"_"+theContentDesc+"_"+theDate+".mp3";
     }
 
     @NonNull
@@ -492,13 +511,13 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * @param fileName
      * @return
      */
-    public File fileExists(String fileName, Context context) {
+    public File fileExists(String fileName, Context context, String theProgram) {
         String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-        File myDir = new File(root );
+        File myDir = new File(root+"/"+theProgram );
         if (!myDir.exists()) {
             return null;
         }
-        File theFile = new File(root +"/" + fileName);
+        File theFile = new File(root +"/"+theProgram+"/"+fileName);
         if (theFile.exists()) {
             return theFile;
         }
@@ -568,16 +587,16 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     @Nullable
-    public Bundle getDownloadOptionsBundle(Context context){
+    public Bundle getDownloadOptionsBundle(Context context, String theProgram){
 
         Bundle theDownloadedPodcastBundle;
         try {
-            theDownloadedPodcastBundle = this.getDownloadedPodcastsBundle(context);
+            theDownloadedPodcastBundle = this.getDownloadedPodcastsBundle(context, theProgram);
         } catch (IOException e) {
             e.printStackTrace();
             theDownloadedPodcastBundle = null;
         }
-        Bundle downloadOptionsBundle = this.getCurrentDownloadOptions(context);
+        Bundle downloadOptionsBundle = this.getCurrentDownloadOptions(context, theProgram);
 
 
         if(theDownloadedPodcastBundle!=null){
@@ -634,5 +653,28 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                 Toast.makeText(context, "Directory "+ myDir +" not created, switch directory settings to internal storage", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public  void processChoosenDownloadOptions(Context theContext) {
+        if(PreferenceManager.getDefaultSharedPreferences(theContext).getBoolean("dl_background", true)==true){
+            for (PeriodicWorkRequest currentDownloadRequest : downLoadRequestMap.values()) {
+                WorkManager
+                        .getInstance(theContext)
+                        .enqueue(currentDownloadRequest);
+            }
+
+        }else {
+            for (PeriodicWorkRequest currentDownloadRequest : downLoadRequestMap.values()) {
+                WorkManager
+                        .getInstance(theContext)
+                        .cancelWorkById(currentDownloadRequest.getId());
+            }
+        }
+    }
+    public void startListService(Context theContext, String theProgram, String theActivityClassName){
+        Intent intent = new Intent(theContext, ListService.class);
+        intent.putExtra("theProgram", theProgram);
+        intent.putExtra("theActivityClassName", theActivityClassName);
+        theContext.startService(intent);
     }
 }

@@ -26,5 +26,6 @@
     <string-array name="bbc_programs">
          <item>BBC World Service Newshour</item>
         <item>BBC World Service Sportsworld</item>
+        <item>BBC World Service Sportshour</item>
     </string-array>
 </resources>

@@ -20,8 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
-import org.mfri.bbcworldservicenewshourdownloader.VolleyRequest;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,7 +57,7 @@ public class DownloadService extends IntentService {
             this.bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
-            File theFile = utils.fileExists(fileName, getApplicationContext());
+            File theFile = utils.fileExists(fileName, getApplicationContext(), bundle.getString("theProgram"));
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
                     sendBroadcast(true, theFile.getName(), fileName, bundle.getBoolean("isStartedInBackground"));
@@ -72,13 +70,13 @@ public class DownloadService extends IntentService {
 
             Log.d("DownloadService", "onHandleIntent start LocalBroadcastManager started");
 
-            executeVolleyRequest(fileName, bundle.getString("url"));
+            executeVolleyRequest(fileName, bundle.getString("url"), bundle.getString("theProgram"));
 
         }
 
     }
 
-    private void executeVolleyRequest(String fileName, String url) {
+    private void executeVolleyRequest(String fileName, String url, String theProgram) {
 
         Log.d("HANDLE_INTENT", "DownloadService: executeVolleyRequest url: "+ url);
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -90,7 +88,7 @@ public class DownloadService extends IntentService {
                         try {
                             if (response != null) {
                                 try {
-                                    String fileNameSaved = savePodcast(fileName, response);
+                                    String fileNameSaved = savePodcast(fileName, response, theProgram);
                                     Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
                                     sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
                                 } catch (IOException e) {
@@ -117,11 +115,11 @@ public class DownloadService extends IntentService {
     }
 
 
-    private String savePodcast(String fileName, byte[] barry) throws IOException {
+    private String savePodcast(String fileName, byte[] barry, String theProgram) throws IOException {
 
         String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
 
-        File myDir = new File(root);
+        File myDir = new File(root+"/"+theProgram);
         BBCWorldServiceDownloaderUtils.checkDir(myDir, this);
 
 
@@ -155,7 +153,7 @@ public class DownloadService extends IntentService {
             switch (intent.getAction()){
                 case "DOWNLOAD_REDIRECT":
                     Log.d("BroadcastReceiver", "onReceive start redirect Volley request to: "+intent.getExtras().getString("redirectUrl"));
-                    executeVolleyRequest(bundle.getString("fileName"), intent.getExtras().getString("redirectUrl"));
+                    executeVolleyRequest(bundle.getString("fileName"), intent.getExtras().getString("redirectUrl"), bundle.getString("theProgram"));
                     break;
                 default:
                     break;
