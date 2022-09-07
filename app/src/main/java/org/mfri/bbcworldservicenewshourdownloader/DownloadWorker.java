@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -47,7 +48,10 @@ public class DownloadWorker extends Worker {
 
     private Result getResult(BBCWorldServiceDownloaderUtils utils, ItemList itemList) {
         Log.d("WORK", "DownloadWorker.doWork() start download size of list is "+itemList.ITEMS.size());
-        if (itemList.ITEMS.size() < 1)
+        if(PreferenceManager.getDefaultSharedPreferences(theContext).getBoolean("dl_background", true)!=true) {
+            return Result.failure();
+        }
+            if (itemList.ITEMS.size() < 1)
             return Result.failure();
         DownloadListItem currentItem = null;
         for(int i = 1;i<itemList.ITEMS.size();i++) {

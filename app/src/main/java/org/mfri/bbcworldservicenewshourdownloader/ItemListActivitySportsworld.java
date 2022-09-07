@@ -28,7 +28,7 @@ public class ItemListActivitySportsworld extends AbstractItemListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("CREATE", "onCreate start");
+        Log.d("SPORTW_CREATE", "onCreate start");
         super.theProgram = PROGRAM_SPORTSWORLD;
         utils = BBCWorldServiceDownloaderUtils.getInstance();
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
@@ -85,7 +85,7 @@ public class ItemListActivitySportsworld extends AbstractItemListActivity {
             }
         });
 
-        Log.d("CREATE", "onCreate end");
+        Log.d("SPORTW_CREATE", "onCreate end");
     }
 
     @Override

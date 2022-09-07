@@ -52,11 +52,16 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent start");
+
         synchronized (intent) {
+            BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
+            if (!utils.isWlanConnection(this)){
+                return;
+            }
             final ResultReceiver receiver = intent.getParcelableExtra("receiver");
             this.bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
-            BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
+
             File theFile = utils.fileExists(fileName, getApplicationContext(), bundle.getString("theProgram"));
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {

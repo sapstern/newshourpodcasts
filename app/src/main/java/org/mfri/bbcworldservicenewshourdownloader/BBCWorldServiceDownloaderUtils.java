@@ -67,7 +67,6 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         downLoadRequestMap = new HashMap<String, PeriodicWorkRequest>();
         currentDownloadOptionsMap = new HashMap<String, Bundle>();
         timeStampOfcurrentDownloadOptionsMap = new HashMap<String, Date>();
-        downLoadRequestMap = new HashMap<String, PeriodicWorkRequest>();
     }
 
     public static BBCWorldServiceDownloaderUtils getInstance()
@@ -108,6 +107,15 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
+    public boolean isWlanConnection(Context context){
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if (mWifi.isConnected()) {
+           return true;
+        }
+        return false;
+    }
 
     public synchronized Bundle getDownloadedPodcastsBundle(Context context, String theProgram) throws IOException{
         Log.d("Utils", "getDownloadedPodcasts() start" );
@@ -656,20 +664,35 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     public  void processChoosenDownloadOptions(Context theContext) {
+        Log.d("UTIL", "processChoosenDownloadOptions start");
+
+        //If empty create new Downloadrequests
+        if(downLoadRequestMap.isEmpty()){
+            Log.d("UTIL", "processChoosenDownloadOptions init background");
+            for (String currentProgram : URL_MAP.keySet()) {
+                downLoadRequestMap.put(currentProgram, getDownLoadRequest(currentProgram));
+            }
+
+        }
+        //If download in background has been choosen, then shedule it
         if(PreferenceManager.getDefaultSharedPreferences(theContext).getBoolean("dl_background", true)==true){
+            Log.d("UTIL", "processChoosenDownloadOptions schedule background");
             for (PeriodicWorkRequest currentDownloadRequest : downLoadRequestMap.values()) {
                 WorkManager
                         .getInstance(theContext)
                         .enqueue(currentDownloadRequest);
             }
-
-        }else {
+        }else{
+            //cancel all background downloads, if there are any
             for (PeriodicWorkRequest currentDownloadRequest : downLoadRequestMap.values()) {
+                Log.d("UTIL", "processChoosenDownloadOptions cancel background");
                 WorkManager
                         .getInstance(theContext)
                         .cancelWorkById(currentDownloadRequest.getId());
             }
         }
+
+        Log.d("UTIL", "processChoosenDownloadOptions end");
     }
     public void startListService(Context theContext, String theProgram, String theActivityClassName){
         Intent intent = new Intent(theContext, ListService.class);

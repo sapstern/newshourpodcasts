@@ -28,7 +28,7 @@ public class ItemListActivityNewshour extends AbstractItemListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("CREATE", "onCreate start");
+        Log.d("NEWSHOUR_CREATE", "onCreate start");
         super.theProgram = PROGRAM_NEWSHOUR;
         utils = BBCWorldServiceDownloaderUtils.getInstance();
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
@@ -83,7 +83,7 @@ public class ItemListActivityNewshour extends AbstractItemListActivity {
             }
         });
 
-        Log.d("CREATE", "onCreate end");
+        Log.d("NEWSHOUR_CREATE", "onCreate end");
     }
 
     @Override
