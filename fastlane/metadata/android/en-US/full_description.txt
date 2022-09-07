@@ -1,10 +1,13 @@
-Download and play famous BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p002vsnk">Newshour</a> news podcasts.
+Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p002vsnk">Newshour</a> news podcasts.
+Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p002w5vq">Sportsworld</a> podcasts.
+Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p016tmfz">Sportshour</a> podcasts.
 
-The app has been written by the programmer without any commercial interest and is meant to be useful for anyone who likes to listen to the "BBC World Service Newshour" program.
+
+The app has been written by the programmer without any commercial interest and is meant to be useful for anyone who likes to listen to the "BBC World Service Newshour/Sportsworld/Sportshour" program.
 The programmer is not an employee nor in any other form affiliated to the publisher of the podcasts.
 
-Publisher of content: BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/">https://www.bbc.co.uk</a>
-The app developer does not take over any responsibility for the content of these downloads.
+Publisher of podcasts: BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/">https://www.bbc.co.uk</a>
+The app developer does not take over any responsibility for the content of these podcasts.
 
 Credits for the radio icon used inside this app: <a moz-do-not-send="true" href="https://icons.iconarchive.com/icons/martz90/hex/48/radio-icon.png">Radio Icon</a>
 Author: <a moz-do-not-send="true" href="https://iconarchive.com/artist/martz90.html">By Martz90</a>.
