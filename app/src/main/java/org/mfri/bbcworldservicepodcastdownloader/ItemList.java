@@ -1,4 +1,4 @@
-package org.mfri.bbcworldservicenewshourdownloader;
+package org.mfri.bbcworldservicepodcastdownloader;
 
 import android.os.Bundle;
 import android.util.Log;

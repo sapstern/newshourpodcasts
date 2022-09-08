@@ -1,4 +1,4 @@
-package org.mfri.bbcworldservicenewshourdownloader;
+package org.mfri.bbcworldservicepodcastdownloader;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -21,15 +21,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 
 
-public class ItemListActivityNewshour extends AbstractItemListActivity {
+public class ItemListActivityBusinessDaily extends AbstractItemListActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("NEWSHOUR_CREATE", "onCreate start");
-        super.theProgram = PROGRAM_NEWSHOUR;
+        Log.d("BUSINESSDAILY_CREATE", "onCreate start");
+        super.theProgram = PROGRAM_BUSINESSDAILY;
         utils = BBCWorldServiceDownloaderUtils.getInstance();
         Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
 
@@ -40,7 +40,7 @@ public class ItemListActivityNewshour extends AbstractItemListActivity {
         //add swipe refresh
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
         pullToRefresh.setOnRefreshListener(() -> {
-            super.startListService(PROGRAM_NEWSHOUR, this.getClass().getName());
+            super.startListService(PROGRAM_BUSINESSDAILY, this.getClass().getName());
             pullToRefresh.setRefreshing(false);
 
         });
@@ -59,19 +59,22 @@ public class ItemListActivityNewshour extends AbstractItemListActivity {
         setSupportActionBar(myToolbar);
         Spinner theSpinner = findViewById(R.id.spinner_nav);
 
-        ArrayAdapter<String> bbcProgramsAdapter = new ArrayAdapter<String>(ItemListActivityNewshour.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bbc_programs));
+        ArrayAdapter<String> bbcProgramsAdapter = new ArrayAdapter<String>(ItemListActivityBusinessDaily.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bbc_programs));
         bbcProgramsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         theSpinner.setAdapter(bbcProgramsAdapter);
-        theSpinner.setSelection(bbcProgramsAdapter.getPosition("BBC World Service Newshour"));
+        theSpinner.setSelection(bbcProgramsAdapter.getPosition("BBC World Service Business Daily"));
         theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch(theSpinner.getSelectedItem().toString()){
+                    case "BBC World Service Newshour":
+                        startListService(PROGRAM_NEWSHOUR, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour");
+                        break;
                     case "BBC World Service Sportsworld":
-                        startListService(PROGRAM_SPORTSWORLD, "org.mfri.bbcworldservicenewshourdownloader.ItemListActivitySportsworld");
+                        startListService(PROGRAM_SPORTSWORLD, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportsworld");
                         break;
                     case "BBC World Service Sportshour":
-                        startListService(PROGRAM_SPORTSHOUR, "org.mfri.bbcworldservicenewshourdownloader.ItemListActivitySportshour");
+                        startListService(PROGRAM_SPORTSHOUR, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportshour");
                         break;
                 }
             }

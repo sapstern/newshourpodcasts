@@ -1,4 +1,4 @@
-package org.mfri.bbcworldservicenewshourdownloader;
+package org.mfri.bbcworldservicepodcastdownloader;
 
 import org.junit.Test;
 

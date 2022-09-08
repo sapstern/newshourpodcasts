@@ -25,7 +25,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="org.mfri.bbcworldservicenewshourdownloader.ItemListActivityNewshour"
+        tools:context="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour"
         tools:listitem="@layout/item_list_content" />
 
     <FrameLayout

@@ -23,9 +23,11 @@
     <string name="custom_license_title">"Open Source Libraries Used "</string>
     <string name="dl_dir_root">Download directory (Internal/External)</string>
     <string name="keep_forever">Keep podcasts forever</string>
+    <string name="loading_podcast_options_from_bbc">Loading podcast options from BBC</string>
     <string-array name="bbc_programs">
          <item>BBC World Service Newshour</item>
         <item>BBC World Service Sportsworld</item>
         <item>BBC World Service Sportshour</item>
+        <item>BBC World Service Business Daily</item>
     </string-array>
 </resources>

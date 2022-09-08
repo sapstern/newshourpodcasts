@@ -17,8 +17,8 @@ android {
         applicationId "org.mfri.bbcworldservicenewshourdownloader"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 136
-        versionName "v1.3.6"
+        versionCode 137
+        versionName "v1.3.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -65,6 +65,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'org.apache.commons:commons-lang3:3.6'
+
 
 
 

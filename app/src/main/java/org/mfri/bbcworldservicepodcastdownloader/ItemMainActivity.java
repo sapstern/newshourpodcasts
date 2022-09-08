@@ -1,4 +1,4 @@
-package org.mfri.bbcworldservicenewshourdownloader;
+package org.mfri.bbcworldservicepodcastdownloader;
 
 import android.Manifest;
 import android.app.Activity;
@@ -75,7 +75,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
 
 
         //Proceed to next activity (display list of download options)
-       utils.startListService(this, PROGRAM_NEWSHOUR, "org.mfri.bbcworldservicenewshourdownloader.ItemListActivityNewshour");
+       utils.startListService(this, PROGRAM_NEWSHOUR, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour");
        Log.d("MAIN", "startBackgroundWorkerAndService end");
     }
 
