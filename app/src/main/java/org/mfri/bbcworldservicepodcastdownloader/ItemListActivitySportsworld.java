@@ -77,6 +77,9 @@ public class ItemListActivitySportsworld extends AbstractItemListActivity {
                     case "BBC World Service Sportshour":
                         startListService(PROGRAM_SPORTSHOUR, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportshour");
                         break;
+                    case "BBC World Service Global News":
+                        startListService(PROGRAM_GLOBALNEWS, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivityGlobalNews");
+                        break;
                 }
 
             }
