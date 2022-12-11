@@ -17,8 +17,8 @@ android {
         applicationId "org.mfri.bbcworldservicepodcastdownloader"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 139
-        versionName "v1.3.9"
+        versionCode 140
+        versionName "v1.4.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
