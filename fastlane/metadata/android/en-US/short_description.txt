@@ -1,1 +1,1 @@
-BBC World Service Newshour news podcasts downloader.
+BBC World Service podcast downloader.
