@@ -52,7 +52,7 @@ public class DownloadWorker extends Worker {
             return Result.failure();
         }
             if (itemList.ITEMS.size() < 1)
-            return Result.failure();
+                return Result.failure();
         DownloadListItem currentItem = null;
         for(int i = 1;i<itemList.ITEMS.size();i++) {
             //find first item which has not been downloaded yet

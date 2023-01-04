@@ -42,7 +42,8 @@ public class DeleteOldPodcastsService extends IntentService {
         synchronized (intent) {
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
             try {
-                ArrayList<DownloadItem> list = utils.getDownloadedPodcastsList(this, intent.getExtras().getString("theProgram"));
+                String theProgram = intent.getExtras().getString("theProgram");
+                ArrayList<DownloadItem> list = utils.getDownloadedPodcastsList(this, theProgram);
                 if (list != null) {
                     for(int i=0; i<list.size();i++){
                         DownloadItem item = list.get(i);
@@ -50,7 +51,7 @@ public class DeleteOldPodcastsService extends IntentService {
                         Calendar calendarDateMin30 = Calendar.getInstance(); // this would default to now
                         calendarDateMin30.add(Calendar.DAY_OF_MONTH, -30);
                         if(item.compareDate.getTime() < calendarDateMin30.getTime().getTime()){
-                           String message = deletePodcast(item.fileName);
+                           String message = deletePodcast(item.fileName, theProgram);
                             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                         }
                     }
@@ -65,15 +66,16 @@ public class DeleteOldPodcastsService extends IntentService {
 
 
 
-    private String deletePodcast(String fileName) throws IOException {
+    private String deletePodcast(String fileName, String theProgram) throws IOException {
 
         String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
 
-        File myDir = new File(root);
+        File myDir = new File(root+"/"+theProgram);
         BBCWorldServiceDownloaderUtils.checkDir(myDir, this);
 
 
         File file = new File(myDir, fileName);
+        Log.d("deletePodcast", "DeleteOldPodcastsService: Directory: "+myDir+" Filename: "+fileName+" Program: "+theProgram+" File: "+file.getAbsolutePath());
         if (file.exists()) {
           if(file.delete()==true)
             return  "Deleted file "+fileName;

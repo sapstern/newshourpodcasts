@@ -55,17 +55,20 @@ public class DownloadService extends IntentService {
 
         synchronized (intent) {
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
-            if (!utils.isWlanConnection(this)){
-                return;
-            }
+
+
             final ResultReceiver receiver = intent.getParcelableExtra("receiver");
             this.bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
-
+            final boolean isStartedInBackground = bundle.getBoolean("isStartedInBackground", true);
+            //Background download check wLan connection
+            if (!utils.isWlanConnection(this) && isStartedInBackground){
+                return;
+            }
             File theFile = utils.fileExists(fileName, getApplicationContext(), bundle.getString("theProgram"));
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
-                    sendBroadcast(true, theFile.getName(), fileName, bundle.getBoolean("isStartedInBackground"));
+                    sendBroadcast(true, theFile.getName(), fileName, isStartedInBackground);
                 }
                 return;
             }
@@ -86,35 +89,29 @@ public class DownloadService extends IntentService {
         Log.d("HANDLE_INTENT", "DownloadService: executeVolleyRequest url: "+ url);
         RequestQueue queue = Volley.newRequestQueue(this);
         VolleyRequest bytesRequest = new VolleyRequest(Request.Method.GET, url,
-                new Response.Listener<byte[]>() {
-                    @Override
-                    public void onResponse(byte[] response) {
+                response -> {
 
-                        try {
-                            if (response != null) {
-                                try {
-                                    String fileNameSaved = savePodcast(fileName, response, theProgram);
-                                    Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
-                                    sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-
+                    try {
+                        if (response != null) {
+                            try {
+                                String fileNameSaved = savePodcast(fileName, response, theProgram);
+                                Toast.makeText(getApplicationContext(), "Saved to: " + fileNameSaved, Toast.LENGTH_LONG).show();
+                                sendBroadcast(true, fileNameSaved, fileName, bundle.getBoolean("isStartedInBackground"));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
-                        } catch (Exception e) {
-                            // TODO Auto-generated catch block
-                            Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
-                            e.printStackTrace();
+
                         }
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO handle the error
-                error.printStackTrace();
-            }
-        }, null, getApplicationContext());
+                }, error -> {
+                    // TODO handle the error
+                    error.printStackTrace();
+                }, null, getApplicationContext());
 
         queue.add(bytesRequest);
     }

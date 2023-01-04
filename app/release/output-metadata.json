@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "org.mfri.bbcworldservicenewshourdownloader",
+  "applicationId": "org.mfri.bbcworldservicepodcastdownloader",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 134,
-      "versionName": "v1.3.4",
+      "versionCode": 141,
+      "versionName": "v1.4.1",
       "outputFile": "app-release.apk"
     }
   ],
