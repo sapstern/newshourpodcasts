@@ -1,8 +1,10 @@
 package org.mfri.bbcworldservicepodcastdownloader;
 
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -12,19 +14,29 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
 
+
+import com.dd.CircularProgressButton;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 
@@ -128,6 +140,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         layMain.removeAllViews();
         layMain.addView(tableLayout);
         LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("IMPLICIT_INTENT_START_PODCAST"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("DOWNLOAD_VOLLEY_ERROR"));
     }
 
 
@@ -144,7 +157,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                 case 0:
                     if ( rowNumber > 0 ){
                         tvCol = setupColumn(true, item.content);
-                        setSubmitButtonOnClickListener((Button)tvCol, item, theProgram);
+                        setSubmitButtonOnClickListener((CircularProgressButton)tvCol, item, theProgram, rowNumber);
                     }
                     else
                         tvCol = setupColumn(false, item.content);
@@ -170,69 +183,171 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
     }
 
     private TextView  setupColumn(boolean isClickable, String theText) {
-        TextView tvCol = new Button(this);
+        TextView tvCol = new CircularProgressButton(this);
         tvCol.setClickable(isClickable);
         tvCol.setText(theText);
         tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
         return tvCol;
     }
-    private void setSubmitButtonOnClickListener(Button button, final DownloadListItem item, String theProgram) {
+    private void setSubmitButtonOnClickListener(CircularProgressButton button, final DownloadListItem item, String theProgram, int rowNumber) {
 
         Log.d("ItemListActivityNews", "setSubmitButtonOnClickListener()start => URL: "+item.url);
 
+        button.setId(rowNumber);
+        Log.d("ItemListActivityNews", "setSubmitButtonOnClickListener() ID of button: "+button.getId());
         button.setOnClickListener(view -> {
             Log.d("DOWNLOAD_ITEM", "onClick start");
+            button.setIdleText(getResources().getString(R.string.download_state));
+
+            //refreshTable();
             if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true){
                 WorkManager
                         .getInstance(getApplicationContext())
                         .cancelWorkById(utils.getDownLoadRequest(theProgram).getId());
             }
-            Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false, theProgram);
+            Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false, theProgram, rowNumber);
+
             utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
             startService(theDownloadIntent);
+
         });
     }
 
 
-    protected final BroadcastReceiver bReceiver = new BroadcastReceiver() {
+    protected final  BroadcastReceiver bReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            String fileName = intent.getExtras().getString("fileName");
-            if(fileName!= null && !fileName.equals("")) {
-                if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
-                    //Setup of implicit intend
-                    Intent viewIntent = new Intent(Intent.ACTION_VIEW);
-                    String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
-                    File file = new File(root+"/"+theProgram+"/"+fileName);
-                    Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-                    viewIntent.setDataAndType(fileURI, "audio/*");
-                    viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    startActivity(Intent.createChooser(viewIntent, fileName));
-                    if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true) {
-                        WorkManager
-                                .getInstance(getApplicationContext())
-                                .enqueue(utils.getDownLoadRequest(theProgram));
+            switch (intent.getAction()){
+                case "IMPLICIT_INTENT_START_PODCAST":
+                    String fileName = intent.getExtras().getString("fileName");
+                    if(fileName!= null && !fileName.equals("")) {
+                        if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
+                            int buttonID = intent.getExtras().getInt("button_id");
+                            Log.d("BROADCAST_RECEIVER", "button ID: "+buttonID);
+                            CircularProgressButton button = findViewById(buttonID);
+                            if(button!=null)
+                                button.setIdleText(theItemList.ITEMS.get(buttonID).content);
+                            //Setup of implicit intend to play the podcast after download
+                            Intent viewIntent = new Intent(Intent.ACTION_VIEW);
+                            String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
+                            File file = new File(root+"/"+theProgram+"/"+fileName);
+                            Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+                            viewIntent.setDataAndType(fileURI, "audio/*");
+                            viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            startActivity(Intent.createChooser(viewIntent, fileName));
+                            if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true) {
+                                WorkManager
+                                        .getInstance(getApplicationContext())
+                                        .enqueue(utils.getDownLoadRequest(theProgram));
+                            }
+                            return;
+                        }
+                        //should not be null anyway
+                        refreshTable();
+
+                        utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+
                     }
-                    return;
-                }
-                //should not be null anyway
-                if(theItemList!=null) {
-                    //Refresh the view with every downloade
-                    setupTableLayout(theItemList);
-                    if (findViewById(R.id.item_list)!=null)
-                        findViewById(R.id.item_list).invalidate();
-                }
-
-                utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-
+                    break;
+                case "DOWNLOAD_VOLLEY_ERROR":
+                    //http error, show popup if not in background
+                    utils.startListService(context, theProgram, intent.getExtras().getInt("http_error_code"));
+                    break;
+                default:
+                    break;
             }
-
         }
     };
 
-    protected void startListService(String theProgram, String theActivityClassName){
-        utils.startListService(this, theProgram, theActivityClassName );
+    /**
+     * Method for display of http error popup
+     * @param context
+     */
+    protected void showPopup(Context context){
+        int httpCode = this.getIntent().getIntExtra("http_error_code", -777);
+        Log.d("ABS_IL_ACTIVITY", "showPopup http error code: " + httpCode);
+        if(httpCode <= 0) {
+            return;
+        }
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
+        dlgAlert.setTitle("Error downloading");
+        dlgAlert.setPositiveButton("Ok",
+                (dialog, which) -> {
+                    //dismiss the dialog
+                });
+        dlgAlert.setMessage("http "+httpCode+" "+HTTP_STATUS_MAP.get(String.valueOf(httpCode)));
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
+
+    /**
+     * Refresh the table layout
+     */
+    private void refreshTable() {
+        if(theItemList!=null) {
+            //Refresh the view with every download
+            setupTableLayout(theItemList);
+            if (findViewById(R.id.item_list)!=null)
+                findViewById(R.id.item_list).invalidate();
+        }
+    }
+
+    /**
+     * Generic setup of layout for all program activities
+     * @param theProgram
+     */
+    protected void setupLayout(String theProgram) {
+
+        this.theProgram = theProgram;
+        utils = BBCWorldServiceDownloaderUtils.getInstance();
+        Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
+
+        theItemList = new ItemList(listBundle);
+        setContentView(R.layout.activity_item_list);
+        setupTableLayout(theItemList);
+
+        //add swipe refresh
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
+        pullToRefresh.setOnRefreshListener(() -> {
+            utils.startListService(this, theProgram, -1);
+            pullToRefresh.setRefreshing(false);
+
+        });
+        tableLayout.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            ScrollView layMain = findViewById(R.id.table);
+            Log.d("SCROLL", "onScrollChanged start Y: "+layMain.getScrollY());
+            if (layMain.getScrollY() == 0)
+                pullToRefresh.setEnabled(true);
+            else
+                pullToRefresh.setEnabled(false);
+        });
+        Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
+        setSupportActionBar(myToolbar);
+        Spinner theSpinner = findViewById(R.id.spinner_nav);
+
+        ArrayAdapter<String> bbcProgramsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bbc_programs));
+        bbcProgramsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        theSpinner.setAdapter(bbcProgramsAdapter);
+        theSpinner.setSelection(bbcProgramsAdapter.getPosition(INVERSE_PROGRAM_TITLES_MAP.get(theProgram)));
+        theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (theSpinner.getSelectedItem().toString() != null && !theSpinner.getSelectedItem().toString().equals(INVERSE_PROGRAM_TITLES_MAP.get(theProgram))) {
+                    utils.startListService(getApplicationContext(), PROGRAM_TITLES_MAP.get(theSpinner.getSelectedItem().toString()), -1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getApplicationContext(), "Nothing selected", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        //Only show Popup on http error
+        showPopup(this);
+    }
+
 }

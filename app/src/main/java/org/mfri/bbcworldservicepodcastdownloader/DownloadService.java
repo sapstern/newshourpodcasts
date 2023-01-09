@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.ResultReceiver;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,8 +15,6 @@ import androidx.preference.PreferenceManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import java.io.File;
@@ -36,11 +33,13 @@ public class DownloadService extends IntentService {
 
 
     private Bundle bundle;
+
     /**
      * @deprecated
      */
     public DownloadService() {
         super("DownloadService");
+
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {
@@ -57,7 +56,7 @@ public class DownloadService extends IntentService {
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
 
 
-            final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+            //final ResultReceiver receiver = intent.getParcelableExtra("receiver");
             this.bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
             final boolean isStartedInBackground = bundle.getBoolean("isStartedInBackground", true);
@@ -65,6 +64,7 @@ public class DownloadService extends IntentService {
             if (!utils.isWlanConnection(this) && isStartedInBackground){
                 return;
             }
+            //First check filesystem on existence of file, if so, we do not need to download
             File theFile = utils.fileExists(fileName, getApplicationContext(), bundle.getString("theProgram"));
             if (theFile != null) {
                 if (bundle.getBoolean("isToastOnFileExists")) {
@@ -72,7 +72,7 @@ public class DownloadService extends IntentService {
                 }
                 return;
             }
-
+            //File does not exist, we have to download it
             LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
             lbm.registerReceiver(bReceiver, new IntentFilter("DOWNLOAD_REDIRECT"));
 
@@ -84,6 +84,12 @@ public class DownloadService extends IntentService {
 
     }
 
+    /**
+     * Starts the actual volley request
+     * @param fileName
+     * @param url
+     * @param theProgram
+     */
     private void executeVolleyRequest(String fileName, String url, String theProgram) {
 
         Log.d("HANDLE_INTENT", "DownloadService: executeVolleyRequest url: "+ url);
@@ -106,17 +112,25 @@ public class DownloadService extends IntentService {
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
                         Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
+                        Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }, error -> {
                     // TODO handle the error
-                    error.printStackTrace();
-                }, null, getApplicationContext());
+                    Toast.makeText(getApplicationContext(), "Error saving file " + fileName + ": " + error.getMessage(), Toast.LENGTH_LONG).show();
+                }, null, getApplicationContext(), bundle.getBoolean("isStartedInBackground"));
 
         queue.add(bytesRequest);
     }
 
-
+    /**
+     * Saves the podcast in filesystem
+     * @param fileName
+     * @param barry
+     * @param theProgram name of bbc pdcast program
+     * @return filename
+     * @throws IOException
+     */
     private String savePodcast(String fileName, byte[] barry, String theProgram) throws IOException {
 
         String root = PreferenceManager.getDefaultSharedPreferences(this).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
@@ -137,8 +151,14 @@ public class DownloadService extends IntentService {
     }
 
 
-
-    private void sendBroadcast(boolean success, String fileName, String fileNameWithoutDir, boolean isStartedInBackground) {
+    /**
+     * Starts implicid intend to play the podcast as it has been downloaded already
+     * @param success
+     * @param fileName
+     * @param fileNameWithoutDir
+     * @param isStartedInBackground play podcast only if not downloaded in background
+     */
+   private void sendBroadcast(boolean success, String fileName, String fileNameWithoutDir, boolean isStartedInBackground) {
         Intent intent = new Intent("IMPLICIT_INTENT_START_PODCAST"); //put the same message as in the filter you used in the activity when registering the receiver
         intent.putExtra("success", success);
         intent.putExtra("fileName", fileName);
@@ -147,11 +167,14 @@ public class DownloadService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
+    /**
+     * Gets called from VolleyRequest class if download error happened and user allowed for redirects
+     */
     private final BroadcastReceiver bReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("BroadcastReceiver", "onReceive start");
+            Log.d("BroadcastReceiver", "onReceive() start => try redirected download");
             switch (intent.getAction()){
                 case "DOWNLOAD_REDIRECT":
                     Log.d("BroadcastReceiver", "onReceive start redirect Volley request to: "+intent.getExtras().getString("redirectUrl"));

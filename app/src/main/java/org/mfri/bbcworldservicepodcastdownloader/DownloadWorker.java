@@ -63,7 +63,7 @@ public class DownloadWorker extends Worker {
         }
 
         assert currentItem != null;
-        Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true, getInputData().getString("PROGRAM_TYPE"));
+        Intent theDownloadIntent = utils.prepareItemDownload(currentItem, theContext, false, true, getInputData().getString("PROGRAM_TYPE"), 0);
 
         theContext.startService(theDownloadIntent);
         Log.d("WORK", "DownloadWorker.doWork() start download intent started ");

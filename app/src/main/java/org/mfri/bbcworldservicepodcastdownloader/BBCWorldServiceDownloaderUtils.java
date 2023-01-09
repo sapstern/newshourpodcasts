@@ -463,7 +463,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
      * @param isStartedInBackground whether this service will be started from background task
      * @return
      */
-    public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists, boolean isStartedInBackground, String theProgram) {
+    public Intent prepareItemDownload(DownloadListItem item, Context theContext, boolean isToastOnFileExists, boolean isStartedInBackground, String theProgram, int rowNumber) {
         Bundle bundle = new Bundle();
         bundle.putString("url", item.url);
 
@@ -471,6 +471,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         bundle.putBoolean("isToastOnFileExists", isToastOnFileExists);
         bundle.putBoolean("isStartedInBackground", isStartedInBackground);
         bundle.putString("theProgram", theProgram);
+        bundle.putInt("button_id", rowNumber);
+        Log.d("DOWNLOAD_UTILS", "prepareItemDownload() ID of button: "+bundle.getInt("button_id"));
         Intent intent = new Intent(theContext, DownloadService.class);
         intent.putExtras(bundle);
         return intent;
@@ -694,10 +696,13 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
         Log.d("UTIL", "processChoosenDownloadOptions end");
     }
-    public void startListService(Context theContext, String theProgram, String theActivityClassName){
+    public void startListService(Context theContext, String theProgram, int httpCode){
+
+
         Intent intent = new Intent(theContext, ListService.class);
+        intent.putExtra("http_error_code", httpCode);
         intent.putExtra("theProgram", theProgram);
-        intent.putExtra("theActivityClassName", theActivityClassName);
+
         theContext.startService(intent);
     }
 }

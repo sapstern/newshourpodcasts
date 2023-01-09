@@ -61,7 +61,7 @@
                 android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityBusinessDaily"
+            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityBusinessdaily"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -69,7 +69,7 @@
                 android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityGlobalNews"
+            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityGlobalnews"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

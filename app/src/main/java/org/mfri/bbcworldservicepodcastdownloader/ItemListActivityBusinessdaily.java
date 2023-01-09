@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
@@ -21,16 +20,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 
 
-public class ItemListActivitySportshour extends AbstractItemListActivity {
+public class ItemListActivityBusinessdaily extends AbstractItemListActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("SPORTH_CREATE", "onCreate start");
-        super.setupLayout(PROGRAM_SPORTSHOUR);
-        Log.d("SPORTH_CREATE", "onCreate end");
+        Log.d("BUSINESSDAILY_CREATE", "onCreate start");
+        super.setupLayout(PROGRAM_BUSINESSDAILY);
+        Log.d("BUSINESSDAILY_CREATE", "onCreate end");
     }
 
     @Override

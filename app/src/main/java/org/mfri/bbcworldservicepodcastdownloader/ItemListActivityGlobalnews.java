@@ -21,16 +21,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 
 
-public class ItemListActivitySportshour extends AbstractItemListActivity {
+public class ItemListActivityGlobalnews extends AbstractItemListActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("SPORTH_CREATE", "onCreate start");
-        super.setupLayout(PROGRAM_SPORTSHOUR);
-        Log.d("SPORTH_CREATE", "onCreate end");
+        Log.d("GLOBALNEWS_CREATE", "onCreate start");
+        super.setupLayout(PROGRAM_GLOBALNEWS);
+        Log.d("GLOBALNEWS_CREATE", "onCreate end");
     }
 
     @Override

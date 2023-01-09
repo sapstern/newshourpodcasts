@@ -29,68 +29,13 @@ public class ItemListActivityNewshour extends AbstractItemListActivity {
         super.onCreate(savedInstanceState);
 
         Log.d("NEWSHOUR_CREATE", "onCreate start");
-        super.theProgram = PROGRAM_NEWSHOUR;
-        utils = BBCWorldServiceDownloaderUtils.getInstance();
-        Bundle listBundle = this.getIntent().getExtras().getBundle("RESULT_LIST");
-
-        theItemList = new ItemList(listBundle);
-        setContentView(R.layout.activity_item_list);
-        super.setupTableLayout(theItemList);
-
-        //add swipe refresh
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
-        pullToRefresh.setOnRefreshListener(() -> {
-            super.startListService(PROGRAM_NEWSHOUR, this.getClass().getName());
-            pullToRefresh.setRefreshing(false);
-
-        });
-        tableLayout.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                ScrollView layMain = findViewById(R.id.table);
-                Log.d("SCROLL", "onScrollChanged start Y: "+layMain.getScrollY());
-                        if (layMain.getScrollY() == 0)
-                            pullToRefresh.setEnabled(true);
-                        else
-                            pullToRefresh.setEnabled(false);
-            }
-        });
-        Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
-        setSupportActionBar(myToolbar);
-        Spinner theSpinner = findViewById(R.id.spinner_nav);
-
-        ArrayAdapter<String> bbcProgramsAdapter = new ArrayAdapter<String>(ItemListActivityNewshour.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.bbc_programs));
-        bbcProgramsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        theSpinner.setAdapter(bbcProgramsAdapter);
-        theSpinner.setSelection(bbcProgramsAdapter.getPosition("BBC World Service Newshour"));
-        theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch(theSpinner.getSelectedItem().toString()){
-                    case "BBC World Service Business Daily":
-                        startListService(PROGRAM_BUSINESSDAILY, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivityBusinessDaily");
-                        break;
-                    case "BBC World Service Sportsworld":
-                        startListService(PROGRAM_SPORTSWORLD, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportsworld");
-                        break;
-                    case "BBC World Service Sportshour":
-                        startListService(PROGRAM_SPORTSHOUR, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportshour");
-                        break;
-                    case "BBC World Service Global News":
-                        startListService(PROGRAM_GLOBALNEWS, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivityGlobalNews");
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getApplicationContext(), "Nothing selected", Toast.LENGTH_LONG).show();
-
-            }
-        });
+        super.setupLayout(PROGRAM_NEWSHOUR);
 
         Log.d("NEWSHOUR_CREATE", "onCreate end");
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

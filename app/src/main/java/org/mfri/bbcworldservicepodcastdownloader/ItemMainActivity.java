@@ -75,7 +75,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
 
 
         //Proceed to next activity (display list of download options)
-       utils.startListService(this, PROGRAM_NEWSHOUR, "org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour");
+       utils.startListService(this, PROGRAM_NEWSHOUR,  -1);
        Log.d("MAIN", "startBackgroundWorkerAndService end");
     }
 
