@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -31,14 +30,12 @@ import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
 
-
 import com.dd.CircularProgressButton;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractItemListActivity  extends AppCompatActivity implements BBCWorldServiceDownloaderStaticValues{
 
@@ -49,6 +46,23 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
     protected TableRow.LayoutParams colParams = null;
     protected ItemList theItemList;
     protected String theProgram = null;
+
+    /**
+     * onActivityResult has been overridden in order to refresh the table of podcasts after
+     * return of the implicit intend which was fired to play the fresh downloaded podcast;
+     * the requestCode = 777 has been set on startup of implicit intent
+     * IMPLICIT_INTENT_START_PODCAST
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void  onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("ABS_IL_ACTIVITY", "receive callback from implicit intend: " + requestCode);
+        if (requestCode == 777)
+            utils.startListService(this, theProgram, -1);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -116,6 +130,10 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         return true;
     }
 
+    /**
+     * Settup of table for downloadable podcasts
+     * @param items
+     */
     protected void setupTableLayout(ItemList items) {
         rowParams = new TableLayout.LayoutParams();
         rowParams.setMargins(0, 0, 0, 1);
@@ -143,7 +161,12 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("DOWNLOAD_VOLLEY_ERROR"));
     }
 
-
+    /**
+     * Creates table ror
+     * @param item
+     * @param rowNumber
+     * @return
+     */
     private TableRow addRow(DownloadListItem item, int rowNumber) {
         TableRow tr = new TableRow(this);
         tr.setBackgroundColor(this.getResources().getColor(R.color.table_background));
@@ -182,6 +205,12 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         return tr;
     }
 
+    /**
+     * Creates Button for each row/column
+     * @param isClickable
+     * @param theText
+     * @return
+     */
     private TextView  setupColumn(boolean isClickable, String theText) {
         TextView tvCol = new CircularProgressButton(this);
         tvCol.setClickable(isClickable);
@@ -189,15 +218,24 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         tvCol.setBackgroundColor(this.getResources().getColor(R.color.row_background));
         return tvCol;
     }
+
+    /**
+     * Implements the button behavior
+     * @param button
+     * @param item
+     * @param theProgram
+     * @param rowNumber
+     */
     private void setSubmitButtonOnClickListener(CircularProgressButton button, final DownloadListItem item, String theProgram, int rowNumber) {
 
         Log.d("ItemListActivityNews", "setSubmitButtonOnClickListener()start => URL: "+item.url);
 
         button.setId(rowNumber);
-        Log.d("ItemListActivityNews", "setSubmitButtonOnClickListener() ID of button: "+button.getId());
+        Log.d("ItemListActivity", "setSubmitButtonOnClickListener() ID of button: "+button.getId());
         button.setOnClickListener(view -> {
             Log.d("DOWNLOAD_ITEM", "onClick start");
-            button.setIdleText(getResources().getString(R.string.download_state));
+            button.setText(getResources().getString(R.string.download_state));
+
 
             //refreshTable();
             if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true){
@@ -210,10 +248,15 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
             utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
             startService(theDownloadIntent);
 
+
+
         });
     }
 
-
+    /**
+     * Tis receiver gets called on return of successful download in class DownloadService
+     * as well as on error handling of any http error inside the Volley call
+     */
     protected final  BroadcastReceiver bReceiver = new BroadcastReceiver() {
 
         @Override
@@ -224,11 +267,8 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                     String fileName = intent.getExtras().getString("fileName");
                     if(fileName!= null && !fileName.equals("")) {
                         if(intent.getExtras().getBoolean("isStartedInBackground")!=true) {
-                            int buttonID = intent.getExtras().getInt("button_id");
-                            Log.d("BROADCAST_RECEIVER", "button ID: "+buttonID);
-                            CircularProgressButton button = findViewById(buttonID);
-                            if(button!=null)
-                                button.setIdleText(theItemList.ITEMS.get(buttonID).content);
+
+
                             //Setup of implicit intend to play the podcast after download
                             Intent viewIntent = new Intent(Intent.ACTION_VIEW);
                             String root = PreferenceManager.getDefaultSharedPreferences(context).getString("dl_dir_root", Environment.getExternalStorageDirectory().toString());
@@ -236,7 +276,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                             Uri fileURI = BBCWorldServicePodcastDownloaderFileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
                             viewIntent.setDataAndType(fileURI, "audio/*");
                             viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            startActivity(Intent.createChooser(viewIntent, fileName));
+                            startActivityForResult(Intent.createChooser(viewIntent, fileName), 777);
                             if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true) {
                                 WorkManager
                                         .getInstance(getApplicationContext())
@@ -245,7 +285,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                             return;
                         }
                         //should not be null anyway
-                        refreshTable();
+                        //refreshTable();
 
                         utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
 

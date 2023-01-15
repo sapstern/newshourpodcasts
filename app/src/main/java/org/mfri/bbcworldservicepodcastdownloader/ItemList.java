@@ -6,16 +6,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
- */
+
 public class ItemList {
 
     /**
-     * An array of sample (dummy) items.
+     * An array of items.
      */
     public  final List<DownloadListItem> ITEMS = new ArrayList<DownloadListItem>();
 
