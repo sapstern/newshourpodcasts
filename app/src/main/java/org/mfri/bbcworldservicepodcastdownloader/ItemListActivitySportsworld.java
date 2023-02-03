@@ -39,7 +39,7 @@ public class ItemListActivitySportsworld extends AbstractItemListActivity {
 
     protected void onResume() {
         super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("IMPLICIT_INTENT_START_PODCAST"));
+        registerReceivers();
     }
 
     protected void onPause() {

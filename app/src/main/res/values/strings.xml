@@ -25,11 +25,16 @@
     <string name="keep_forever">Keep podcasts forever</string>
     <string name="loading_podcast_options_from_bbc">Loading podcast options from BBC</string>
     <string name="download_state">Downloading / retrieving</string>
+    <string name="button_complete">Finished download</string>
+    <string name="button_download">Downloading</string>
+    <string name="error_download">Error downloading</string>
+    <string name="button_error">Error downloading</string>
     <string-array name="bbc_programs">
-         <item>BBC World Service Newshour</item>
+        <item>BBC World Service Newshour</item>
         <item>BBC World Service Sportsworld</item>
         <item>BBC World Service Sportshour</item>
         <item>BBC World Service Business Daily</item>
         <item>BBC World Service Global News</item>
+        <item>BBC World Service Football Daily</item>
     </string-array>
 </resources>

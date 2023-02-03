@@ -3,6 +3,7 @@ Download and play BBC World Service <a moz-do-not-send="true" href="https://www.
 Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p016tmfz">Sportshour</a> podcasts.
 Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p002vsxs">Business Daily</a> podcasts.
 Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p02nq0gn">Global News</a> podcasts.
+Download and play BBC World Service <a moz-do-not-send="true" href="https://www.bbc.co.uk/programmes/p02nrsln">Football Daily</a> podcasts.
 
 
 The app has been written by the programmer without any commercial interest and is meant to be useful for anyone who likes to listen to the "BBC World Service Newshour/Sportsworld/Sportshour" program.

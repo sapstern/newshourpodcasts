@@ -571,13 +571,6 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     private static String[] addToDirArry(int count, File[] fileArry){
         List<String> resultList = new LinkedList<String>();
         for(int i=0; i < count;i++){
-            //int endIndex = fileArry[i].getAbsolutePath().indexOf("Android/data/");
-            //String rootDir = null;
-            //if(endIndex!=-1)
-            //    rootDir = fileArry[i].getAbsolutePath().substring(0,fileArry[i].getAbsolutePath().indexOf("Android/data/"));
-            //else
-            //    rootDir = fileArry[i].getAbsolutePath();
-            //resultList.add(rootDir);
             resultList.add(fileArry[i].getAbsolutePath());
         }
         String[] resultArry = new String[resultList.size()];

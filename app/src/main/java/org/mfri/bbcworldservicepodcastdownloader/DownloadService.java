@@ -1,6 +1,7 @@
 package org.mfri.bbcworldservicepodcastdownloader;
 
 import android.app.IntentService;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +51,8 @@ public class DownloadService extends IntentService {
     }
 
 
+
+
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("HANDLE_INTENT", "DownloadService: onHandleIntent start");
@@ -55,8 +60,6 @@ public class DownloadService extends IntentService {
         synchronized (intent) {
             BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
 
-
-            //final ResultReceiver receiver = intent.getParcelableExtra("receiver");
             this.bundle = intent.getExtras();
             final String fileName = bundle.getString("fileName");
             final boolean isStartedInBackground = bundle.getBoolean("isStartedInBackground", true);
@@ -93,6 +96,8 @@ public class DownloadService extends IntentService {
     private void executeVolleyRequest(String fileName, String url, String theProgram) {
 
         Log.d("HANDLE_INTENT", "DownloadService: executeVolleyRequest url: "+ url);
+
+
         RequestQueue queue = Volley.newRequestQueue(this);
         VolleyRequest bytesRequest = new VolleyRequest(Request.Method.GET, url,
                 response -> {
@@ -143,9 +148,29 @@ public class DownloadService extends IntentService {
         if (file.exists())
             file.delete();
 
-        FileOutputStream out = new FileOutputStream(file);
-        out.write(barry);
-        out.close();
+        BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(file));
+        ByteArrayInputStream input = new ByteArrayInputStream(barry);
+        byte data[] = new byte[1024];
+
+        long total = 0;
+        int count;
+
+        while ((count = input.read(data)) != -1) {
+            total += count;
+            int progress = (int) total * 100 / barry.length;
+            output.write(data, 0, count);
+            if(!bundle.getBoolean("isStartedInBackground")&&progress > 0) {
+
+                Intent intent = new Intent("DOWNLOAD_DISPLAY_PROGRESS");
+                intent.putExtra("progress", progress);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            }
+        }
+
+        output.flush();
+
+        output.close();
+        input.close();
         return file.getName();
 
     }

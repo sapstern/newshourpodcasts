@@ -12,16 +12,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import java.util.ArrayList;
 
 
-public class ItemListActivityGlobalnews extends AbstractItemListActivity {
+public class ItemListActivityFootballdaily extends AbstractItemListActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("GLOBALNEWS_CREATE", "onCreate start");
-        super.setupLayout(PROGRAM_GLOBALNEWS);
-        Log.d("GLOBALNEWS_CREATE", "onCreate end");
+        Log.d("FOOTBALLDAILY_CREATE", "onCreate start");
+        super.setupLayout(PROGRAM_FOOTBALLDAILY);
+        Log.d("FOOTBALLDAILY_CREATE", "onCreate end");
     }
 
     @Override

@@ -12,12 +12,15 @@ public interface BBCWorldServiceDownloaderStaticValues {
     String PROGRAM_BUSINESSDAILY = "businessdaily";
     String PROGRAM_GLOBALNEWS = "globalnews";
 
+    String PROGRAM_FOOTBALLDAILY = "footballdaily";
+
     HashMap<String, String> PROGRAM_TITLES_MAP = new HashMap<>() {{
         put("BBC World Service Newshour", PROGRAM_NEWSHOUR);
         put("BBC World Service Sportsworld", PROGRAM_SPORTSWORLD);
         put("BBC World Service Sportshour", PROGRAM_SPORTSHOUR);
         put("BBC World Service Business Daily", PROGRAM_BUSINESSDAILY);
         put("BBC World Service Global News", PROGRAM_GLOBALNEWS);
+        put("BBC World Service Football Daily", PROGRAM_FOOTBALLDAILY);
     }};
 
     HashMap<String, String> INVERSE_PROGRAM_TITLES_MAP = new HashMap<>() {{
@@ -26,6 +29,7 @@ public interface BBCWorldServiceDownloaderStaticValues {
         put(PROGRAM_SPORTSHOUR, "BBC World Service Sportshour");
         put(PROGRAM_BUSINESSDAILY, "BBC World Service Business Daily");
         put(PROGRAM_GLOBALNEWS, "BBC World Service Global News");
+        put(PROGRAM_FOOTBALLDAILY, "BBC World Service Football Daily");
     }};
 
     HashMap<String, String> URL_MAP = new HashMap<>() {{
@@ -34,6 +38,7 @@ public interface BBCWorldServiceDownloaderStaticValues {
         put(PROGRAM_SPORTSHOUR, "https://www.bbc.co.uk/programmes/p016tmfz/episodes/downloads");
         put(PROGRAM_BUSINESSDAILY, "https://www.bbc.co.uk/programmes/p002vsxs/episodes/downloads");
         put(PROGRAM_GLOBALNEWS, "https://www.bbc.co.uk/programmes/p02nq0gn/episodes/downloads");
+        put(PROGRAM_FOOTBALLDAILY, "https://www.bbc.co.uk/programmes/p02nrsln/episodes/downloads");
     }};
 
     HashMap<String, String> HTTP_STATUS_MAP = new HashMap<String, String>() {{

@@ -24,6 +24,9 @@
             android:alignmentMode="alignBounds"
             android:textColor="@color/white_70"
             android:textSize="18sp"
+            app:cpb_textComplete="@string/button_complete"
+            app:cpb_textError="@string/button_error"
+            app:cpb_textIdle="@string/button_download"
             />
         <!--   <Button
                android:id="@+id/content"

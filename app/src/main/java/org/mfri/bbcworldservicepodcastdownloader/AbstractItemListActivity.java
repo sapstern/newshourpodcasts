@@ -2,6 +2,7 @@ package org.mfri.bbcworldservicepodcastdownloader;
 
 import android.app.AlertDialog;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,9 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
     protected TableRow.LayoutParams colParams = null;
     protected ItemList theItemList;
     protected String theProgram = null;
+
+    public ProgressDialog progressDialog;
+
 
     /**
      * onActivityResult has been overridden in order to refresh the table of podcasts after
@@ -157,8 +161,13 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         ScrollView layMain = findViewById(R.id.table);
         layMain.removeAllViews();
         layMain.addView(tableLayout);
+        registerReceivers();
+    }
+
+    protected void registerReceivers() {
         LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("IMPLICIT_INTENT_START_PODCAST"));
         LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("DOWNLOAD_VOLLEY_ERROR"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(bReceiver, new IntentFilter("DOWNLOAD_DISPLAY_PROGRESS"));
     }
 
     /**
@@ -237,15 +246,14 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
             button.setText(getResources().getString(R.string.download_state));
 
 
-            //refreshTable();
             if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("dl_background", true)==true){
                 WorkManager
                         .getInstance(getApplicationContext())
                         .cancelWorkById(utils.getDownLoadRequest(theProgram).getId());
             }
             Intent theDownloadIntent = utils.prepareItemDownload(item,getApplicationContext(),true, false, theProgram, rowNumber);
-
-            utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+            setupProgressDialog("Download of "+item.content);
+            //utils.showNotification("BBC podcast download", "Downloading or retrieving: "+theDownloadIntent.getExtras().get("fileName"), getApplicationContext(), (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
             startService(theDownloadIntent);
 
 
@@ -284,8 +292,6 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                             }
                             return;
                         }
-                        //should not be null anyway
-                        //refreshTable();
 
                         utils.showNotification("BBC podcast download", "Podcast downloaded or retrieved: "+fileName, context, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
 
@@ -294,6 +300,11 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                 case "DOWNLOAD_VOLLEY_ERROR":
                     //http error, show popup if not in background
                     utils.startListService(context, theProgram, intent.getExtras().getInt("http_error_code"));
+                    break;
+                case "DOWNLOAD_DISPLAY_PROGRESS":
+                    //update progress bar
+                    int progress = intent.getExtras().getInt("progress");
+                    progressDialog.setProgress(progress);
                     break;
                 default:
                     break;
@@ -322,17 +333,6 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         dlgAlert.create().show();
     }
 
-    /**
-     * Refresh the table layout
-     */
-    private void refreshTable() {
-        if(theItemList!=null) {
-            //Refresh the view with every download
-            setupTableLayout(theItemList);
-            if (findViewById(R.id.item_list)!=null)
-                findViewById(R.id.item_list).invalidate();
-        }
-    }
 
     /**
      * Generic setup of layout for all program activities
@@ -389,5 +389,14 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         //Only show Popup on http error
         showPopup(this);
     }
-
+    private void setupProgressDialog(String title) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage("Downloading in Progress...");
+        progressDialog.setProgressStyle(progressDialog.STYLE_HORIZONTAL);
+        progressDialog.setCancelable(false);
+        progressDialog.setMax(100);
+        progressDialog.setProgress(0);
+        progressDialog.show();
+    }
 }
