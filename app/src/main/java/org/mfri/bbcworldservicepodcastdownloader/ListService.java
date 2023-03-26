@@ -21,9 +21,10 @@ public class ListService extends IntentService {
     /**
      * @deprecated
      */
+    @Deprecated
     public ListService() {
 
-        super("DownloadService");
+        super("ListService");
     }
 
 
@@ -36,7 +37,7 @@ public class ListService extends IntentService {
         final int httpErrorCode = intent.getExtras().getInt("http_error_code", -999);
         BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
         Bundle downloadOptionsBundle = utils.getDownloadOptionsBundle(this, theProgram);
-        Class theActivityClass = null;
+        Class theActivityClass;
         try {
             theActivityClass = Class.forName("org.mfri.bbcworldservicepodcastdownloader.ItemListActivity"+ StringUtils.capitalize(theProgram));
         } catch (ClassNotFoundException e) {

@@ -6,13 +6,15 @@ public interface BBCWorldServiceDownloaderStaticValues {
 
     long MILLIS_PER_12H = 12 * 60 * 60 * 1000L;
 
+
     String PROGRAM_NEWSHOUR = "newshour";
     String PROGRAM_SPORTSWORLD = "sportsworld";
     String PROGRAM_SPORTSHOUR = "sportshour";
     String PROGRAM_BUSINESSDAILY = "businessdaily";
     String PROGRAM_GLOBALNEWS = "globalnews";
-
     String PROGRAM_FOOTBALLDAILY = "footballdaily";
+
+    String PROGRAM_RADIOLIVE = "radiolive";
 
     HashMap<String, String> PROGRAM_TITLES_MAP = new HashMap<>() {{
         put("BBC World Service Newshour", PROGRAM_NEWSHOUR);
@@ -21,6 +23,7 @@ public interface BBCWorldServiceDownloaderStaticValues {
         put("BBC World Service Business Daily", PROGRAM_BUSINESSDAILY);
         put("BBC World Service Global News", PROGRAM_GLOBALNEWS);
         put("BBC World Service Football Daily", PROGRAM_FOOTBALLDAILY);
+        put("BBC World Service Radio Live", PROGRAM_RADIOLIVE);
     }};
 
     HashMap<String, String> INVERSE_PROGRAM_TITLES_MAP = new HashMap<>() {{
@@ -30,6 +33,7 @@ public interface BBCWorldServiceDownloaderStaticValues {
         put(PROGRAM_BUSINESSDAILY, "BBC World Service Business Daily");
         put(PROGRAM_GLOBALNEWS, "BBC World Service Global News");
         put(PROGRAM_FOOTBALLDAILY, "BBC World Service Football Daily");
+        put(PROGRAM_RADIOLIVE, "BBC World Service Radio Live");
     }};
 
     HashMap<String, String> URL_MAP = new HashMap<>() {{
@@ -39,9 +43,10 @@ public interface BBCWorldServiceDownloaderStaticValues {
         put(PROGRAM_BUSINESSDAILY, "https://www.bbc.co.uk/programmes/p002vsxs/episodes/downloads");
         put(PROGRAM_GLOBALNEWS, "https://www.bbc.co.uk/programmes/p02nq0gn/episodes/downloads");
         put(PROGRAM_FOOTBALLDAILY, "https://www.bbc.co.uk/programmes/p02nrsln/episodes/downloads");
+        put(PROGRAM_RADIOLIVE, "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service");
     }};
 
-    HashMap<String, String> HTTP_STATUS_MAP = new HashMap<String, String>() {{
+    HashMap<String, String> HTTP_STATUS_MAP = new HashMap<>() {{
         put("100", "Continue");
         put("101", "Switching protocols");
         put("102", "Processing");
@@ -106,5 +111,7 @@ public interface BBCWorldServiceDownloaderStaticValues {
         put("510", "Not Extended");
         put("511", "Network Authentication Required");
     }};
+
+
 
 }

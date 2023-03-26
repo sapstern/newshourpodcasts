@@ -1,6 +1,6 @@
 package org.mfri.bbcworldservicepodcastdownloader;
 
-import android.content.IntentFilter;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;

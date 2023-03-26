@@ -1,13 +1,17 @@
 package org.mfri.bbcworldservicepodcastdownloader;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -36,7 +40,6 @@ import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractItemListActivity  extends AppCompatActivity implements BBCWorldServiceDownloaderStaticValues{
 
@@ -65,7 +68,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("ABS_IL_ACTIVITY", "receive callback from implicit intend: " + requestCode);
         if (requestCode == 777)
-            utils.startListService(this, theProgram, -1);
+            utils.startListService(this, theProgram, -1, ListService.class);
     }
 
     @Override
@@ -299,7 +302,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                     break;
                 case "DOWNLOAD_VOLLEY_ERROR":
                     //http error, show popup if not in background
-                    utils.startListService(context, theProgram, intent.getExtras().getInt("http_error_code"));
+                    utils.startListService(context, theProgram, intent.getExtras().getInt("http_error_code"), ListService.class);
                     break;
                 case "DOWNLOAD_DISPLAY_PROGRESS":
                     //update progress bar
@@ -351,7 +354,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
         //add swipe refresh
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swiperefresh);
         pullToRefresh.setOnRefreshListener(() -> {
-            utils.startListService(this, theProgram, -1);
+            utils.startListService(this, theProgram, -1, ListService.class);
             pullToRefresh.setRefreshing(false);
 
         });
@@ -363,6 +366,17 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
             else
                 pullToRefresh.setEnabled(false);
         });
+        setupToolbarAndSpinner(theProgram);
+
+        //Only show Popup on http error
+        showPopup(this);
+    }
+    protected void setupRadioLiveLayout(String theProgram){
+        this.theProgram = theProgram;
+        utils = BBCWorldServiceDownloaderUtils.getInstance();
+        setupToolbarAndSpinner(theProgram);
+    }
+    private void setupToolbarAndSpinner(String theProgram) {
         Toolbar myToolbar = findViewById(R.id.bbc_toolbar);
         setSupportActionBar(myToolbar);
         Spinner theSpinner = findViewById(R.id.spinner_nav);
@@ -375,7 +389,11 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (theSpinner.getSelectedItem().toString() != null && !theSpinner.getSelectedItem().toString().equals(INVERSE_PROGRAM_TITLES_MAP.get(theProgram))) {
-                    utils.startListService(getApplicationContext(), PROGRAM_TITLES_MAP.get(theSpinner.getSelectedItem().toString()), -1);
+                    if (!theProgram.equals(PROGRAM_RADIOLIVE)) {
+                        Intent intent = new Intent("ON_STOP");
+                        getApplicationContext().sendBroadcast(intent);
+                    }
+                    utils.startListService(getApplicationContext(), PROGRAM_TITLES_MAP.get(theSpinner.getSelectedItem().toString()), -1, ListService.class);
                 }
             }
 
@@ -385,10 +403,8 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
 
             }
         });
-
-        //Only show Popup on http error
-        showPopup(this);
     }
+
     private void setupProgressDialog(String title) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(title);

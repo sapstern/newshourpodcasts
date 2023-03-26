@@ -1,5 +1,6 @@
 package org.mfri.bbcworldservicepodcastdownloader;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -30,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
@@ -112,7 +115,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         if (mWifi.isConnected()) {
-           return true;
+            return true;
         }
         return false;
     }
@@ -234,7 +237,6 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         if(!isDeviceConnected(context))
             return null;
         currentDownloadOptions = new Bundle();
-        timeStampOfcurrentDownloadOptions = new Date();
 
         //MFRI jsoup rein
         String userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
@@ -263,15 +265,17 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                 }
             }
         }
-        ArrayList<DownloadItem> dlItemList = new ArrayList<DownloadItem>();
+        ArrayList<DownloadItem> dlItemList = new ArrayList<>();
         Elements theElements = doc.select("a[href]");
         String publicationDate;
-        int i = 0;
+        //First check for the Element items which are eligible
+        List<Element> theElementList  = extractElementList(theElements, context.getResources().getStringArray(R.array.dl_qual_arry),  PreferenceManager.getDefaultSharedPreferences(context));
+        Iterator<Element> theIteratorElements = theElementList.iterator();
         int s = 0;
-        for (; i < theElements.size(); i++) {
-
-            if (theElements.get(i).attr("title") != null && theElements.get(i).attr("title").indexOf("days left to listen") != -1) {
-                String theTitle = theElements.get(i).attr("title");
+        while(theIteratorElements.hasNext()) {
+            Element currentElement = theIteratorElements.next();
+            if (currentElement.attr("title") != null && currentElement.attr("title").indexOf("days left to listen") != -1) {
+                String theTitle = currentElement.attr("title");
                 int startIndexOfText = theTitle.indexOf("days left to listen");
                 int dateOffset = Integer.parseInt((theTitle.substring(0, startIndexOfText)).trim());
                 Log.d("TITLE", theTitle);
@@ -287,56 +291,93 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
                     Log.d("PUB_DATE", publicationDate);
                 }
             }
-            Log.d("ELEMENT", theElements.get(i).text());
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            String theQuality = prefs.getString("dl_qual","Lower quality (64kbps)");
-            if (theElements.get(i).text().startsWith(theQuality)) {
+            Log.d("ELEMENT", currentElement.text());
 
-                Log.d("ATTRIBUT_TEXT", theElements.get(i).attr("download"));
-                Log.d("ATTRIBUT_HREF", theElements.get(i).attr("href"));
-                String[] tokens = theElements.get(i).attr("download").split("-");
-                String theDescription = "";
-                String theId = "";
-                for (int j=0;j< tokens.length;j++) {
-                    switch (j) {
-                        case 0:
-                            theDescription = tokens[j];
-                            break;
-                        case 1:
-                            theId = tokens[j];
-                            theId = theId.replace(".mp3", "").trim();
-                            break;
-                    }
+
+            Log.d("ATTRIBUT_TEXT", currentElement.attr("download"));
+            Log.d("ATTRIBUT_HREF", currentElement.attr("href"));
+            String[] tokens = currentElement.attr("download").split("-");
+            String theDescription = "";
+            String theId = "";
+            for (int j = 0; j < tokens.length; j++) {
+                switch (j) {
+                    case 0:
+                        theDescription = tokens[j];
+                        break;
+                    case 1:
+                        theId = tokens[j];
+                        theId = theId.replace(".mp3", "").trim();
+                        break;
                 }
-
-                publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
-                String theFilename = prepareFilename(theDescription, publicationDate, theProgram);
-                if (publicationDate.equals("Mon 01 Januar 0000, 00:00")){
-                    continue;
-                }
-                DownloadItem item = new DownloadItem(String.valueOf(s), theDescription, "https:" + theElements.get(i).attr("href"), publicationDate, theFilename);
-                //MFRI comparedate
-                item.compareDate = getDateFromPatternString(publicationDate, "E d MMMM yyyy, HH:mm");
-
-                //currentDownloadOptions.putParcelable("ITEM_" + s, item);
-                dlItemList.add(item);
-                s++;
             }
-            Log.d("onHandleIntent size: ", String.valueOf(s));
-            //Sort by date descending
 
+            publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
+            String theFilename = prepareFilename(theDescription, publicationDate, theProgram);
+            if (publicationDate.equals("Mon 01 Januar 0000, 00:00")) {
+                return currentDownloadOptions;
+            }
+
+            String dlURL = "https:" + currentElement.attr("href");
+            DownloadItem item = new DownloadItem(String.valueOf(s), theDescription, dlURL, publicationDate, theFilename);
+            //MFRI comparedate
+            item.compareDate = getDateFromPatternString(publicationDate, "E d MMMM yyyy, HH:mm");
+
+            //currentDownloadOptions.putParcelable("ITEM_" + s, item);
+            dlItemList.add(item);
+            s++;
         }
+        Log.d("onHandleIntent size: ", String.valueOf(s));
+        //Sort by date descending
+
+
         Collections.sort(dlItemList);
         for (int z=0; z<dlItemList.size();z++){
             DownloadItem dlitem = dlItemList.get(z);
-            DownloadListItem item = new DownloadListItem(dlitem.id, dlitem.content, dlitem.url, dlitem.dateOfPublication, dlitem.fileName);
-            currentDownloadOptions.putParcelable("ITEM_" + z, item);
+            DownloadListItem downloadListItem = new DownloadListItem(dlitem.id, dlitem.content, dlitem.url, dlitem.dateOfPublication, dlitem.fileName);
+            currentDownloadOptions.putParcelable("ITEM_" + z, downloadListItem);
         }
         currentDownloadOptions.putInt("LIST_SIZE", s);
-        timeStampOfcurrentDownloadOptions = new Date();
         currentDownloadOptionsMap.put(theProgram,currentDownloadOptions);
         Log.d("HANDLE", "handleActionDownloadList exit");
         return currentDownloadOptions;
+    }
+    /*
+     * First look if we get anything for the selected dl quality, if not test if we get something for the
+     * unselected dl quality (very clumsy, but due to bbc inconsistent maintenace of their dl pages)
+     */
+    private List<Element> extractElementList(Elements theElements, String[] arryQualities, SharedPreferences prefs) {
+
+      List<Element>  theElementList = new LinkedList();
+        String selectedQuality = prefs.getString("dl_qual","Lower quality (64kbps)");
+        String unselectedQuality = null;
+
+
+        for(int i=0;i<arryQualities.length;i++){
+            if(!arryQualities[i].equals(selectedQuality)){
+                unselectedQuality = arryQualities[i];
+                break;
+            }
+        }
+        for (int i = 0; i < theElements.size(); i++) {
+            Element element =  theElements.get(i);
+             if(isInQuality(element,selectedQuality)){
+                 theElementList.add(element);
+                 continue;
+             }
+            if(isInQuality(element,unselectedQuality)){
+                theElementList.add(element);
+            }
+        }
+        return theElementList;
+    }
+
+    private boolean isInQuality(Element currentElement, String theQuality) {
+
+            if (currentElement.text().startsWith(theQuality)) {
+                return true;
+            }
+
+        return false;
     }
 
     private String parsePublicationDate(String theId, List<DownloadItem> theDownloadItemsFromJson) {
@@ -689,12 +730,13 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
         Log.d("UTIL", "processChoosenDownloadOptions end");
     }
-    public void startListService(Context theContext, String theProgram, int httpCode){
+    public void startListService(Context theContext, String theProgram, int httpCode, Class theClass){
 
 
-        Intent intent = new Intent(theContext, ListService.class);
+        Intent intent = new Intent(theContext, theClass);
         intent.putExtra("http_error_code", httpCode);
         intent.putExtra("theProgram", theProgram);
+
 
         theContext.startService(intent);
     }

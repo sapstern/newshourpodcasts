@@ -75,7 +75,7 @@ public class ItemMainActivity extends Activity implements BBCWorldServiceDownloa
 
 
         //Proceed to next activity (display list of download options)
-       utils.startListService(this, PROGRAM_NEWSHOUR,  -1);
+       utils.startListService(this, PROGRAM_NEWSHOUR,  -1, ListService.class);
        Log.d("MAIN", "startBackgroundWorkerAndService end");
     }
 

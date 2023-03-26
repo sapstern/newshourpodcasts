@@ -26,8 +26,9 @@ public class DeleteOldPodcastsService extends IntentService {
     /**
      * @deprecated
      */
+    @Deprecated
     public DeleteOldPodcastsService() {
-        super("DownloadService");
+        super("DeleteOldPodcastsService");
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {

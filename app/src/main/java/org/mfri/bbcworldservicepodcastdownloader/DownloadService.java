@@ -40,6 +40,7 @@ public class DownloadService extends IntentService {
     /**
      * @deprecated
      */
+    @Deprecated
     public DownloadService() {
         super("DownloadService");
 
@@ -150,7 +151,7 @@ public class DownloadService extends IntentService {
 
         BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(file));
         ByteArrayInputStream input = new ByteArrayInputStream(barry);
-        byte data[] = new byte[1024];
+        byte data[] = new byte[512];
 
         long total = 0;
         int count;
