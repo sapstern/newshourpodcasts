@@ -314,7 +314,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
             publicationDate = parsePublicationDate(theId, theDownloadItemsFromJson);
             String theFilename = prepareFilename(theDescription, publicationDate, theProgram);
             if (publicationDate.equals("Mon 01 Januar 0000, 00:00")) {
-                return currentDownloadOptions;
+                continue;
             }
 
             String dlURL = "https:" + currentElement.attr("href");
