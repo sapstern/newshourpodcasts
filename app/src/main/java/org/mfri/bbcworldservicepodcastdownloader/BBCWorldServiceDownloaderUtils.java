@@ -322,9 +322,10 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
             //MFRI comparedate
             item.compareDate = getDateFromPatternString(publicationDate, "E d MMMM yyyy, HH:mm");
 
-            //currentDownloadOptions.putParcelable("ITEM_" + s, item);
-            dlItemList.add(item);
-            s++;
+            if(!isInList(dlItemList.iterator(), item)) {
+                dlItemList.add(item);
+                s++;
+            }
         }
         Log.d("onHandleIntent size: ", String.valueOf(s));
         //Sort by date descending
@@ -341,13 +342,23 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         Log.d("HANDLE", "handleActionDownloadList exit");
         return currentDownloadOptions;
     }
+    private boolean isInList(Iterator<DownloadItem> iter, DownloadItem item){
+
+        while (iter.hasNext()){
+            DownloadItem currentItem = iter.next();
+            if (currentItem.content.equals(item.content))
+                return true;
+        }
+        return false;
+
+    }
     /*
      * First look if we get anything for the selected dl quality, if not test if we get something for the
      * unselected dl quality (very clumsy, but due to bbc inconsistent maintenace of their dl pages)
      */
     private List<Element> extractElementList(Elements theElements, String[] arryQualities, SharedPreferences prefs) {
 
-      List<Element>  theElementList = new LinkedList();
+        List<Element>  theElementList = new LinkedList();
         String selectedQuality = prefs.getString("dl_qual","Lower quality (64kbps)");
         String unselectedQuality = null;
 
@@ -360,10 +371,10 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         for (int i = 0; i < theElements.size(); i++) {
             Element element =  theElements.get(i);
-             if(isInQuality(element,selectedQuality)){
-                 theElementList.add(element);
-                 continue;
-             }
+            if(isInQuality(element,selectedQuality)){
+                theElementList.add(element);
+                continue;
+            }
             if(isInQuality(element,unselectedQuality)){
                 theElementList.add(element);
             }
@@ -373,10 +384,9 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
     private boolean isInQuality(Element currentElement, String theQuality) {
 
-            if (currentElement.text().startsWith(theQuality)) {
-                return true;
-            }
-
+        if (currentElement.text().startsWith(theQuality)) {
+            return true;
+        }
         return false;
     }
 
@@ -731,7 +741,12 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         Log.d("UTIL", "processChoosenDownloadOptions end");
     }
     public void startListService(Context theContext, String theProgram, int httpCode, Class theClass){
-
+        //MFRI Temporary removed
+        if(theProgram.equals(PROGRAM_RADIOLIVE)) {
+            Toast.makeText(theContext, "Not yet implemented", Toast.LENGTH_LONG).show();
+            startListService(theContext,PROGRAM_NEWSHOUR,-1, ListService.class);
+            return;
+        }
 
         Intent intent = new Intent(theContext, theClass);
         intent.putExtra("http_error_code", httpCode);

@@ -35,7 +35,8 @@
         <item>BBC World Service Sportshour</item>
         <item>BBC World Service Business Daily</item>
         <item>BBC World Service Global News</item>
-        <item>BBC World Service Football Daily</item>
-        <item>BBC World Service Radio Live</item>
+        <item>BBC Radio 5 Live Football Daily</item>
+        <item>BBC World Service 606</item>
+        <item>BBC World Service Radio Live (Early Beta)</item>
     </string-array>
 </resources>
