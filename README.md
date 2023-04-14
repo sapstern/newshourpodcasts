@@ -9,4 +9,4 @@ Publisher of content: BBC World Service https://www.bbc.co.uk
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/org.mfri.bbcworldservicenewshourdownloader/)
+     height="80">](https://f-droid.org/packages/org.mfri.bbcworldservicepodcastdownloader/)
