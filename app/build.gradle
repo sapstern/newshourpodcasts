@@ -5,9 +5,9 @@ android {
     signingConfigs {
         debug {
             storeFile file('/home/matthias/gitBBCPodcastDownloader_keystore/keystore/bbc_newshour_downloader.jks')
-            storePassword 'qwertzuiop'
+            storePassword ' '
             keyAlias 'key0'
-            keyPassword 'qwertzuiop'
+            keyPassword ' '
         }
     }
     compileSdkVersion 33
@@ -17,8 +17,8 @@ android {
         applicationId "org.mfri.bbcworldservicepodcastdownloader"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 144
-        versionName "v1.4.4"
+        versionCode 145
+        versionName "v1.4.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

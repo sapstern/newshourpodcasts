@@ -41,14 +41,11 @@ public class SettingsActivity extends AppCompatActivity {
         //printMap (prefs.getAll());
 
         Button theBackButton = findViewById(R.id.settings_back_button);
-        theBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("SETTINGS_ACTION", "onClick start");
-                //if user changed background download behavior
-                utils.processChoosenDownloadOptions(getApplicationContext());
-                startMainActivity();
-            }
+        theBackButton.setOnClickListener(view -> {
+            Log.d("SETTINGS_ACTION", "onClick start");
+            //if user changed background download behavior
+            utils.processChoosenDownloadOptions(getApplicationContext());
+            startMainActivity();
         });
         if (savedInstanceState == null) {
             getSupportFragmentManager()

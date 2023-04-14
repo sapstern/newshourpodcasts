@@ -1,10 +1,12 @@
 package org.mfri.bbcworldservicepodcastdownloader;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -595,7 +597,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         }
         // Create an explicit intent for an SettingsActivity => Entrypoint of the app
         Intent intent = new Intent(context, SettingsActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "1234567")
                 .setSmallIcon(R.mipmap.ic_launcher) // notification icon
                 .setContentTitle(title) // title for notification
@@ -740,6 +742,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
         Log.d("UTIL", "processChoosenDownloadOptions end");
     }
+
+
     public void startListService(Context theContext, String theProgram, int httpCode, Class theClass){
         //MFRI Temporary removed
         if(theProgram.equals(PROGRAM_RADIOLIVE)) {
