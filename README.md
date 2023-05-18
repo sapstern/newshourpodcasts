@@ -1,4 +1,4 @@
-BBC Worldservice Newshour Podcast Downloader
+BBC Worldservice Podcast Downloader
 --------------------------------------------
 
 Download and play famous BBC World Service podcasts.
