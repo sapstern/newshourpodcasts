@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,16 +14,15 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/radio_icon_96_px"
+        android:roundIcon="@mipmap/radio_icon_128_px"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name="org.mfri.bbcworldservicepodcastdownloader.WebViewActivity" />
+        <activity android:name="org.mfri.bbc.mediamanager.WebViewActivity" />
         <activity
             android:exported="true"
-            android:name="org.mfri.bbcworldservicepodcastdownloader.SettingsActivity"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,87 +30,79 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemMainActivity"
+            android:name="org.mfri.bbc.mediamanager.ItemMainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.SettingsActivity" />
+                android:value="org.mfri.bbc.mediamanager.SettingsActivity" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivityNewshour"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemMainActivity" />
+                android:value="org.mfri.bbc.mediamanager.ItemMainActivity" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportsworld"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivitySportsworld"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySportshour"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivitySportshour"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityBusinessdaily"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivityBusinessdaily"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityFootballdaily"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivityFootballdaily"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivitySix06"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivitySix06"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityGlobalnews"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivityGlobalnews"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <activity
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityRadiolive"
-            android:label="@string/app_name"
+            android:name="org.mfri.bbc.mediamanager.ItemListActivityRadiolive"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour" />
+                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
         </activity>
         <service
-            android:name="org.mfri.bbcworldservicepodcastdownloader.RadioLiveService"
+            android:name="org.mfri.bbc.mediamanager.RadioLiveService"
             android:exported="false" />
         <service
-            android:name="org.mfri.bbcworldservicepodcastdownloader.DeleteOldPodcastsService"
+            android:name="org.mfri.bbc.mediamanager.DeleteOldPodcastsService"
             android:exported="false" />
         <service
-            android:name="org.mfri.bbcworldservicepodcastdownloader.ListService"
+            android:name="org.mfri.bbc.mediamanager.ListService"
             android:exported="false" />
         <service
-            android:name="org.mfri.bbcworldservicepodcastdownloader.DownloadService"
+            android:name="org.mfri.bbc.mediamanager.DownloadService"
             android:exported="false" />
 
         <provider

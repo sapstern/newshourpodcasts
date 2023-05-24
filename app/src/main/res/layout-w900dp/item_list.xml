@@ -10,22 +10,21 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context=".ItemListActivityNewshour">
+    tools:context="org.mfri.bbc.mediamanager.ItemListActivityNewshour">
 
     <!--
     This layout is a two-pane layout for the Items master/detail flow.
     -->
 
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
-        android:name="org.mfri.bbcworldservicenewshourdownloader.ItemListFragment"
+        android:name="org.mfri.bbc.mediamanager.ItemListFragment"
         android:layout_width="@dimen/item_width"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="org.mfri.bbcworldservicepodcastdownloader.ItemListActivityNewshour"
+        tools:context="org.mfri.bbc.mediamanager.ItemListActivityNewshour"
         tools:listitem="@layout/item_list_content" />
 
     <FrameLayout

@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "BBC Worldservice Podcast Downloader"
+rootProject.name = "BBC Worldservice Media Manager"
