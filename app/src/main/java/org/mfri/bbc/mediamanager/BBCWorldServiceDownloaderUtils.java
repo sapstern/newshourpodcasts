@@ -3,11 +3,16 @@ package org.mfri.bbc.mediamanager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -17,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 import androidx.work.Constraints;
 import androidx.work.Data;
@@ -54,6 +60,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDownloaderStaticValues {
 
+    private final RadioLive bbcWorldserviceLive = new RadioLive();
     private HashMap<String, Bundle> currentDownloadOptionsMap = null;
     private HashMap<String, Date> timeStampOfcurrentDownloadOptionsMap = null;
 
@@ -742,10 +749,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
     public void startListService(Context theContext, String theProgram, int httpCode, Class theClass){
         //MFRI Temporary removed
-        if(theProgram.equals(PROGRAM_RADIOLIVE)) {
-            Toast.makeText(theContext, "Not yet implemented", Toast.LENGTH_LONG).show();
-            startListService(theContext,PROGRAM_NEWSHOUR,-1, ListService.class);
-            return;
+        if(!theProgram.equals(PROGRAM_RADIOLIVE)) {
+           bbcWorldserviceLive.killMplayer();
         }
 
         Intent intent = new Intent(theContext, theClass);
@@ -754,5 +759,112 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
 
         theContext.startService(intent);
+    }
+
+    public void startRadioLive(Context context){
+        bbcWorldserviceLive.setContext(context);
+        bbcWorldserviceLive.initMplayer();
+    }
+    private class RadioLive{
+        private MediaPlayer mPlayer;
+        private int oTime = 0, sTime = 0, eTime = 0, fTime = 5000, bTime = 5000;
+        private Context context;
+        RadioLive(){
+
+        }
+
+        public void setContext(Context context){
+           this.context = context;
+        }
+        public void initMplayer() {
+            Log.d("RadioLive", "initMplayer start");
+            mPlayer = new MediaPlayer();
+            mPlayer.setOnPreparedListener(mPlayer -> mPlayer.start());
+            mPlayer.setOnErrorListener((mp, what, extra) -> {
+                Log.d("RadioLive.mPlayer", "onError start "+mp.isPlaying());
+                return false;
+            });
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mPlayer.setAudioAttributes(
+                        new AudioAttributes.Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .build()
+                );
+            }
+
+            try {
+                mPlayer.setDataSource(URL_MAP.get(PROGRAM_RADIOLIVE));
+                mPlayer.prepare(); // might take long! (for buffering, etc)
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_PLAY"));
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_START"));
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_RESUME"));
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_STOP"));
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_PAUSE"));
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_MOVE_FORWARD"));
+            lbm.registerReceiver(bReceiverRadioLive, new IntentFilter("ON_MOVE_BACKWARD"));
+            Log.d("RadioLive", "initMplayer end");
+        }
+
+        /**
+         * Gets called from Radiolive class
+         */
+        private BroadcastReceiver bReceiverRadioLive = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("BroadcastReceiver_RL", "onReceive() start processing Media Player");
+                if (mPlayer == null) {
+                    initMplayer();
+                }
+                switch (intent.getAction()) {
+                    case "ON_PLAY":
+                        mPlayer.start();
+                        Intent playIntent = new Intent("UPDATE_PLAY_TIME");
+                        playIntent.putExtra("eTime", mPlayer.getDuration());
+                        playIntent.putExtra("sTime", mPlayer.getCurrentPosition());
+                        if(oTime == 0){
+                            oTime = 1;
+                        }
+                        playIntent.putExtra("oTime", oTime);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(playIntent);
+                        break;
+                    case "ON_START":
+                    case "ON_RESUME":
+                        mPlayer.start();
+                        break;
+                    case "ON_STOP":
+                    case "ON_PAUSE":
+                        //stopThread();
+                        mPlayer.stop();
+                        mPlayer.release();
+                        break;
+                    case "ON_MOVE_FORWARD":
+                        //onMoveForwardButton();
+                        break;
+                    case "ON_MOVE_BACKWARD":
+                        //onMoveBackwardButton();
+                        break;
+                    default:
+                        break;
+                }
+
+
+            }
+
+        };
+
+        public void killMplayer() {
+            if(mPlayer==null){
+                return;
+            }
+            mPlayer.stop();
+            mPlayer = null;
+        }
     }
 }

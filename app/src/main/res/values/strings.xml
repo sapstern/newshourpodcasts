@@ -30,7 +30,7 @@
     <string name="error_download">Error downloading</string>
     <string name="button_error">Error downloading</string>
     <string name="bg_confirm">Confirm</string>
-    <string name="bg_confirm_message">Enabling background download is not recommended as it might fill your disk!</string>
+    <string name="bg_confirm_message">Enabling background download has been disabled as it floats the device storage too quickly.</string>
     <string name="bg_warning">Warning</string>
     <string-array name="bbc_programs">
         <item>BBC World Service Newshour</item>

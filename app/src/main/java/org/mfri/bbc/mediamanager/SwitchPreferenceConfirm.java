@@ -30,26 +30,27 @@ public class SwitchPreferenceConfirm extends SwitchPreferenceCompat {
     }
     @Override
     public void setChecked(boolean checked){
-
-        if (checked && PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("dl_background", false)==false){
+        isChecked = false;
+        if (checked){
             sendBackupDownloadPopupToConfirm(getContext());
+            //isChecked = checked;
             super.setChecked(isChecked);
-            return;
         }
-        super.setChecked(checked);
+        super.setChecked(false);
     }
 
     private void sendBackupDownloadPopupToConfirm(Context theContext){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(theContext);
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setTitle(R.string.bg_warning);
         builder.setMessage(R.string.bg_confirm_message);
         builder.setPositiveButton(R.string.bg_confirm, (dialog, which) -> {
-            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("dl_background", true);
+            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("dl_background", true).apply();
             isChecked = true;
         });
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("dl_background", false);
+            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("dl_background", false).apply();
             isChecked = false;
         });
 

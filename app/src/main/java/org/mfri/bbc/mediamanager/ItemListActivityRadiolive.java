@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -59,8 +58,8 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-        ImageButton backwardbtn = findViewById(R.id.btnBackward);
-        ImageButton forwardbtn = findViewById(R.id.btnForward);
+//        ImageButton backwardbtn = findViewById(R.id.btnBackward);
+//        ImageButton forwardbtn = findViewById(R.id.btnForward);
         playbtn = findViewById(R.id.btnPlay);
         pausebtn = findViewById(R.id.btnPause);
 
@@ -84,18 +83,18 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
             Toast.makeText(getApplicationContext(),"Pausing Audio", Toast.LENGTH_SHORT).show();
             sendBroadcast("ON_PAUSE");
         });
-        forwardbtn.setOnClickListener(v -> {
-            if(!playbtn.isEnabled()){
-                playbtn.setEnabled(true);
-            }
-            sendBroadcast("ON_MOVE_FORWARD");
-        });
-        backwardbtn.setOnClickListener(v -> {
-            if(!playbtn.isEnabled()){
-                playbtn.setEnabled(true);
-            }
-            sendBroadcast("ON_MOVE_BACKWARD");
-        });
+//        forwardbtn.setOnClickListener(v -> {
+//            if(!playbtn.isEnabled()){
+//                playbtn.setEnabled(true);
+//            }
+//            sendBroadcast("ON_MOVE_FORWARD");
+//        });
+//        backwardbtn.setOnClickListener(v -> {
+//            if(!playbtn.isEnabled()){
+//                playbtn.setEnabled(true);
+//            }
+//            sendBroadcast("ON_MOVE_BACKWARD");
+//        });
 
 
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);

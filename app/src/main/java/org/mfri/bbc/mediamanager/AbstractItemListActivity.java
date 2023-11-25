@@ -28,7 +28,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-//import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkManager;
 
@@ -389,7 +388,7 @@ public abstract class AbstractItemListActivity  extends AppCompatActivity implem
                     if (!theProgram.equals(PROGRAM_RADIOLIVE)) {
                         Intent intent = new Intent("ON_STOP");
                         getApplicationContext().sendBroadcast(intent);
-                    }
+                   }
                     utils.startListService(getApplicationContext(), PROGRAM_TITLES_MAP.get(theSpinner.getSelectedItem().toString()), -1, ListService.class);
                 }
             }
