@@ -20,6 +20,7 @@ public class ItemListActivitySportsworld extends AbstractItemListActivity {
 
         Log.d("SPORTW_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_SPORTSWORLD);
+        RadioLive.getInstance().reset();
         Log.d("SPORTW_CREATE", "onCreate end");
     }
 

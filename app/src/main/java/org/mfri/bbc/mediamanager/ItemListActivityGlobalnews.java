@@ -20,6 +20,7 @@ public class ItemListActivityGlobalnews extends AbstractItemListActivity {
 
         Log.d("GLOBALNEWS_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_GLOBALNEWS);
+        RadioLive.getInstance().reset();
         Log.d("GLOBALNEWS_CREATE", "onCreate end");
     }
 

@@ -20,6 +20,7 @@ public class ItemListActivityFootballdaily extends AbstractItemListActivity {
 
         Log.d("FOOTBALLDAILY_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_FOOTBALLDAILY);
+        RadioLive.getInstance().reset();
         Log.d("FOOTBALLDAILY_CREATE", "onCreate end");
     }
 

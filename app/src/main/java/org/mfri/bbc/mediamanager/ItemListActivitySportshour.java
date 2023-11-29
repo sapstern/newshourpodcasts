@@ -20,6 +20,7 @@ public class ItemListActivitySportshour extends AbstractItemListActivity {
 
         Log.d("SPORTH_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_SPORTSHOUR);
+        RadioLive.getInstance().reset();
         Log.d("SPORTH_CREATE", "onCreate end");
     }
 

@@ -21,6 +21,7 @@ public class ItemListActivityBusinessdaily extends AbstractItemListActivity {
 
         Log.d("BUSINESSDAILY_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_BUSINESSDAILY);
+        RadioLive.getInstance().reset();
         Log.d("BUSINESSDAILY_CREATE", "onCreate end");
     }
 

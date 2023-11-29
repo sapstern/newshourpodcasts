@@ -20,7 +20,7 @@ public class ItemListActivityNewshour extends AbstractItemListActivity {
 
         Log.d("NEWSHOUR_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_NEWSHOUR);
-
+        RadioLive.getInstance().reset();
         Log.d("NEWSHOUR_CREATE", "onCreate end");
     }
 

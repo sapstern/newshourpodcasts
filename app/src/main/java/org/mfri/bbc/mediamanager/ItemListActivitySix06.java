@@ -21,6 +21,7 @@ public class ItemListActivitySix06 extends AbstractItemListActivity {
 
         Log.d("606_CREATE", "onCreate start");
         super.setupLayout(PROGRAM_606);
+        RadioLive.getInstance().reset();
         Log.d("606_CREATE", "onCreate end");
     }
 
