@@ -752,14 +752,19 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
     }
 
     public void startRadioLive(Context context){
-     RadioLive  bbcWorldserviceLive = RadioLive.getInstance();
+        Log.d("UTIL", "startRadioLive start");
+
+        RadioLive  bbcWorldserviceLive = RadioLive.getInstance();
      if(bbcWorldserviceLive.isInitial==false){
          if(!bbcWorldserviceLive.isPlaying()){
+             Log.d("UTIL", "startRadioLive reset reset and then initialization of Mediaplayer");
+
              bbcWorldserviceLive.reset();
              bbcWorldserviceLive.initMplayer(context,URL_MAP.get(PROGRAM_RADIOLIVE));
          }
          return;
      }
+     Log.d("UTIL", "startRadioLive initialization of Mediaplayer");
      bbcWorldserviceLive.initMplayer(context, URL_MAP.get(PROGRAM_RADIOLIVE));
     }
 

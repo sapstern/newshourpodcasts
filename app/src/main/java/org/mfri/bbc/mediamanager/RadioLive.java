@@ -78,11 +78,14 @@ public class RadioLive extends MediaPlayer{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("BroadcastReceiver_RL", "onReceive() start processing Media Player");
+            Log.d("BroadcastReceiver_RL", "onReceive() start processing Media Player actions");
 
             switch (intent.getAction()) {
                 case "ON_PLAY":
-                    RadioLive.this.start();
+                    if(!RadioLive.this.isPlaying()) {
+                        RadioLive.this.prepareAsync();
+                        RadioLive.this.start();
+                    }
                     Intent playIntent = new Intent("UPDATE_PLAY_TIME");
                     playIntent.putExtra("eTime", RadioLive.this.getDuration());
                     playIntent.putExtra("sTime", RadioLive.this.getCurrentPosition());
@@ -101,7 +104,7 @@ public class RadioLive extends MediaPlayer{
                 case "ON_PAUSE":
                     //stopThread();
                     RadioLive.this.stop();
-                    RadioLive.this.release();
+                    //RadioLive.this.release();
                     break;
                 case "ON_MOVE_FORWARD":
                     //onMoveForwardButton();
@@ -112,7 +115,6 @@ public class RadioLive extends MediaPlayer{
                 default:
                     break;
             }
-
 
         }
 

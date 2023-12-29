@@ -69,17 +69,17 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
 
         podcastPrgs = findViewById(R.id.sBar);
         podcastPrgs.setClickable(false);
-        pausebtn.setEnabled(false);
+        pausebtn.setEnabled(true);
+        playbtn.setEnabled(true);
 
         playbtn.setOnClickListener(v -> {
             Toast.makeText(ItemListActivityRadiolive.this, "Playing Audio", Toast.LENGTH_SHORT).show();
-            pausebtn.setEnabled(true);
-            playbtn.setEnabled(false);
+
+
             sendBroadcast("ON_PLAY");
         });
         pausebtn.setOnClickListener(v -> {
-            pausebtn.setEnabled(false);
-            playbtn.setEnabled(true);
+
             Toast.makeText(getApplicationContext(),"Pausing Audio", Toast.LENGTH_SHORT).show();
             sendBroadcast("ON_PAUSE");
         });
@@ -142,6 +142,6 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
     private void sendBroadcast(String intendFilter) {
 
         Intent intent = new Intent(intendFilter);
-        getApplicationContext().sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
