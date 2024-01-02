@@ -115,7 +115,7 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("BR_ActivityILRadioLive", "onReceive() start Updating view");
+            Log.d("BR_ActivityILRadioLive", "onReceive() start Updating view progress indicator");
 
             switch (intent.getAction()){
                 case "UPDATE_RADIO_TIME":

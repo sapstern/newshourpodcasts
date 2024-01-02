@@ -40,6 +40,8 @@ public class RadioLive extends MediaPlayer{
         this.setOnPreparedListener(mPlayer -> this.start());
         this.setOnErrorListener((mp, what, extra) -> {
             Log.d("RadioLive.mPlayer", "onError start " + mp.isPlaying());
+            Log.d("RadioLive.mPlayer", "onError what " + what);
+            Log.d("RadioLive.mPlayer", "onError extra " + extra);
             return false;
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -53,7 +55,7 @@ public class RadioLive extends MediaPlayer{
 
         try {
             this.setDataSource(url);
-            this.prepare(); // might take long! (for buffering, etc)
+            this.prepareAsync();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +85,6 @@ public class RadioLive extends MediaPlayer{
             switch (intent.getAction()) {
                 case "ON_PLAY":
                     if(!RadioLive.this.isPlaying()) {
-                        RadioLive.this.prepareAsync();
                         RadioLive.this.start();
                     }
                     Intent playIntent = new Intent("UPDATE_PLAY_TIME");
@@ -97,20 +98,15 @@ public class RadioLive extends MediaPlayer{
                     break;
                 case "ON_START":
                 case "ON_RESUME":
-                    RadioLive.this.prepareAsync();
                     RadioLive.this.start();
                     break;
                 case "ON_STOP":
                 case "ON_PAUSE":
-                    //stopThread();
-                    RadioLive.this.stop();
-                    //RadioLive.this.release();
+                    RadioLive.this.pause();
                     break;
                 case "ON_MOVE_FORWARD":
-                    //onMoveForwardButton();
                     break;
                 case "ON_MOVE_BACKWARD":
-                    //onMoveBackwardButton();
                     break;
                 default:
                     break;
@@ -120,11 +116,7 @@ public class RadioLive extends MediaPlayer{
 
     };
 
-    public void killMplayer() {
 
-        this.stop();
-        this.release();
-    }
 
 
 }
