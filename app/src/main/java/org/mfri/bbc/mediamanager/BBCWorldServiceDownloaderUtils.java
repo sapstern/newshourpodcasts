@@ -63,6 +63,8 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
     private static final BBCWorldServiceDownloaderUtils INSTANCE = new BBCWorldServiceDownloaderUtils();
 
+    private static  RadioLiveThread rlThread;
+
 
     private BBCWorldServiceDownloaderUtils(){
         downLoadRequestMap = new HashMap<String, PeriodicWorkRequest>();
@@ -753,19 +755,11 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
 
     public void startRadioLive(Context context){
         Log.d("UTIL", "startRadioLive start");
+        if(rlThread==null||!rlThread.isAlive()) {
+            rlThread = new RadioLiveThread(context, URL_MAP.get(PROGRAM_RADIOLIVE));
+            rlThread.start();
 
-        RadioLive  bbcWorldserviceLive = RadioLive.getInstance();
-     if(bbcWorldserviceLive.isInitial==false){
-         if(!bbcWorldserviceLive.isPlaying()){
-             Log.d("UTIL", "startRadioLive reset and then initialization of Mediaplayer");
-
-             bbcWorldserviceLive.reset();
-             bbcWorldserviceLive.initMplayer(context,URL_MAP.get(PROGRAM_RADIOLIVE));
-         }
-         return;
-     }
-     Log.d("UTIL", "startRadioLive initialization of Mediaplayer");
-     bbcWorldserviceLive.initMplayer(context, URL_MAP.get(PROGRAM_RADIOLIVE));
+        }
     }
 
 
