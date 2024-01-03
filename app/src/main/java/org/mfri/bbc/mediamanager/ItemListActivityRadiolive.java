@@ -55,6 +55,7 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
         Log.d("RADIOLIVE_CREATE", "onCreate start");
         super.setupRadioLiveLayout(PROGRAM_RADIOLIVE);
 
+
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
@@ -100,6 +101,8 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.registerReceiver(bReceiverItemListRadioLive, new IntentFilter("UPDATE_RADIO_TIME"));
         lbm.registerReceiver(bReceiverItemListRadioLive, new IntentFilter("UPDATE_PLAY_TIME"));
+
+
         Intent radioLiveIntent = new Intent(this, RadioLiveService.class);
         getApplicationContext().startService(radioLiveIntent);
 

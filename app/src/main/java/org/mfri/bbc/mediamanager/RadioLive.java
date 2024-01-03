@@ -80,7 +80,7 @@ public class RadioLive extends MediaPlayer{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("BroadcastReceiver_RL", "onReceive() start processing Media Player actions");
+            Log.d("BroadcastReceiver_RL", "onReceive()  processing Media Player action: "+intent.getAction());
 
             switch (intent.getAction()) {
                 case "ON_PLAY":
@@ -101,6 +101,7 @@ public class RadioLive extends MediaPlayer{
                     RadioLive.this.start();
                     break;
                 case "ON_STOP":
+                    break;
                 case "ON_PAUSE":
                     RadioLive.this.pause();
                     break;

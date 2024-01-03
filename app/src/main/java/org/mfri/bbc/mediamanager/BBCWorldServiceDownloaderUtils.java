@@ -757,7 +757,7 @@ public final class BBCWorldServiceDownloaderUtils implements BBCWorldServiceDown
         RadioLive  bbcWorldserviceLive = RadioLive.getInstance();
      if(bbcWorldserviceLive.isInitial==false){
          if(!bbcWorldserviceLive.isPlaying()){
-             Log.d("UTIL", "startRadioLive reset reset and then initialization of Mediaplayer");
+             Log.d("UTIL", "startRadioLive reset and then initialization of Mediaplayer");
 
              bbcWorldserviceLive.reset();
              bbcWorldserviceLive.initMplayer(context,URL_MAP.get(PROGRAM_RADIOLIVE));
