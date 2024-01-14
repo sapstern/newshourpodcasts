@@ -142,6 +142,7 @@ public class RadioLiveService extends IntentService {
 
         // Send the notification.
         mNM.notify(NOTIFICATION, notification);
+        //Start service as forground service (prevents stopping of the service once app is swapped out)
         startForeground(NOTIFICATION,notification);
     }
 
