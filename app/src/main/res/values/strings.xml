@@ -32,6 +32,9 @@
     <string name="bg_confirm">Confirm</string>
     <string name="bg_confirm_message">Enabling background download has been disabled as it floats the device storage too quickly.</string>
     <string name="bg_warning">Warning</string>
+    <string name="local_service_started">BBC Radio Live started</string>
+    <string name="local_service_label">BBC World Service Live Radio</string>
+    <string name="local_service_stopped">Radio Live stopped</string>
     <string-array name="bbc_programs">
         <item>BBC World Service Newshour</item>
         <item>BBC World Service Sportsworld</item>

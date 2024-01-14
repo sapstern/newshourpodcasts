@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -104,7 +105,9 @@ public class ItemListActivityRadiolive extends AbstractItemListActivity{
 
 
         Intent radioLiveIntent = new Intent(this, RadioLiveService.class);
-        getApplicationContext().startService(radioLiveIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getApplicationContext().startForegroundService(radioLiveIntent);
+        }
 
 
         Log.d("RADIOLIVE_CREATE", "onCreate end");
