@@ -35,6 +35,8 @@
     <string name="local_service_started">BBC Radio Live started</string>
     <string name="local_service_label">BBC World Service Live Radio</string>
     <string name="local_service_stopped">Radio Live stopped</string>
+    <string name="Radio_Live_Text_View">Radio Live</string>
+    <string name="Text_0_min_0_sec">0 min, 0 sec</string>
     <string-array name="bbc_programs">
         <item>BBC World Service Newshour</item>
         <item>BBC World Service Sportsworld</item>

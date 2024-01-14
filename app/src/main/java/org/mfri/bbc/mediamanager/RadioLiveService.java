@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -12,12 +13,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 
 public class RadioLiveService extends IntentService {
-
-
 
     private NotificationManager mNM;
 
@@ -41,7 +39,7 @@ public class RadioLiveService extends IntentService {
     @Override
     public void onCreate() {
 
-        mNM = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         assert mNM != null;
         Log.d("INTENT_RADIO_LIVE", "onHandleIntent RadioLiveService start");
         showNotification();
@@ -52,23 +50,16 @@ public class RadioLiveService extends IntentService {
             utils.startRadioLive(this);
         }
 
-
         Log.d("INTENT_RADIO_LIVE", "onHandleIntent RadioLiveService end");
-
     }
-
 
     /**
      * @deprecated
      */
     @Deprecated
     public RadioLiveService() {
-
         super("RadioLiveService");
-
-
     }
-
 
 
     @Override
@@ -97,19 +88,7 @@ public class RadioLiveService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-//        Log.d("INTENT_RADIO_LIVE", "onHandleIntent RadioLiveService start");
-//        startForeground(NOTIFICATION,notification);
-//        synchronized (intent) {
-//            BBCWorldServiceDownloaderUtils utils = BBCWorldServiceDownloaderUtils.getInstance();
-//
-//            utils.startRadioLive(this);
-//        }
-//
-//
-//        Log.d("INTENT_RADIO_LIVE", "onHandleIntent RadioLiveService end");
-
     }
-
     /**
      * Show a notification while this service is running.
      */
@@ -120,7 +99,6 @@ public class RadioLiveService extends IntentService {
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("Listen Radio Live");
             mNM.createNotificationChannel(channel);
-            //mNM.setChannelId("NOTIFICATION_ID");
         }
         // In this sample, we'll use the same text for the ticker and the expanded notification
         CharSequence text = getText(R.string.local_service_started);

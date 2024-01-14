@@ -46,13 +46,12 @@
 
         <ImageView
             android:id="@+id/imgLogo"
-            android:layout_width="350dp"
-            android:layout_height="400dp"
+            android:layout_width="375dp"
+            android:layout_height="396dp"
             android:layout_below="@+id/txtVw1"
-            android:layout_marginStart="7dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/bbc_world_service_2022__boxed_" />
 
         <ImageButton
