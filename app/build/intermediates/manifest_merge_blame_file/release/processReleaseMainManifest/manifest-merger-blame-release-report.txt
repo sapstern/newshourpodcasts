@@ -1,0 +1,558 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.mfri.bbc.mediamanager"
+4    android:versionCode="100"
+5    android:versionName="v1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+11-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:3:5-91
+11-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:3:22-89
+12    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+12-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:4:5-76
+12-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:4:22-74
+13    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:5:5-76
+13-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:5:22-74
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:6:5-67
+14-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:6:22-64
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:7:5-79
+15-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:7:22-76
+16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+16-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:8:5-76
+16-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:8:22-73
+17    <uses-permission
+17-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:9:5-107
+18        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+18-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:9:22-78
+19        android:maxSdkVersion="28" />
+19-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:9:79-105
+20    <uses-permission
+20-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:10:5-106
+21        android:name="android.permission.READ_EXTERNAL_STORAGE"
+21-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:10:22-77
+22        android:maxSdkVersion="28" />
+22-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:10:78-104
+23    <uses-permission android:name="android.permission.WAKE_LOCK" />
+23-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:23:5-68
+23-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:23:22-65
+24    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+24-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:25:5-81
+24-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:25:22-78
+25
+26    <permission
+26-->[androidx.core:core:1.9.0] /home/matthias/.gradle/caches/transforms-3/6b0e93590e9e601eae62fa406828d2f9/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+27        android:name="org.mfri.bbc.mediamanager.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+27-->[androidx.core:core:1.9.0] /home/matthias/.gradle/caches/transforms-3/6b0e93590e9e601eae62fa406828d2f9/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+28        android:protectionLevel="signature" />
+28-->[androidx.core:core:1.9.0] /home/matthias/.gradle/caches/transforms-3/6b0e93590e9e601eae62fa406828d2f9/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+29
+30    <uses-permission android:name="org.mfri.bbc.mediamanager.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+30-->[androidx.core:core:1.9.0] /home/matthias/.gradle/caches/transforms-3/6b0e93590e9e601eae62fa406828d2f9/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+30-->[androidx.core:core:1.9.0] /home/matthias/.gradle/caches/transforms-3/6b0e93590e9e601eae62fa406828d2f9/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+31
+32    <application
+32-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:12:5-119:19
+33        android:name="androidx.multidex.MultiDexApplication"
+34        android:allowBackup="true"
+34-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:13:9-35
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.9.0] /home/matthias/.gradle/caches/transforms-3/6b0e93590e9e601eae62fa406828d2f9/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+36        android:extractNativeLibs="true"
+37        android:icon="@mipmap/ic_launcher"
+37-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:14:9-43
+38        android:label="@string/app_name"
+38-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:15:9-41
+39        android:largeHeap="true"
+39-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:16:9-33
+40        android:requestLegacyExternalStorage="true"
+40-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:17:9-52
+41        android:roundIcon="@mipmap/radio_icon_128_px"
+41-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:18:9-54
+42        android:supportsRtl="true"
+42-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:19:9-35
+43        android:theme="@android:style/Theme.Holo"
+43-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:20:9-50
+44        android:usesCleartextTraffic="true" >
+44-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:21:9-44
+45        <activity android:name="org.mfri.bbc.mediamanager.WebViewActivity" />
+45-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:23:9-78
+45-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:23:19-75
+46        <activity
+46-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:24:9-32:20
+47            android:name="org.mfri.bbc.mediamanager.SettingsActivity"
+47-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:26:13-70
+48            android:exported="true"
+48-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:25:13-36
+49            android:theme="@style/AppTheme.NoActionBar" >
+49-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:27:13-56
+50            <intent-filter>
+50-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:28:13-31:29
+51                <action android:name="android.intent.action.MAIN" />
+51-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:29:17-69
+51-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:29:25-66
+52
+53                <category android:name="android.intent.category.LAUNCHER" />
+53-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:30:17-77
+53-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:30:27-74
+54            </intent-filter>
+55        </activity>
+56        <activity
+56-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:33:9-39:20
+57            android:name="org.mfri.bbc.mediamanager.ItemMainActivity"
+57-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:34:13-70
+58            android:theme="@style/AppTheme.NoActionBar" >
+58-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:35:13-56
+59            <meta-data
+59-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+60                android:name="android.support.PARENT_ACTIVITY"
+60-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+61                android:value="org.mfri.bbc.mediamanager.SettingsActivity" />
+61-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+62        </activity>
+63        <activity
+63-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:40:9-46:20
+64            android:name="org.mfri.bbc.mediamanager.ItemListActivityNewshour"
+64-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:41:13-78
+65            android:theme="@style/AppTheme.NoActionBar" >
+65-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:42:13-56
+66            <meta-data
+66-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+67                android:name="android.support.PARENT_ACTIVITY"
+67-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+68                android:value="org.mfri.bbc.mediamanager.ItemMainActivity" />
+68-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+69        </activity>
+70        <activity
+70-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:47:9-53:20
+71            android:name="org.mfri.bbc.mediamanager.ItemListActivitySportsworld"
+71-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:48:13-81
+72            android:theme="@style/AppTheme.NoActionBar" >
+72-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:49:13-56
+73            <meta-data
+73-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+74                android:name="android.support.PARENT_ACTIVITY"
+74-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+75                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+75-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+76        </activity>
+77        <activity
+77-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:54:9-60:20
+78            android:name="org.mfri.bbc.mediamanager.ItemListActivitySportshour"
+78-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:55:13-80
+79            android:theme="@style/AppTheme.NoActionBar" >
+79-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:56:13-56
+80            <meta-data
+80-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+81                android:name="android.support.PARENT_ACTIVITY"
+81-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+82                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+82-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+83        </activity>
+84        <activity
+84-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:61:9-67:20
+85            android:name="org.mfri.bbc.mediamanager.ItemListActivityBusinessdaily"
+85-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:62:13-83
+86            android:theme="@style/AppTheme.NoActionBar" >
+86-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:63:13-56
+87            <meta-data
+87-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+88                android:name="android.support.PARENT_ACTIVITY"
+88-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+89                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+89-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+90        </activity>
+91        <activity
+91-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:68:9-74:20
+92            android:name="org.mfri.bbc.mediamanager.ItemListActivityFootballdaily"
+92-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:69:13-83
+93            android:theme="@style/AppTheme.NoActionBar" >
+93-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:70:13-56
+94            <meta-data
+94-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+95                android:name="android.support.PARENT_ACTIVITY"
+95-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+96                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+96-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+97        </activity>
+98        <activity
+98-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:75:9-81:20
+99            android:name="org.mfri.bbc.mediamanager.ItemListActivitySix06"
+99-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:76:13-75
+100            android:theme="@style/AppTheme.NoActionBar" >
+100-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:77:13-56
+101            <meta-data
+101-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+102                android:name="android.support.PARENT_ACTIVITY"
+102-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+103                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+103-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+104        </activity>
+105        <activity
+105-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:82:9-88:20
+106            android:name="org.mfri.bbc.mediamanager.ItemListActivityGlobalnews"
+106-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:83:13-80
+107            android:theme="@style/AppTheme.NoActionBar" >
+107-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:84:13-56
+108            <meta-data
+108-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+109                android:name="android.support.PARENT_ACTIVITY"
+109-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+110                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+110-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+111        </activity>
+112        <activity
+112-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:89:9-95:20
+113            android:name="org.mfri.bbc.mediamanager.ItemListActivityRadiolive"
+113-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:90:13-79
+114            android:theme="@style/AppTheme.NoActionBar" >
+114-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:91:13-56
+115            <meta-data
+115-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:36:13-38:78
+116                android:name="android.support.PARENT_ACTIVITY"
+116-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:37:17-63
+117                android:value="org.mfri.bbc.mediamanager.ItemListActivityNewshour" />
+117-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:38:17-75
+118        </activity>
+119
+120        <service
+120-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:96:9-99:40
+121            android:name="org.mfri.bbc.mediamanager.RadioLiveService"
+121-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:97:13-70
+122            android:exported="false"
+122-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:99:13-37
+123            android:foregroundServiceType="mediaPlayback" />
+123-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:98:13-58
+124        <service
+124-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:100:9-102:40
+125            android:name="org.mfri.bbc.mediamanager.DeleteOldPodcastsService"
+125-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:101:13-78
+126            android:exported="false" />
+126-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:102:13-37
+127        <service
+127-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:103:9-105:40
+128            android:name="org.mfri.bbc.mediamanager.ListService"
+128-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:104:13-65
+129            android:exported="false" />
+129-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:105:13-37
+130        <service
+130-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:106:9-108:40
+131            android:name="org.mfri.bbc.mediamanager.DownloadService"
+131-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:107:13-69
+132            android:exported="false" />
+132-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:108:13-37
+133
+134        <provider
+135            android:name="androidx.core.content.FileProvider"
+135-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:111:13-62
+136            android:authorities="org.mfri.bbc.mediamanager.provider"
+136-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:112:13-60
+137            android:exported="false"
+137-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:113:13-37
+138            android:grantUriPermissions="true" >
+138-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:114:13-47
+139            <meta-data
+139-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:115:13-117:58
+140                android:name="android.support.FILE_PROVIDER_PATHS"
+140-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:116:17-67
+141                android:resource="@xml/provider_paths" />
+141-->/home/matthias/gitBBCPodcastDownloader/app/src/main/AndroidManifest.xml:117:17-55
+142        </provider>
+143        <provider
+143-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:29:9-37:20
+144            android:name="androidx.startup.InitializationProvider"
+144-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:30:13-67
+145            android:authorities="org.mfri.bbc.mediamanager.androidx-startup"
+145-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:31:13-68
+146            android:exported="false" >
+146-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:32:13-37
+147            <meta-data
+147-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:34:13-36:52
+148                android:name="androidx.work.WorkManagerInitializer"
+148-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:35:17-68
+149                android:value="androidx.startup" />
+149-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:36:17-49
+150            <meta-data
+150-->[androidx.emoji2:emoji2:1.2.0] /home/matthias/.gradle/caches/transforms-3/562be71e0062d7ece557a822d7f1e6a7/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+151                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+151-->[androidx.emoji2:emoji2:1.2.0] /home/matthias/.gradle/caches/transforms-3/562be71e0062d7ece557a822d7f1e6a7/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+152                android:value="androidx.startup" />
+152-->[androidx.emoji2:emoji2:1.2.0] /home/matthias/.gradle/caches/transforms-3/562be71e0062d7ece557a822d7f1e6a7/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+153            <meta-data
+153-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/matthias/.gradle/caches/transforms-3/19ffae467af149903dc93ad8df644548/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+154                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+154-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/matthias/.gradle/caches/transforms-3/19ffae467af149903dc93ad8df644548/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+155                android:value="androidx.startup" />
+155-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/matthias/.gradle/caches/transforms-3/19ffae467af149903dc93ad8df644548/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+156            <meta-data
+156-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+157                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+157-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+158                android:value="androidx.startup" />
+158-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+159        </provider>
+160
+161        <service
+161-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:39:9-45:35
+162            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+162-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:40:13-88
+163            android:directBootAware="false"
+163-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:41:13-44
+164            android:enabled="@bool/enable_system_alarm_service_default"
+164-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:42:13-72
+165            android:exported="false" />
+165-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:43:13-37
+166        <service
+166-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:46:9-52:35
+167            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+167-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:47:13-84
+168            android:directBootAware="false"
+168-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:48:13-44
+169            android:enabled="@bool/enable_system_job_service_default"
+169-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:49:13-70
+170            android:exported="true"
+170-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:50:13-36
+171            android:permission="android.permission.BIND_JOB_SERVICE" />
+171-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:51:13-69
+172        <service
+172-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:53:9-59:35
+173            android:name="androidx.work.impl.foreground.SystemForegroundService"
+173-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:54:13-81
+174            android:directBootAware="false"
+174-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:55:13-44
+175            android:enabled="@bool/enable_system_foreground_service_default"
+175-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:56:13-77
+176            android:exported="false" />
+176-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:57:13-37
+177
+178        <receiver
+178-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:61:9-66:35
+179            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+179-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:62:13-88
+180            android:directBootAware="false"
+180-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:63:13-44
+181            android:enabled="true"
+181-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:64:13-35
+182            android:exported="false" />
+182-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:65:13-37
+183        <receiver
+183-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:67:9-77:20
+184            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+184-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:68:13-106
+185            android:directBootAware="false"
+185-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:69:13-44
+186            android:enabled="false"
+186-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:70:13-36
+187            android:exported="false" >
+187-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:71:13-37
+188            <intent-filter>
+188-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:73:13-76:29
+189                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+189-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:74:17-87
+189-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:74:25-84
+190                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+190-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:75:17-90
+190-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:75:25-87
+191            </intent-filter>
+192        </receiver>
+193        <receiver
+193-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:78:9-88:20
+194            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+194-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:79:13-104
+195            android:directBootAware="false"
+195-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:80:13-44
+196            android:enabled="false"
+196-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:81:13-36
+197            android:exported="false" >
+197-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:82:13-37
+198            <intent-filter>
+198-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:84:13-87:29
+199                <action android:name="android.intent.action.BATTERY_OKAY" />
+199-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:85:17-77
+199-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:85:25-74
+200                <action android:name="android.intent.action.BATTERY_LOW" />
+200-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:86:17-76
+200-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:86:25-73
+201            </intent-filter>
+202        </receiver>
+203        <receiver
+203-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:89:9-99:20
+204            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+204-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:90:13-104
+205            android:directBootAware="false"
+205-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:91:13-44
+206            android:enabled="false"
+206-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:92:13-36
+207            android:exported="false" >
+207-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:93:13-37
+208            <intent-filter>
+208-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:95:13-98:29
+209                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+209-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:96:17-83
+209-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:96:25-80
+210                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+210-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:97:17-82
+210-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:97:25-79
+211            </intent-filter>
+212        </receiver>
+213        <receiver
+213-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:100:9-109:20
+214            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+214-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:101:13-103
+215            android:directBootAware="false"
+215-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:102:13-44
+216            android:enabled="false"
+216-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:103:13-36
+217            android:exported="false" >
+217-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:104:13-37
+218            <intent-filter>
+218-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:106:13-108:29
+219                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+219-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:107:17-79
+219-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:107:25-76
+220            </intent-filter>
+221        </receiver>
+222        <receiver
+222-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:110:9-121:20
+223            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+223-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:111:13-88
+224            android:directBootAware="false"
+224-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:112:13-44
+225            android:enabled="false"
+225-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:113:13-36
+226            android:exported="false" >
+226-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:114:13-37
+227            <intent-filter>
+227-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:116:13-120:29
+228                <action android:name="android.intent.action.BOOT_COMPLETED" />
+228-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:117:17-79
+228-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:117:25-76
+229                <action android:name="android.intent.action.TIME_SET" />
+229-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:118:17-73
+229-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:118:25-70
+230                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+230-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:119:17-81
+230-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:119:25-78
+231            </intent-filter>
+232        </receiver>
+233        <receiver
+233-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:122:9-131:20
+234            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+234-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:123:13-99
+235            android:directBootAware="false"
+235-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:124:13-44
+236            android:enabled="@bool/enable_system_alarm_service_default"
+236-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:125:13-72
+237            android:exported="false" >
+237-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:126:13-37
+238            <intent-filter>
+238-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:128:13-130:29
+239                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+239-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:129:17-98
+239-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:129:25-95
+240            </intent-filter>
+241        </receiver>
+242        <receiver
+242-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:132:9-142:20
+243            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+243-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:133:13-78
+244            android:directBootAware="false"
+244-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:134:13-44
+245            android:enabled="true"
+245-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:135:13-35
+246            android:exported="true"
+246-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:136:13-36
+247            android:permission="android.permission.DUMP" >
+247-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:137:13-57
+248            <intent-filter>
+248-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:139:13-141:29
+249                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+249-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:140:17-88
+249-->[androidx.work:work-runtime:2.9.0] /home/matthias/.gradle/caches/transforms-3/4e14189d0b10c99fe34f4400b4e96925/transformed/work-runtime-2.9.0/AndroidManifest.xml:140:25-85
+250            </intent-filter>
+251        </receiver>
+252
+253        <activity android:name="com.mikepenz.aboutlibraries.ui.LibsActivity" />
+253-->[com.mikepenz:aboutlibraries:7.0.0] /home/matthias/.gradle/caches/transforms-3/7ca86501cf9d482884732391a53a5d9d/transformed/aboutlibraries-7.0.0/AndroidManifest.xml:12:9-80
+253-->[com.mikepenz:aboutlibraries:7.0.0] /home/matthias/.gradle/caches/transforms-3/7ca86501cf9d482884732391a53a5d9d/transformed/aboutlibraries-7.0.0/AndroidManifest.xml:12:19-77
+254
+255        <provider
+255-->[com.mikepenz:iconics-core:4.0.0] /home/matthias/.gradle/caches/transforms-3/b56c6f0f5286152cff2dfe4361cec94f/transformed/iconics-core-4.0.0/AndroidManifest.xml:27:9-32:39
+256            android:name="com.mikepenz.iconics.IconicsContentProvider"
+256-->[com.mikepenz:iconics-core:4.0.0] /home/matthias/.gradle/caches/transforms-3/b56c6f0f5286152cff2dfe4361cec94f/transformed/iconics-core-4.0.0/AndroidManifest.xml:28:13-71
+257            android:authorities="org.mfri.bbc.mediamanager.iconics.core.provider"
+257-->[com.mikepenz:iconics-core:4.0.0] /home/matthias/.gradle/caches/transforms-3/b56c6f0f5286152cff2dfe4361cec94f/transformed/iconics-core-4.0.0/AndroidManifest.xml:29:13-73
+258            android:enabled="@bool/is_iconics_content_provider_enabled"
+258-->[com.mikepenz:iconics-core:4.0.0] /home/matthias/.gradle/caches/transforms-3/b56c6f0f5286152cff2dfe4361cec94f/transformed/iconics-core-4.0.0/AndroidManifest.xml:30:13-72
+259            android:exported="false"
+259-->[com.mikepenz:iconics-core:4.0.0] /home/matthias/.gradle/caches/transforms-3/b56c6f0f5286152cff2dfe4361cec94f/transformed/iconics-core-4.0.0/AndroidManifest.xml:31:13-37
+260            android:initOrder="100" />
+260-->[com.mikepenz:iconics-core:4.0.0] /home/matthias/.gradle/caches/transforms-3/b56c6f0f5286152cff2dfe4361cec94f/transformed/iconics-core-4.0.0/AndroidManifest.xml:32:13-36
+261
+262        <uses-library
+262-->[androidx.window:window:1.0.0] /home/matthias/.gradle/caches/transforms-3/c79eb4c99c94719b6088d7164cde80a7/transformed/window-1.0.0/AndroidManifest.xml:25:9-27:40
+263            android:name="androidx.window.extensions"
+263-->[androidx.window:window:1.0.0] /home/matthias/.gradle/caches/transforms-3/c79eb4c99c94719b6088d7164cde80a7/transformed/window-1.0.0/AndroidManifest.xml:26:13-54
+264            android:required="false" />
+264-->[androidx.window:window:1.0.0] /home/matthias/.gradle/caches/transforms-3/c79eb4c99c94719b6088d7164cde80a7/transformed/window-1.0.0/AndroidManifest.xml:27:13-37
+265        <uses-library
+265-->[androidx.window:window:1.0.0] /home/matthias/.gradle/caches/transforms-3/c79eb4c99c94719b6088d7164cde80a7/transformed/window-1.0.0/AndroidManifest.xml:28:9-30:40
+266            android:name="androidx.window.sidecar"
+266-->[androidx.window:window:1.0.0] /home/matthias/.gradle/caches/transforms-3/c79eb4c99c94719b6088d7164cde80a7/transformed/window-1.0.0/AndroidManifest.xml:29:13-51
+267            android:required="false" />
+267-->[androidx.window:window:1.0.0] /home/matthias/.gradle/caches/transforms-3/c79eb4c99c94719b6088d7164cde80a7/transformed/window-1.0.0/AndroidManifest.xml:30:13-37
+268
+269        <service
+269-->[androidx.room:room-runtime:2.5.0] /home/matthias/.gradle/caches/transforms-3/dfb29bec5c260ee9203e8155d0c7c701/transformed/room-runtime-2.5.0/AndroidManifest.xml:24:9-28:63
+270            android:name="androidx.room.MultiInstanceInvalidationService"
+270-->[androidx.room:room-runtime:2.5.0] /home/matthias/.gradle/caches/transforms-3/dfb29bec5c260ee9203e8155d0c7c701/transformed/room-runtime-2.5.0/AndroidManifest.xml:25:13-74
+271            android:directBootAware="true"
+271-->[androidx.room:room-runtime:2.5.0] /home/matthias/.gradle/caches/transforms-3/dfb29bec5c260ee9203e8155d0c7c701/transformed/room-runtime-2.5.0/AndroidManifest.xml:26:13-43
+272            android:exported="false" />
+272-->[androidx.room:room-runtime:2.5.0] /home/matthias/.gradle/caches/transforms-3/dfb29bec5c260ee9203e8155d0c7c701/transformed/room-runtime-2.5.0/AndroidManifest.xml:27:13-37
+273
+274        <receiver
+274-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+275            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+275-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+276            android:directBootAware="false"
+276-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+277            android:enabled="true"
+277-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+278            android:exported="true"
+278-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+279            android:permission="android.permission.DUMP" >
+279-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+280            <intent-filter>
+280-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+281                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+281-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+281-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+282            </intent-filter>
+283            <intent-filter>
+283-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+284                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+284-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+284-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+285            </intent-filter>
+286            <intent-filter>
+286-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+287                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+287-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+287-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+288            </intent-filter>
+289            <intent-filter>
+289-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+290                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+290-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+290-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/matthias/.gradle/caches/transforms-3/8f9599e168ffc122c082b828f3077ab5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+291            </intent-filter>
+292        </receiver>
+293    </application>
+294
+295</manifest>

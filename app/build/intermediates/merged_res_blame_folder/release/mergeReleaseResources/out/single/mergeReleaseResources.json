@@ -1,0 +1,222 @@
+[
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/xml_provider_paths.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/xml/provider_paths.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xxxhdpi_bbc_world_service_2022__boxed_.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xxxhdpi/bbc_world_service_2022__boxed_.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-ldpi_ic_launcher_foreground.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-ldpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/raw_license_apache_2_0.txt.flat",
+        "source": "org.mfri.bbc.mediamanager.app-release-49:/raw/license_apache_2_0.txt"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_item_list_content.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/item_list_content.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-mdpi_ic_launcher_background.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-mdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/menu_bbc_menu.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/menu/bbc_menu.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xhdpi_ic_launcher_background.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_activity_settings.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_activity_webview.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/activity_webview.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-anydpi-v21_bbc_world_service_2022__boxed_.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-anydpi-v21/bbc_world_service_2022__boxed_.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/raw_license_mit.txt.flat",
+        "source": "org.mfri.bbc.mediamanager.app-release-49:/raw/license_mit.txt"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-mdpi_radio_icon_32_px.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-mdpi/radio_icon_32_px.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout-v21_activity_radio_live.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout-v21/activity_radio_live.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-xhdpi_radio_icon_64_px.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-xhdpi/radio_icon_64_px.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable__20px_bbc_world_service_2022__boxed__svg.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/drawable/_20px_bbc_world_service_2022__boxed__svg.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_podcast_row.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/podcast_row.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_activity_item_list.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/activity_item_list.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-xxhdpi_radio_icon_72_px.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-xxhdpi/radio_icon_72_px.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable_button_selector.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/drawable/button_selector.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xxhdpi_bbc_world_service_2022__boxed_.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xxhdpi/bbc_world_service_2022__boxed_.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_item_list.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/item_list.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_item_list_table.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/item_list_table.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xxxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xhdpi_bbc_world_service_2022__boxed_.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xhdpi/bbc_world_service_2022__boxed_.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-hdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-hdpi_bbc_world_service_2022__boxed_.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-hdpi/bbc_world_service_2022__boxed_.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-mdpi_ic_launcher_foreground.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable_media.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/drawable/media.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_activity_item_main.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/activity_item_main.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-ldpi_bbc_world_service_2022__boxed_.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-ldpi/bbc_world_service_2022__boxed_.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout_activity_radio_live.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout/activity_radio_live.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable_ic_favorite_black_48dp.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/drawable/ic_favorite_black_48dp.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-hdpi_ic_launcher_foreground.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable_border.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/drawable/border.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-hdpi_radio_icon_48_px.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-hdpi/radio_icon_48_px.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-xxxhdpi_radio_icon_128_px.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-xxxhdpi/radio_icon_128_px.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout-w900dp_item_list.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout-w900dp/item_list.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-xxhdpi_ic_launcher_background.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-xxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/layout-v21_activity_item_list.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/layout-v21/activity_item_list.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/raw_license_cc0_1_0.txt.flat",
+        "source": "org.mfri.bbc.mediamanager.app-release-49:/raw/license_cc0_1_0.txt"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-anydpi-v21_ic_launcher_background.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-anydpi-v21/ic_launcher_background.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable__80px_bbc_world_service_2022__boxed__svg.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/drawable/_80px_bbc_world_service_2022__boxed__svg.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-ldpi_ic_launcher_background.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-ldpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-mdpi_bbc_world_service_2022__boxed_.png.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-mdpi/bbc_world_service_2022__boxed_.png"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-pngs-50:/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "org.mfri.bbc.mediamanager.app-release-54:/xml_root_preferences.xml.flat",
+        "source": "org.mfri.bbc.mediamanager.app-main-55:/xml/root_preferences.xml"
+    }
+]
