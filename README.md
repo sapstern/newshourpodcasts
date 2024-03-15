@@ -11,6 +11,6 @@ Update May 23:
 
 I have withdrawn the app from F-Droid app store, (it is still there as an archived version) as it got marked with a so called "anti feature" for "promote or depend entirely on a Non-Free network service", which for me is unjustified and not acceptable.
 
-However, the app can be downloaded here: <a href="https://github.com/sapstern/newshourpodcasts/Downloads">link</a>
+However, the app can be downloaded here: <a href="https://github.com/sapstern/newshourpodcasts/Download">Download</a>
 
 
