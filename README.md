@@ -13,8 +13,8 @@ I have withdrawn the app from F-Droid app store, (it is still there as an archiv
 
 However, the app can be downloaded here: 
 
-<a href="https://github.com/sapstern/newshourpodcasts/tree/master/Download">Test</a>
-<a href="https://github.com/sapstern/newshourpodcasts/tree/master/Download">Debug</a>
-<a href="https://github.com/sapstern/newshourpodcasts/tree/master/Download">Release</a>
+<a href="https://github.com/sapstern/newshourpodcasts/tree/master/app/build/outputs/apk/androidTest/debug">Test</a>
+<a href="https://github.com/sapstern/newshourpodcasts/tree/master/app/build/outputs/apk/debug">Debug</a>
+<a href="https://github.com/sapstern/newshourpodcasts/tree/master/app/build/outputs/apk/release">Release</a>
 
 
