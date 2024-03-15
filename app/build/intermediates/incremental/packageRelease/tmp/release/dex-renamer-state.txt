@@ -1,7 +1,0 @@
-#Fri Mar 15 12:58:01 CET 2024
-base.0=/home/matthias/gitBBCPodcastDownloader/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
-base.1=/home/matthias/gitBBCPodcastDownloader/app/build/intermediates/dex/release/mergeDexRelease/classes2.dex
-path.0=classes.dex
-path.1=classes2.dex
-renamed.0=classes.dex
-renamed.1=classes2.dex
